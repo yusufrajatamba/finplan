@@ -682,20 +682,23 @@ export default function App() {
             localStorage.removeItem("user_cashflow_data_v3");
             localStorage.removeItem("user_career_data_v3");
             localStorage.removeItem("user_goals_data_v3");
-            localStorage.removeItem("user_risk_profile_v3");
-            localStorage.removeItem("saved_finplan_results_v3");
+            localStorage.removeItem("user_risk_data_v3");
+            localStorage.removeItem("user_plan_result_v3");
+            localStorage.removeItem("user_profiling_history_v3");
             localStorage.removeItem("finplan_saved_profiles_history");
-            sessionStorage.removeItem("finplan_session_lock_key");
+            sessionStorage.clear();
 
-            setProfile(createEmptyProfileData().profile);
-            setCashflow(createEmptyProfileData().cashflow);
-            setCareer(createEmptyProfileData().career);
-            setGoals(createEmptyProfileData().goals);
-            setRisk(createEmptyProfileData().risk);
+            const fresh = createEmptyProfileData();
+            setProfile(fresh.profile);
+            setCashflow(fresh.cashflow);
+            setCareer(fresh.career);
+            setGoals(fresh.goals);
+            setRisk(fresh.risk);
             setPlanResult(null);
+            setHistory([]);
             setIsLandingPage(true);
             setCurrentStep("data_diri");
-            showToast("Sesi berhasil direset bersih.");
+            showToast("Seluruh data input dan riwayat profiling berhasil direset bersih seperti baru.");
           }}
         />
       )}

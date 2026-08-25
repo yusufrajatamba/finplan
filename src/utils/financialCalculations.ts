@@ -730,3 +730,152 @@ export function generateFutureGoalProjection(
     totalProjectedWealth10Yr: yearlyProjections[9]?.projectedNetWorth || 0,
   };
 }
+
+// ─── Deterministic CFP Financial Plan Generator ──────────────────────────────
+
+export function generateDeterministicFinancialPlan(data: {
+  profile?: UserProfile;
+  cashflow?: CashflowData;
+  career?: CareerProfile;
+  goals?: TargetGoalsData;
+  risk?: RiskProfileData;
+}): FinancialPlanResult {
+  const profile = data.profile || ({} as UserProfile);
+  const cashflow = data.cashflow || ({} as CashflowData);
+  const career = data.career || ({ personal: {} } as CareerProfile);
+  const goals = data.goals || ({} as TargetGoalsData);
+  const risk = data.risk || ({ profileType: "Moderat" } as RiskProfileData);
+
+  const monthlyIncome =
+    (cashflow.monthlyMainIncome || 0) +
+    (cashflow.monthlySideIncome || 0) +
+    (cashflow.partnerMainIncome || 0) +
+    (cashflow.partnerSideIncome || 0) +
+    (cashflow.businessPassiveIncome || 0) +
+    (cashflow.investmentPassiveIncome || 0);
+
+  const livingCost =
+    (cashflow.monthlyNeeds || 0) +
+    (cashflow.housingExpense || 0) +
+    (cashflow.utilitiesExpense || 0) +
+    (cashflow.transportationExpense || 0) +
+    (cashflow.familySupportExpense || 0) +
+    (cashflow.educationCurrentExpense || 0);
+
+  const debtsList = cashflow.debts || [];
+  const totalDebtsMonthly = debtsList.reduce((acc, d) => acc + (d.monthlyPayment || 0), 0);
+  const totalDebtsRemaining = debtsList.reduce((acc, d) => acc + (d.totalRemaining || 0), 0);
+
+  const existingInsurance = cashflow.monthlyExistingInsurance || 0;
+
+  const liquidCash = (cashflow.cashEmergencyFund || 0) + (cashflow.bankSavings || 0) + (cashflow.deposits || 0);
+  const investmentAssets = (cashflow.stocks || 0) + (cashflow.mutualFunds || 0) + (cashflow.gold || 0) + (cashflow.cryptoAssets || 0);
+  const physicalAssets = (cashflow.propertyValue || 0) + (cashflow.vehicleValue || 0) + (cashflow.otherAssets || 0);
+  const totalAssets = liquidCash + investmentAssets + physicalAssets;
+
+  const recNeeds = livingCost > 0 ? livingCost : Math.round(monthlyIncome * 0.5);
+  const recDebt = totalDebtsMonthly;
+  const isMarriedOrDeps = profile.maritalStatus === "Menikah" || (profile.dependents || 0) > 0;
+  const recInsurance = existingInsurance > 0
+    ? existingInsurance
+    : isMarriedOrDeps ? Math.round(monthlyIncome * 0.05) : Math.round(monthlyIncome * 0.03);
+  const recSavings = Math.max(0, monthlyIncome - recNeeds - recDebt - recInsurance - Math.round(monthlyIncome * 0.15));
+  const recWants = Math.max(0, monthlyIncome - recNeeds - recDebt - recInsurance - recSavings);
+
+  const isFreelance = career.personal?.jobType === "Freelancer / Profesional" || career.personal?.jobType === "Wirausaha / Bisnis";
+  const emergencyMultiplier = isFreelance ? (isMarriedOrDeps ? 12 : 9) : (isMarriedOrDeps ? 9 : 6);
+  const baseLivingCostForEmergency = livingCost > 0 ? livingCost : Math.round(monthlyIncome * 0.5);
+  const targetEmergencyFund = Math.max(25000000, baseLivingCostForEmergency * emergencyMultiplier);
+  const currentEmergencyFund = (cashflow.cashEmergencyFund || 0) + (cashflow.bankSavings || 0);
+
+  // Health Score
+  const dti = monthlyIncome > 0 ? (totalDebtsMonthly / monthlyIncome) * 100 : 0;
+  const debtScore = dti === 0 ? 100 : dti <= 15 ? 95 : dti <= 30 ? 80 : dti <= 40 ? 55 : 25;
+  const emergencyCoverageMonths = baseLivingCostForEmergency > 0 ? currentEmergencyFund / baseLivingCostForEmergency : 0;
+  const liquidityScore = emergencyCoverageMonths >= emergencyMultiplier ? 100 : Math.min(95, Math.round((emergencyCoverageMonths / emergencyMultiplier) * 100));
+  const savingsRate = monthlyIncome > 0 ? (recSavings / monthlyIncome) * 100 : 0;
+  const savingsScore = savingsRate >= 25 ? 100 : savingsRate >= 20 ? 85 : savingsRate >= 10 ? 65 : 40;
+  const protectionScore = profile.hasPrivateInsurance ? 95 : profile.bpjsStatus?.includes("Aktif") ? 80 : 50;
+  const solvencyScore = totalAssets > 0 ? Math.min(100, Math.max(10, Math.round(((totalAssets - totalDebtsRemaining) / totalAssets) * 100))) : 60;
+  const healthScore = Math.min(100, Math.max(20, Math.round((liquidityScore * 0.25) + (debtScore * 0.25) + (savingsScore * 0.25) + (protectionScore * 0.15) + (solvencyScore * 0.1))));
+
+  // Multi-Year Projections
+  const expectedReturn = risk.profileType === "Agresif" || risk.profileType === "Sangat Agresif" ? 0.11 : risk.profileType === "Moderat" || risk.profileType === "Moderat-Agresif" ? 0.09 : 0.065;
+  const multiYearProjections = [1, 3, 5, 10, 15].map((yr) => {
+    const monthlyRate = expectedReturn / 12;
+    const totalMonths = yr * 12;
+    const fvLumpSum = totalAssets * Math.pow(1 + expectedReturn, yr);
+    const fvAnnuity = monthlyRate > 0 ? recSavings * ((Math.pow(1 + monthlyRate, totalMonths) - 1) / monthlyRate) : recSavings * totalMonths;
+    const projNetWorth = Math.round(fvLumpSum + fvAnnuity);
+    const projEmergency = Math.min(targetEmergencyFund, Math.round(currentEmergencyFund + (recSavings * 0.4 * Math.min(totalMonths, 24))));
+    const monthlyPassive = Math.round((projNetWorth * 0.05) / 12);
+    let goalsStatus = "Fondasi dana darurat dan proteksi keluarga diperkuat.";
+    if (yr === 3) goalsStatus = "Target DP Rumah / kendaraan terpenuhi, dana darurat 100% aman.";
+    else if (yr === 5) goalsStatus = "Portofolio bertumbuh, persiapan dana pendidikan jenjang lanjut.";
+    else if (yr === 10) goalsStatus = "Akumulasi aset mapan, pasif income mulai menopang kebutuhan rutin.";
+    else if (yr === 15) goalsStatus = "Kemerdekaan finansial (Financial Freedom) & persiapan pensiun mandiri.";
+    return { year: yr, projectedNetWorth: projNetWorth, emergencyFundTotal: projEmergency, estimatedMonthlyPassiveIncome: monthlyPassive, goalsStatus };
+  });
+
+  const isMarried = profile.maritalStatus === "Menikah" || (profile.dependents || 0) > 0;
+  const partnerInfo = profile.partnerName ? ` bersama pasangan (${profile.partnerName})` : profile.maritalStatus === "Menikah" ? " bersama pasangan" : "";
+
+  const strategicMilestones = [
+    {
+      timeframe: "Bulan 1-3",
+      title: isMarried ? "Otomasi Arus Kas Keluarga & Dana Darurat" : "Otomasi Autodebet & Dana Darurat",
+      description: isMarried
+        ? `Pisahkan rekening operasional rumah tangga dari tabungan. Setup autodebet dana darurat keluarga (${emergencyMultiplier}x pengeluaran) ke instrumen likuid (RDPU/SBN).`
+        : "Pisahkan rekening operasional dari rekening tabungan. Setup autodebet tabungan pada tanggal gajian ke RDPU.",
+      targetAllocation: `Rp ${Math.round(recSavings * 0.5).toLocaleString("id-ID")}/bulan ke RDPU/SBN`,
+    },
+    {
+      timeframe: "Bulan 4-6",
+      title: isMarried ? "Audit Pengeluaran & Proteksi Polis Keluarga" : "Audit Pengeluaran & Proteksi Polis",
+      description: isMarried
+        ? `Amankan asuransi jiwa pencari nafkah keluarga (UP tunai 10x biaya hidup keluarga) dan pastikan kepesertaan BPJS/asuransi kesehatan seluruh anggota keluarga aktif.`
+        : "Pastikan kepesertaan BPJS Kesehatan aktif dan amankan polis asuransi jiwa murni (Term-Life) jika memiliki tanggungan.",
+      targetAllocation: "Premi hemat terjangkau (Maks 5% - 10% income)",
+    },
+    {
+      timeframe: "Tahun 1-2",
+      title: isMarried ? "Investasi Rutin DCA & Dana Pendidikan / Rumah" : "Investasi Rutin DCA & Target DP Rumah",
+      description: isMarried
+        ? `Rutin Dollar-Cost Averaging portofolio keluarga ke SBN Ritel, RDPT, dan Indeks Saham IDX30 untuk persiapan DP rumah keluarga dan dana pendidikan anak.`
+        : "Rutin Dollar-Cost Averaging ke instrumen SBN Ritel, RDPT, dan Indeks Saham IDX30 sesuai profil risiko.",
+      targetAllocation: `${risk.profileType || "Moderat"} Portofolio Keluarga`,
+    },
+    {
+      timeframe: "Tahun 3-5",
+      title: isMarried ? "Akselerasi Kekayaan Bersih Keluarga & Pensiun Bersama" : "Eksekusi Goals Properti & Akselerasi Aset",
+      description: isMarried
+        ? "Realisasikan kepemilikan aset riil keluarga, optimalisasi pendapatan pasif rumah tangga, dan review berkala roadmap kemerdekaan finansial masa tua bersama pasangan."
+        : "Realisasikan target kepemilikan aset riil, optimalisasi pendapatan pasif, dan review berkala kenaikan nilai portofolio.",
+      targetAllocation: "Pertumbuhan Aset Jangka Panjang Rumah Tangga",
+    },
+  ];
+
+  const executiveSummary = isMarried
+    ? `Berdasarkan analisis perencana keuangan (CFP) untuk ${profile.fullName || "Klien"}${partnerInfo} (status menikah dengan ${profile.dependents || 0} tanggungan), kondisi finansial rumah tangga Anda memiliki indeks kesehatan ${healthScore}/100 dengan profil risiko ${risk.profileType || "Moderat"}. Rasio cicilan utang tercatat ${dti.toFixed(1)}% (batas aman OJK ≤30%) dan kapasitas tabungan keluarga mencapai Rp ${recSavings.toLocaleString("id-ID")}/bulan. Rencana keuangan komprehensif ini mengintegrasikan dana darurat keluarga sebesar ${emergencyMultiplier}x pengeluaran pokok (Rp ${targetEmergencyFund.toLocaleString("id-ID")}), proteksi asuransi jiwa pencari nafkah, dan investasi terstruktur demi kemakmuran masa depan keluarga.`
+    : `Berdasarkan analisis perencana keuangan (CFP) untuk ${profile.fullName || "Klien"}, kondisi finansial Anda memiliki indeks kesehatan ${healthScore}/100 dengan profil risiko ${risk.profileType || "Moderat"}. Rasio beban cicilan saat ini tercatat ${dti.toFixed(1)}% (batas aman OJK ≤30%) dan kapasitas tabungan bulanan mencapai Rp ${recSavings.toLocaleString("id-ID")}/bulan. Dengan mendisiplinkan alokasi dana darurat ${emergencyMultiplier}x pengeluaran dan investasi rutin pada instrumen legal berizin OJK, target kemerdekaan finansial Anda diproyeksikan tercapai sesuai jadwal.`;
+
+  return {
+    executiveSummary,
+    healthScore,
+    ojkRatios: {
+      savingsRatio: parseFloat(savingsRate.toFixed(1)),
+      debtServiceRatio: parseFloat(dti.toFixed(1)),
+      emergencyFundMonths: parseFloat(emergencyCoverageMonths.toFixed(1)),
+      solvencyRatio: parseFloat(solvencyScore.toFixed(1)),
+    },
+    monthlyBudgetRecommendation: {
+      livingNeeds: recNeeds,
+      debtRepayment: recDebt,
+      insurancePremiums: recInsurance,
+      savingsAndInvestment: recSavings,
+      lifestyleWants: recWants,
+    },
+    multiYearProjections,
+    strategicMilestones,
+  };
+}

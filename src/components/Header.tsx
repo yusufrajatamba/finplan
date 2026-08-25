@@ -11,6 +11,7 @@ import {
   Sun,
   History,
   Download,
+  Lock,
 } from "lucide-react";
 import { SampleProfileData, sampleProfiles } from "../data/sampleProfiles";
 import { WizardStep } from "../types";
@@ -32,6 +33,7 @@ interface HeaderProps {
   onToggleTheme: () => void;
   hasPlan?: boolean;
   hasGeneratedPlan?: boolean;
+  onLockApp?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -242,6 +244,17 @@ export const Header: React.FC<HeaderProps> = ({
             >
               {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
             </button>
+
+            {/* Lock App */}
+            {onLockApp && (
+              <button
+                onClick={onLockApp}
+                className="p-1.5 rounded-lg text-rose-500 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
+                title="Kunci Akses FinPlan"
+              >
+                <Lock className="w-4 h-4" />
+              </button>
+            )}
           </div>
         </div>
 

@@ -28,10 +28,16 @@ import { NewProfileModal } from "./components/NewProfileModal";
 import { PostSaveModal } from "./components/PostSaveModal";
 import { generateFinancialPlanPDF } from "./utils/pdfExport";
 import { LoadingPlanScreen } from "./components/LoadingPlanScreen";
+import { AuthGateModal } from "./components/AuthGateModal";
 
 import { Bot, AlertCircle, RefreshCw, CheckCircle2 } from "lucide-react";
 
 export default function App() {
+  // Authentication gatekeeper state (Password: finfreedom2026!)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    return localStorage.getItem("finplan_access_granted") === "true";
+  });
+
   // Theme state
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     return (
@@ -378,6 +384,10 @@ export default function App() {
         onToggleTheme={() => setIsDarkMode(!isDarkMode)}
         hasPlan={!!planResult}
         hasGeneratedPlan={!!planResult}
+        onLockApp={() => {
+          localStorage.removeItem("finplan_access_granted");
+          setIsAuthenticated(false);
+        }}
       />
 
       {/* Main App Container */}
@@ -594,6 +604,11 @@ export default function App() {
         onClose={() => setIsEducationOpen(false)}
         onAskAI={() => setIsAIChatOpen(true)}
       />
+
+      {/* Static Password Protection Gate (finfreedom2026!) */}
+      {!isAuthenticated && (
+        <AuthGateModal onUnlock={() => setIsAuthenticated(true)} />
+      )}
     </div>
   );
 }

@@ -53,6 +53,7 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleTheme,
   hasPlan,
   hasGeneratedPlan,
+  onLockApp,
 }) => {
   const [showSampleDropdown, setShowSampleDropdown] = useState(false);
 

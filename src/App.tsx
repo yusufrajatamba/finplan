@@ -27,12 +27,18 @@ import { CalculatorsModal } from "./components/CalculatorsModal";
 import { EducationModal } from "./components/EducationModal";
 import { NewProfileModal } from "./components/NewProfileModal";
 import { PostSaveModal } from "./components/PostSaveModal";
+import { AuthGateModal } from "./components/AuthGateModal";
 import { LoadingPlanScreen } from "./components/LoadingPlanScreen";
 import { generateFinancialPlanPDF } from "./utils/pdfExport";
 import { generateDeterministicFinancialPlan } from "./utils/financialCalculations";
 import { CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
 
 export default function App() {
+  // Security lock state (Requires password on first visit or when locked)
+  const [isLocked, setIsLocked] = useState<boolean>(() => {
+    return localStorage.getItem("finplan_access_granted") !== "true";
+  });
+
   // Theme state
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     return (
@@ -71,7 +77,7 @@ export default function App() {
     if (saved) {
       try {
         return JSON.parse(saved);
-      } catch (e) {}
+      } catch (e) { }
     }
     return createEmptyProfileData().profile;
   });
@@ -81,7 +87,7 @@ export default function App() {
     if (saved) {
       try {
         return JSON.parse(saved);
-      } catch (e) {}
+      } catch (e) { }
     }
     return createEmptyProfileData().cashflow;
   });
@@ -91,7 +97,7 @@ export default function App() {
     if (saved) {
       try {
         return JSON.parse(saved);
-      } catch (e) {}
+      } catch (e) { }
     }
     return createEmptyProfileData().career;
   });
@@ -101,7 +107,7 @@ export default function App() {
     if (saved) {
       try {
         return JSON.parse(saved);
-      } catch (e) {}
+      } catch (e) { }
     }
     return createEmptyProfileData().goals;
   });
@@ -111,7 +117,7 @@ export default function App() {
     if (saved) {
       try {
         return JSON.parse(saved);
-      } catch (e) {}
+      } catch (e) { }
     }
     return createEmptyProfileData().risk;
   });
@@ -122,7 +128,7 @@ export default function App() {
     if (saved) {
       try {
         return JSON.parse(saved);
-      } catch (e) {}
+      } catch (e) { }
     }
     return null;
   });
@@ -132,7 +138,7 @@ export default function App() {
     if (saved) {
       try {
         return JSON.parse(saved);
-      } catch (e) {}
+      } catch (e) { }
     }
     return [];
   });
@@ -379,6 +385,11 @@ export default function App() {
         onLoadSample={handleLoadSample}
         isDarkMode={isDarkMode}
         onToggleTheme={() => setIsDarkMode(!isDarkMode)}
+        onLockApp={() => {
+          localStorage.removeItem("finplan_access_granted");
+          setIsLocked(true);
+          showToast("Aplikasi FinPlan berhasil dikunci.");
+        }}
         hasPlan={!!planResult}
         hasGeneratedPlan={!!planResult}
       />
@@ -627,6 +638,16 @@ export default function App() {
         onClose={() => setIsEducationOpen(false)}
         onAskAI={() => setIsAIChatOpen(true)}
       />
+
+      {/* Security Gate Password Modal */}
+      {isLocked && (
+        <AuthGateModal
+          onUnlock={() => {
+            setIsLocked(false);
+            showToast("Akses FinPlan berhasil dibuka!");
+          }}
+        />
+      )}
     </div>
   );
 }

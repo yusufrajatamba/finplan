@@ -175,6 +175,17 @@ export const Header: React.FC<HeaderProps> = ({
             >
               {isDarkMode ? <Sun className="w-3.5 h-3.5 text-amber-300" /> : <Moon className="w-3.5 h-3.5" />}
             </button>
+
+            {/* Lock App Security Button */}
+            {onLockApp && (
+              <button
+                onClick={onLockApp}
+                className="p-1 rounded-md text-blue-200 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                title="Kunci Akses FinPlan (Logout)"
+              >
+                <Lock className="w-3.5 h-3.5 text-blue-200" />
+              </button>
+            )}
           </div>
         </div>
       </div>

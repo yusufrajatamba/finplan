@@ -65,6 +65,66 @@ async function tryGenerateWithModels(
   return null;
 }
 
+// ─── Vercel AI Gateway Client ──────────────────────────────────────────────────
+
+async function tryGenerateWithAIGateway(
+  messages: Array<{ role: string; content: string }>,
+  systemInstruction?: string
+): Promise<string | null> {
+  const gatewayKey = process.env.AI_GATEWAY_KEY || process.env.VERCEL_AI_GATEWAY_KEY;
+  if (!gatewayKey || gatewayKey.trim() === "") return null;
+
+  const formattedMessages: Array<{ role: string; content: string }> = [];
+  if (systemInstruction) {
+    formattedMessages.push({ role: "system", content: systemInstruction });
+  }
+  for (const m of messages) {
+    formattedMessages.push({
+      role: m.role === "model" || m.role === "assistant" ? "assistant" : "user",
+      content: m.content,
+    });
+  }
+
+  const endpoints = [
+    {
+      url: "https://ai-gateway.vercel.sh/v1/chat/completions",
+      models: ["google/gemini-2.0-flash", "google/gemini-1.5-flash", "openai/gpt-4o-mini"],
+    },
+    {
+      url: "https://gateway.ai.cloudflare.com/v1/chat/completions",
+      models: ["google/gemini-2.0-flash", "openai/gpt-4o-mini"],
+    },
+  ];
+
+  for (const ep of endpoints) {
+    for (const model of ep.models) {
+      try {
+        const res = await fetch(ep.url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${gatewayKey}`,
+          },
+          body: JSON.stringify({
+            model,
+            messages: formattedMessages,
+            temperature: 0.7,
+          }),
+        });
+
+        if (res.ok) {
+          const data = (await res.json()) as any;
+          const reply = data?.choices?.[0]?.message?.content;
+          if (reply && typeof reply === "string") return reply;
+        }
+      } catch {
+        // Try next endpoint/model
+      }
+    }
+  }
+  return null;
+}
+
 // ─── Deterministic CFP Financial Plan Engine ──────────────────────────────────
 
 function generateDeterministicFinancialPlan(data: any) {
@@ -329,6 +389,22 @@ Hasilkan respons dalam format JSON sesuai schema yang ditentukan.`;
     }
   }
 
+  // Try Vercel AI Gateway fallback
+  const gatewayText = await tryGenerateWithAIGateway(
+    [{ role: "user", content: prompt }],
+    "You are a Certified Financial Planner (CFP) in Indonesia. You must respond in valid JSON matching the exact schema."
+  );
+
+  if (gatewayText) {
+    try {
+      const cleaned = gatewayText.replace(/```json/g, "").replace(/```/g, "").trim();
+      const parsed = JSON.parse(cleaned);
+      if (parsed?.healthScore && parsed?.monthlyBudgetRecommendation && parsed?.ojkRatios) {
+        return parsed;
+      }
+    } catch {}
+  }
+
   return generateDeterministicFinancialPlan(userPayload);
 }
 
@@ -418,6 +494,14 @@ PANDUAN MENJAWAB SEBAGAI CFP PROFESIONAL:
         systemInstruction,
         temperature: 0.7,
       });
+      if (text) replyText = text;
+    }
+
+    if (!replyText && geminiContents.length > 0) {
+      const text = await tryGenerateWithAIGateway(
+        geminiContents.map((g) => ({ role: g.role, content: g.parts[0].text })),
+        systemInstruction
+      );
       if (text) replyText = text;
     }
 

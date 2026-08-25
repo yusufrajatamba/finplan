@@ -54,6 +54,7 @@ import {
   calculateMarginOfSafety,
   calculateExpectedNetWorth,
   calculateRuleOf25x,
+  generateDeterministicFinancialPlan,
 } from "../utils/financialCalculations";
 import { PosKeuanganTable } from "./PosKeuanganTable";
 import { RoadmapPertahunDetail } from "./RoadmapPertahunDetail";
@@ -76,7 +77,7 @@ interface StepRencanaKeuanganProps {
 }
 
 export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
-  plan,
+  plan: propPlan,
   profile,
   cashflow,
   goals,
@@ -89,6 +90,17 @@ export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
   onOpenAIChat,
   onPrev,
 }) => {
+  // Always guarantee a complete, non-null plan by computing deterministic plan as fallback
+  const plan: FinancialPlanResult =
+    propPlan ||
+    generateDeterministicFinancialPlan({
+      profile,
+      cashflow,
+      career,
+      goals,
+      risk,
+    });
+
   const [activeMode, setActiveMode] = useState<"ai_plan" | "manual_calc">("ai_plan");
   const [budgetModelView, setBudgetModelView] = useState<"spreadsheet_9pos" | "macro_5pos">("spreadsheet_9pos");
   

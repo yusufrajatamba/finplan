@@ -189,23 +189,39 @@ export default function App() {
     }, 4000);
   };
 
-  // Reset to brand new profile
-  const handleCreateNewProfile = (newFullName: string, keepStructure = false) => {
-    const emptyData = createEmptyProfileData();
-    emptyData.profile.fullName = newFullName;
+  // Reset to brand new profile or load chosen starter template
+  const handleConfirmCreateNew = (params: {
+    name: string;
+    starterType: "empty" | "sample";
+    sampleData?: SampleProfileData;
+  }) => {
+    if (params.starterType === "sample" && params.sampleData) {
+      handleLoadSample(params.sampleData);
+    } else {
+      const emptyData = createEmptyProfileData();
+      emptyData.profile.fullName = params.name;
 
-    setProfile(emptyData.profile);
-    setCashflow(emptyData.cashflow);
-    setCareer(emptyData.career);
-    setGoals(emptyData.goals);
-    setRisk(emptyData.risk);
-    setPlanResult(null);
+      setProfile(emptyData.profile);
+      setCashflow(emptyData.cashflow);
+      setCareer(emptyData.career);
+      setGoals(emptyData.goals);
+      setRisk(emptyData.risk);
 
-    setIsLandingPage(false);
-    setCurrentStep("data_diri");
-    setIsNewProfileModalOpen(false);
-    showToast(`Profil baru "${newFullName}" berhasil dibuat.`);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+      const instantPlan = generateDeterministicFinancialPlan({
+        profile: emptyData.profile,
+        cashflow: emptyData.cashflow,
+        career: emptyData.career,
+        goals: emptyData.goals,
+        risk: emptyData.risk,
+      });
+      setPlanResult(instantPlan);
+
+      setIsLandingPage(false);
+      setCurrentStep("data_diri");
+      setIsNewProfileModalOpen(false);
+      showToast(`Profil baru "${params.name}" berhasil dibuat.`);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   // Load sample profile
@@ -598,13 +614,6 @@ export default function App() {
         onAddNewProfile={() => setIsNewProfileModalOpen(true)}
       />
 
-      <NewProfileModal
-        isOpen={isNewProfileModalOpen}
-        onClose={() => setIsNewProfileModalOpen(false)}
-        currentProfileName={profile.fullName}
-        onConfirmCreateNew={handleCreateNewProfile}
-      />
-
       <PostSaveModal
         isOpen={isPostSaveModalOpen}
         onClose={() => setIsPostSaveModalOpen(false)}
@@ -635,6 +644,14 @@ export default function App() {
         isOpen={isEducationOpen}
         onClose={() => setIsEducationOpen(false)}
         onAskAI={() => setIsAIChatOpen(true)}
+      />
+
+      {/* New Profile Creation Modal */}
+      <NewProfileModal
+        isOpen={isNewProfileModalOpen}
+        onClose={() => setIsNewProfileModalOpen(false)}
+        currentProfileName={profile.fullName}
+        onConfirmCreateNew={handleConfirmCreateNew}
       />
 
       {/* Lock Session Prompt Modal */}

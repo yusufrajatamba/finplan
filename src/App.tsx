@@ -12,12 +12,13 @@ import {
 import { sampleProfiles, createEmptyProfileData, SampleProfileData } from "./data/sampleProfiles";
 import { Header } from "./components/Header";
 import { MarketInsightsBanner } from "./components/MarketInsightsBanner";
+import { LandingPage } from "./components/LandingPage";
 import { StepDataDiri } from "./components/StepDataDiri";
 import { StepProfileKeuangan } from "./components/StepProfileKeuangan";
 import { StepProfileKarier } from "./components/StepProfileKarier";
 import { StepGoals } from "./components/StepGoals";
-import { StepTeoriKeuangan } from "./components/StepTeoriKeuangan";
 import { StepProfilRisiko } from "./components/StepProfilRisiko";
+import { StepTeoriKeuangan } from "./components/StepTeoriKeuangan";
 import { StepRencanaKeuangan } from "./components/StepRencanaKeuangan";
 
 import { HistoryModal } from "./components/HistoryModal";
@@ -26,19 +27,12 @@ import { CalculatorsModal } from "./components/CalculatorsModal";
 import { EducationModal } from "./components/EducationModal";
 import { NewProfileModal } from "./components/NewProfileModal";
 import { PostSaveModal } from "./components/PostSaveModal";
-import { generateFinancialPlanPDF } from "./utils/pdfExport";
 import { LoadingPlanScreen } from "./components/LoadingPlanScreen";
-import { AuthGateModal } from "./components/AuthGateModal";
+import { generateFinancialPlanPDF } from "./utils/pdfExport";
 import { generateDeterministicFinancialPlan } from "./utils/financialCalculations";
-
-import { Bot, AlertCircle, RefreshCw, CheckCircle2 } from "lucide-react";
+import { CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
 
 export default function App() {
-  // Authentication gatekeeper state (Password: finfreedom2026!)
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    return localStorage.getItem("finplan_access_granted") === "true";
-  });
-
   // Theme state
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     return (
@@ -57,7 +51,10 @@ export default function App() {
     }
   }, [isDarkMode]);
 
-  // Active step
+  // Landing page vs Wizard view state
+  const [isLandingPage, setIsLandingPage] = useState<boolean>(true);
+
+  // Active wizard step
   const [currentStep, setCurrentStep] = useState<WizardStep>("data_diri");
 
   // Modal open states
@@ -70,57 +67,58 @@ export default function App() {
 
   // User input states with localStorage persistence
   const [profile, setProfile] = useState<UserProfile>(() => {
-    const saved = localStorage.getItem("user_profile_data_v2");
+    const saved = localStorage.getItem("user_profile_data_v3");
     if (saved) {
       try {
         return JSON.parse(saved);
       } catch (e) {}
     }
-    return sampleProfiles[0].profile;
+    return createEmptyProfileData().profile;
   });
 
   const [cashflow, setCashflow] = useState<CashflowData>(() => {
-    const saved = localStorage.getItem("user_cashflow_data_v2");
+    const saved = localStorage.getItem("user_cashflow_data_v3");
     if (saved) {
       try {
         return JSON.parse(saved);
       } catch (e) {}
     }
-    return sampleProfiles[0].cashflow;
+    return createEmptyProfileData().cashflow;
   });
 
   const [career, setCareer] = useState<CareerProfile>(() => {
-    const saved = localStorage.getItem("user_career_data_v2");
+    const saved = localStorage.getItem("user_career_data_v3");
     if (saved) {
       try {
         return JSON.parse(saved);
       } catch (e) {}
     }
-    return sampleProfiles[0].career;
+    return createEmptyProfileData().career;
   });
 
   const [goals, setGoals] = useState<TargetGoalsData>(() => {
-    const saved = localStorage.getItem("user_goals_data_v2");
+    const saved = localStorage.getItem("user_goals_data_v3");
     if (saved) {
       try {
         return JSON.parse(saved);
       } catch (e) {}
     }
-    return sampleProfiles[0].goals;
+    return createEmptyProfileData().goals;
   });
 
   const [risk, setRisk] = useState<RiskProfileData>(() => {
-    const saved = localStorage.getItem("user_risk_data_v2");
+    const saved = localStorage.getItem("user_risk_data_v3");
     if (saved) {
       try {
         return JSON.parse(saved);
       } catch (e) {}
     }
-    return sampleProfiles[0].risk;
+    return createEmptyProfileData().risk;
   });
 
+  // Generated Plan & History states
   const [planResult, setPlanResult] = useState<FinancialPlanResult | null>(() => {
-    const saved = localStorage.getItem("user_plan_result_v2");
+    const saved = localStorage.getItem("user_plan_result_v3");
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -129,9 +127,8 @@ export default function App() {
     return null;
   });
 
-  // History records state
   const [history, setHistory] = useState<ProfilingHistoryRecord[]>(() => {
-    const saved = localStorage.getItem("user_profiling_history_v2");
+    const saved = localStorage.getItem("user_profiling_history_v3");
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -140,120 +137,93 @@ export default function App() {
     return [];
   });
 
-  // Status & Notification state
-  const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  // UI state
+  const [isGeneratingPlan, setIsGeneratingPlan] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 3500);
-  };
-
-  // Sync to localStorage
+  // Sync states to LocalStorage
   useEffect(() => {
-    localStorage.setItem("user_profile_data_v2", JSON.stringify(profile));
+    localStorage.setItem("user_profile_data_v3", JSON.stringify(profile));
   }, [profile]);
 
   useEffect(() => {
-    localStorage.setItem("user_cashflow_data_v2", JSON.stringify(cashflow));
+    localStorage.setItem("user_cashflow_data_v3", JSON.stringify(cashflow));
   }, [cashflow]);
 
   useEffect(() => {
-    localStorage.setItem("user_career_data_v2", JSON.stringify(career));
+    localStorage.setItem("user_career_data_v3", JSON.stringify(career));
   }, [career]);
 
   useEffect(() => {
-    localStorage.setItem("user_goals_data_v2", JSON.stringify(goals));
+    localStorage.setItem("user_goals_data_v3", JSON.stringify(goals));
   }, [goals]);
 
   useEffect(() => {
-    localStorage.setItem("user_risk_data_v2", JSON.stringify(risk));
+    localStorage.setItem("user_risk_data_v3", JSON.stringify(risk));
   }, [risk]);
 
   useEffect(() => {
     if (planResult) {
-      localStorage.setItem("user_plan_result_v2", JSON.stringify(planResult));
+      localStorage.setItem("user_plan_result_v3", JSON.stringify(planResult));
     }
   }, [planResult]);
 
   useEffect(() => {
-    localStorage.setItem("user_profiling_history_v2", JSON.stringify(history));
+    localStorage.setItem("user_profiling_history_v3", JSON.stringify(history));
   }, [history]);
 
+  // Toast auto-hide
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 4000);
+  };
+
+  // Reset to brand new profile
+  const handleCreateNewProfile = (newFullName: string, keepStructure = false) => {
+    const emptyData = createEmptyProfileData();
+    emptyData.profile.fullName = newFullName;
+
+    setProfile(emptyData.profile);
+    setCashflow(emptyData.cashflow);
+    setCareer(emptyData.career);
+    setGoals(emptyData.goals);
+    setRisk(emptyData.risk);
+    setPlanResult(null);
+
+    setIsLandingPage(false);
+    setCurrentStep("data_diri");
+    setIsNewProfileModalOpen(false);
+    showToast(`Profil baru "${newFullName}" berhasil dibuat.`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   // Load sample profile
-  const handleLoadSample = (sample: (typeof sampleProfiles)[0]) => {
+  const handleLoadSample = (sample: SampleProfileData) => {
     setProfile(sample.profile);
     setCashflow(sample.cashflow);
     setCareer(sample.career);
     setGoals(sample.goals);
     setRisk(sample.risk);
-    setPlanResult(null);
-    setCurrentStep("data_diri");
-    showToast(`Memuat template profil: ${sample.title}`);
+
+    const instantPlan = generateDeterministicFinancialPlan({
+      profile: sample.profile,
+      cashflow: sample.cashflow,
+      career: sample.career,
+      goals: sample.goals,
+      risk: sample.risk,
+    });
+    setPlanResult(instantPlan);
+
+    setIsLandingPage(false);
+    setCurrentStep("rencana");
+    showToast(`Contoh profil "${sample.name}" berhasil dimuat.`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Create new profile for another person
-  const handleCreateNewProfile = ({
-    name,
-    starterType,
-    sampleData,
-  }: {
-    name: string;
-    starterType: "empty" | "sample";
-    sampleData?: SampleProfileData;
-  }) => {
-    // If there is an existing plan and not yet in history, auto-archive it so no previous work is lost
-    if (planResult) {
-      const alreadySaved = history.some(
-        (h) =>
-          h.profile.fullName === profile.fullName &&
-          h.date.slice(0, 10) === new Date().toISOString().slice(0, 10)
-      );
-      if (!alreadySaved) {
-        const autoArchive: ProfilingHistoryRecord = {
-          id: `hist_${Date.now()}`,
-          date: new Date().toISOString(),
-          title: `${profile.fullName || "User Sebelumnya"} (${risk.profileType})`,
-          profile,
-          cashflow,
-          career,
-          goals,
-          risk,
-          planResult,
-        };
-        setHistory((prev) => [autoArchive, ...prev]);
-      }
-    }
-
-    if (starterType === "sample" && sampleData) {
-      setProfile({
-        ...sampleData.profile,
-        fullName: name || sampleData.profile.fullName,
-      });
-      setCareer(sampleData.career);
-      setCashflow(sampleData.cashflow);
-      setGoals(sampleData.goals);
-      setRisk(sampleData.risk);
-    } else {
-      const empty = createEmptyProfileData(name);
-      setProfile(empty.profile);
-      setCareer(empty.career);
-      setCashflow(empty.cashflow);
-      setGoals(empty.goals);
-      setRisk(empty.risk);
-    }
-
-    setPlanResult(null);
-    setCurrentStep("data_diri");
-    showToast(`Memulai sesi profiling untuk ${name || "orang baru"}!`);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  // Generate Plan via Server Endpoint (Gemini + CFP Fallback)
+  // Handle plan generation (Calling backend or local deterministic fallback)
   const handleGenerateAIPlan = async () => {
     setIsGeneratingPlan(true);
     setCurrentStep("loading_plan");
@@ -361,6 +331,7 @@ export default function App() {
     setGoals(record.goals);
     setRisk(record.risk);
     setPlanResult(record.planResult);
+    setIsLandingPage(false);
     setCurrentStep("rencana");
     showToast("Snapshot riwayat berhasil dimuat!");
   };
@@ -378,17 +349,25 @@ export default function App() {
       {/* Main Header with Step Nav & Tool Buttons */}
       <Header
         currentStep={currentStep}
+        isLandingPage={isLandingPage}
+        onGoHome={() => {
+          setIsLandingPage(true);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
         onSelectStep={(step) => {
+          setIsLandingPage(false);
           setCurrentStep(step);
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
         onStepClick={(step) => {
+          setIsLandingPage(false);
           setCurrentStep(step);
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
         onOpenHistory={() => setIsHistoryOpen(true)}
         onOpenNewProfile={() => setIsNewProfileModalOpen(true)}
         onOpenTeori={() => {
+          setIsLandingPage(false);
           setCurrentStep("teori");
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
@@ -402,18 +381,14 @@ export default function App() {
         onToggleTheme={() => setIsDarkMode(!isDarkMode)}
         hasPlan={!!planResult}
         hasGeneratedPlan={!!planResult}
-        onLockApp={() => {
-          localStorage.removeItem("finplan_access_granted");
-          setIsAuthenticated(false);
-        }}
       />
 
       {/* Main App Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-5 sm:space-y-6">
         {/* Toast Notification */}
         {toastMessage && (
-          <div className="fixed top-20 right-6 z-50 p-4 rounded-2xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xl border border-slate-700/50 text-xs font-semibold flex items-center space-x-2 animate-in slide-in-from-top duration-200">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 dark:text-emerald-600" />
+          <div className="fixed top-16 sm:top-20 right-3 left-3 sm:left-auto sm:right-6 max-w-md z-50 p-3 sm:p-4 rounded-2xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xl border border-slate-700/50 text-xs font-semibold flex items-center space-x-2 animate-in slide-in-from-top duration-200">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400 dark:text-emerald-600 shrink-0" />
             <span>{toastMessage}</span>
           </div>
         )}
@@ -428,7 +403,7 @@ export default function App() {
             </div>
             <button
               onClick={() => handleGenerateAIPlan()}
-              className="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-semibold flex items-center space-x-1"
+              className="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-semibold flex items-center space-x-1 cursor-pointer"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Coba Lagi</span>
@@ -436,143 +411,173 @@ export default function App() {
           </div>
         )}
 
-        {/* STEP 1: Data Diri */}
-        {currentStep === "data_diri" && (
-          <StepDataDiri
-            profile={profile}
-            onChange={setProfile}
-            onAddNewProfile={() => setIsNewProfileModalOpen(true)}
-            onNext={() => {
-              setCurrentStep("arus_kas");
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-          />
-        )}
-
-        {/* STEP 2: Profile Keuangan (Arus Kas, Pengeluaran & Aset) */}
-        {currentStep === "arus_kas" && (
-          <StepProfileKeuangan
-            cashflow={cashflow}
-            onChange={setCashflow}
-            onNext={() => {
-              setCurrentStep("karier");
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-            onPrev={() => {
+        {/* ─── CONDITIONAL SCREEN: LANDING GATEWAY vs WIZARD ─── */}
+        {isLandingPage ? (
+          <LandingPage
+            onStartPlanning={() => {
+              setIsLandingPage(false);
               setCurrentStep("data_diri");
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-          />
-        )}
-
-        {/* STEP 3: Profile Karier & Pekerjaan */}
-        {currentStep === "karier" && (
-          <StepProfileKarier
-            career={career}
-            onChange={setCareer}
-            hasPartner={profile.maritalStatus === "Menikah"}
-            onNext={() => {
-              setCurrentStep("goals");
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-            onPrev={() => {
-              setCurrentStep("arus_kas");
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-          />
-        )}
-
-        {/* STEP 4: Target & Goals Impian */}
-        {currentStep === "goals" && (
-          <StepGoals
-            goals={goals}
-            cashflow={cashflow}
-            profile={profile}
-            onChange={setGoals}
-            onNext={() => {
-              setCurrentStep("teori");
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-            onPrev={() => {
-              setCurrentStep("karier");
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-          />
-        )}
-
-        {/* STEP 5: Teori Keuangan & Standar OJK */}
-        {currentStep === "teori" && (
-          <StepTeoriKeuangan
-            cashflow={cashflow}
-            profile={profile}
-            onNext={() => {
-              setCurrentStep("profil_risiko");
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-            onPrev={() => {
-              setCurrentStep("goals");
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-          />
-        )}
-
-        {/* LOADING: Generating Plan */}
-        {currentStep === "loading_plan" && (
-          <LoadingPlanScreen profileName={profile.fullName} />
-        )}
-
-        {/* STEP 6: Profil Risiko */}
-        {currentStep === "profil_risiko" && (
-          <StepProfilRisiko
-            riskData={risk}
-            onChange={setRisk}
-            onNext={() => {
-              handleGenerateAIPlan();
-            }}
-            onPrev={() => {
-              setCurrentStep("teori");
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-          />
-        )}
-
-        {/* STEP 7 & 8: Rencana Keuangan Komprehensif */}
-        {currentStep === "rencana" && (
-          <StepRencanaKeuangan
-            plan={planResult}
-            profile={profile}
-            cashflow={cashflow}
-            goals={goals}
-            career={career}
-            risk={risk}
-            isLoadingAI={isGeneratingPlan}
-            onGenerateAIPlan={handleGenerateAIPlan}
-            onSaveToHistory={handleSaveToHistory}
-            onAddNewProfile={() => setIsNewProfileModalOpen(true)}
+            onOpenEducation={() => setIsEducationOpen(true)}
+            onOpenCalculators={() => setIsCalculatorsOpen(true)}
             onOpenAIChat={() => setIsAIChatOpen(true)}
-            onPrev={() => {
-              setCurrentStep("profil_risiko");
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
           />
+        ) : (
+          <>
+            {/* STEP 1: Data Diri */}
+            {currentStep === "data_diri" && (
+              <StepDataDiri
+                profile={profile}
+                onChange={setProfile}
+                onAddNewProfile={() => setIsNewProfileModalOpen(true)}
+                onNext={() => {
+                  setCurrentStep("arus_kas");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              />
+            )}
+
+            {/* STEP 2: Profile Keuangan (Arus Kas, Pengeluaran & Aset) */}
+            {currentStep === "arus_kas" && (
+              <StepProfileKeuangan
+                cashflow={cashflow}
+                onChange={setCashflow}
+                onNext={() => {
+                  setCurrentStep("karier");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                onPrev={() => {
+                  setCurrentStep("data_diri");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              />
+            )}
+
+            {/* STEP 3: Profile Karier & Pekerjaan */}
+            {currentStep === "karier" && (
+              <StepProfileKarier
+                career={career}
+                onChange={setCareer}
+                hasPartner={profile.maritalStatus === "Menikah"}
+                onNext={() => {
+                  setCurrentStep("goals");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                onPrev={() => {
+                  setCurrentStep("arus_kas");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              />
+            )}
+
+            {/* STEP 4: Target & Goals Impian */}
+            {currentStep === "goals" && (
+              <StepGoals
+                goals={goals}
+                cashflow={cashflow}
+                profile={profile}
+                onChange={setGoals}
+                onNext={() => {
+                  setCurrentStep("profil_risiko");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                onPrev={() => {
+                  setCurrentStep("karier");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              />
+            )}
+
+            {/* STEP 5: Profil Risiko (Sekarang Step 5) */}
+            {currentStep === "profil_risiko" && (
+              <StepProfilRisiko
+                riskData={risk}
+                onChange={setRisk}
+                onNext={() => {
+                  setCurrentStep("teori");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                onPrev={() => {
+                  setCurrentStep("goals");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              />
+            )}
+
+            {/* STEP 6: Evaluasi Rasio Keuangan & Standar OJK (Sekarang Step 6) */}
+            {currentStep === "teori" && (
+              <StepTeoriKeuangan
+                cashflow={cashflow}
+                profile={profile}
+                onNext={() => {
+                  handleGenerateAIPlan();
+                }}
+                onPrev={() => {
+                  setCurrentStep("profil_risiko");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              />
+            )}
+
+            {/* LOADING: Generating Plan */}
+            {currentStep === "loading_plan" && (
+              <LoadingPlanScreen profileName={profile.fullName} />
+            )}
+
+            {/* STEP 7: Rencana Keuangan Komprehensif */}
+            {currentStep === "rencana" && (
+              <StepRencanaKeuangan
+                plan={planResult}
+                profile={profile}
+                cashflow={cashflow}
+                goals={goals}
+                career={career}
+                risk={risk}
+                isLoadingAI={isGeneratingPlan}
+                onGenerateAIPlan={handleGenerateAIPlan}
+                onSaveToHistory={handleSaveToHistory}
+                onAddNewProfile={() => setIsNewProfileModalOpen(true)}
+                onOpenAIChat={() => setIsAIChatOpen(true)}
+                onPrev={() => {
+                  setCurrentStep("teori");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              />
+            )}
+          </>
         )}
       </main>
 
-      {/* Floating Action Button for AI Advisor Chat */}
-      <div className="fixed bottom-6 right-6 z-40">
-        <button
-          id="btn-floating-advisor"
-          onClick={() => setIsAIChatOpen(true)}
-          className="flex items-center space-x-2.5 px-5 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-xl shadow-emerald-600/30 hover:scale-105 active:scale-95 transition-all font-bold cursor-pointer"
-        >
-          <Bot className="w-5 h-5" />
-          <span className="text-xs hidden sm:inline">Tanya AI CFP Advisor</span>
-          <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-          </span>
-        </button>
-      </div>
+      {/* Corporate Banking Footer */}
+      <footer className="mt-12 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 px-4 sm:px-6 lg:px-8 text-xs text-slate-500 dark:text-slate-400">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <div
+            className="flex items-center space-x-3 cursor-pointer group"
+            onClick={() => {
+              setIsLandingPage(true);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
+            <div className="w-7 h-7 rounded-lg bg-[#0055B8] group-hover:bg-[#0047BA] flex items-center justify-center font-black text-white text-xs shadow-inner transition-colors">
+              FP
+            </div>
+            <div>
+              <span className="font-extrabold text-slate-800 dark:text-white block text-sm group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                FinPlan Indonesia
+              </span>
+              <span className="text-[11px] text-slate-400">
+                Solusi Perencanaan Finansial Mandiri Berstandar Certified Financial Planner (CFP®) & OJK
+              </span>
+            </div>
+          </div>
+
+          <div className="text-center md:text-right text-[11px] text-slate-400 space-y-1">
+            <p>🔒 Data tersimpan aman di peramban lokal Anda tanpa login server pihak ketiga.</p>
+            <p>© 2026 FinPlan Advisory Indonesia. Seluruh hak cipta dilindungi.</p>
+          </div>
+        </div>
+      </footer>
 
       {/* Modals for Profiling & Education */}
       <HistoryModal
@@ -622,11 +627,6 @@ export default function App() {
         onClose={() => setIsEducationOpen(false)}
         onAskAI={() => setIsAIChatOpen(true)}
       />
-
-      {/* Static Password Protection Gate (finfreedom2026!) */}
-      {!isAuthenticated && (
-        <AuthGateModal onUnlock={() => setIsAuthenticated(true)} />
-      )}
     </div>
   );
 }

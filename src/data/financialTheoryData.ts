@@ -1,18 +1,12 @@
 /**
- * Financial Theory Data — Expanded with Source Citations
- * Covers OJK (Indonesia), Bank Indonesia, FPSB, CFP Indonesia,
- * and international financial gurus.
- *
- * Sources:
- * - OJK: https://ojk.go.id/id/kanal/edukasi-dan-perlindungan-konsumen
- * - Bank Indonesia: https://www.bi.go.id/id/edukasi
- * - FPSB: https://fpsb.org/
- * - CFP Indonesia: https://fpaindonesia.or.id/
- * - Sikapiuangmu OJK: https://sikapiuangmu.ojk.go.id
+ * Financial Theory Data — Synthesis of 10 Global Masters & OJK Indonesia
+ * Covers OJK (Indonesia), Bank Indonesia, FPSB/CFP Indonesia,
+ * and the 10 Ranked Global Financial Thinkers.
  */
 
 export interface FinancialGuruTheory {
   id: string;
+  rank?: number;
   author: string;
   nationality: string;
   role: string;
@@ -25,6 +19,38 @@ export interface FinancialGuruTheory {
   sources: Array<{ label: string; url: string }>;
   bookOrWork?: string;
   yearPublished?: string;
+  categoryTag?: "Mindset" | "Sistem" | "Kepatuhan" | "Investasi" | "Proteksi" | "Filosofi Hidup";
+}
+
+export interface FinancialUniversitySemester {
+  semester: number;
+  semesterName: string;
+  bookTitle: string;
+  author: string;
+  category: string;
+  focusTopics: string[];
+  keyQuestion: string;
+  readingAdvice: string;
+  sourceUrl?: string;
+}
+
+export interface FamilyFinancialRule {
+  ruleNumber: number;
+  title: string;
+  principle: string;
+  guruInfluence: string;
+  practicalAction: string;
+}
+
+export interface FiveLayerHierarchyItem {
+  layer: number;
+  name: string;
+  subtitle: string;
+  targetPercentRange: string;
+  color: string;
+  itemsIncluded: string[];
+  ojkGuideline: string;
+  guruPhilosophy: string;
 }
 
 export interface OJKFinancialStandard {
@@ -52,528 +78,705 @@ export interface LocalTheory {
   year: string;
 }
 
-// ─── International Financial Gurus ───────────────────────────────────────────
+// ─── 10 Ranked Financial Masters (Keluarga & Personal Wealth) ─────────────────
 
 export const financialGurusTheories: FinancialGuruTheory[] = [
   {
-    id: "warren_buffett",
-    author: "Warren Buffett",
-    nationality: "Amerika Serikat",
-    role: "Chairman & CEO Berkshire Hathaway, Investor Terkaya ke-6 Dunia",
-    title: "Aturan No. 1: Jangan Pernah Kehilangan Uang & Pay Yourself First",
-    quote:
-      "Rule No. 1: Never lose money. Rule No. 2: Never forget Rule No. 1. Jangan menabung apa yang tersisa setelah belanja — belanjakan apa yang tersisa setelah menabung.",
-    coreRule: "Pay Yourself First & Margin of Safety",
-    explanation:
-      "Buffett menekankan bahwa kekayaan besar dibangun melalui kebiasaan menyisihkan uang di awal (bukan di akhir bulan), menjaga cadangan kas tunai yang cukup agar tidak terpaksa menjual aset saat pasar jatuh, serta berinvestasi pada instrumen berfundamental kuat dengan 'Margin of Safety'.",
-    keyTakeaways: [
-      "Autodebet tabungan & investasi langsung pada H+1 setelah gajian.",
-      "Miliki 'Dry Powder' (dana kas likuid) agar bisa memanfaatkan diskon pasar saham.",
-      "Gunakan strategi Dollar Cost Averaging (DCA) pada instrumen indeks (IDX30 / S&P500).",
-      "Hindari utang konsumtif kartu kredit berbunga tinggi seperti wabah penyakit.",
-    ],
-    applicabilityIndonesia:
-      "Di Indonesia, terapkan dengan menyisihkan minimal 20-30% penghasilan ke RDPU atau SBN Ritel segera setelah tanggal transfer gaji. Gunakan fitur autodebet di aplikasi Bibit atau Bareksa.",
-    sources: [
-      { label: "Berkshire Hathaway Annual Letters", url: "https://www.berkshirehathaway.com/letters/letters.html" },
-      { label: "Warren Buffett's Biography – The Snowball", url: "https://www.goodreads.com/book/show/2054761.The_Snowball" },
-    ],
-    bookOrWork: "The Snowball: Warren Buffett and the Business of Life",
-    yearPublished: "2008",
-  },
-  {
-    id: "elizabeth_warren",
-    author: "Elizabeth Warren & Amelia Warren Tyagi",
-    nationality: "Amerika Serikat",
-    role: "Pakar Hukum Keuangan Harvard & Senator AS — Penggagas Aturan 50/30/20",
-    title: "Metode Alokasi Anggaran Seimbang 50/30/20",
-    quote:
-      "Anggaran bukanlah penjara yang membatasi kesenangan, melainkan peta jalan yang memberi izin untuk menikmati hidup tanpa rasa bersalah.",
-    coreRule: "50% Kebutuhan (Needs) + 30% Keinginan (Wants) + 20% Tabungan/Investasi (Savings)",
-    explanation:
-      "Aturan 50/30/20 membagi pemasukan bersih menjadi 3 pos utama yang tegas. 50% untuk kebutuhan mutlak (makan pokok, sewa, tagihan listrik, cicilan wajib), 30% untuk gaya hidup dan rekreasi terukur, serta 20% wajib untuk dana darurat dan akumulasi aset masa depan.",
-    keyTakeaways: [
-      "Kebutuhan Pokok (Needs) maksimal 50% dari total penghasilan.",
-      "Keinginan & Lifestyle (Wants) dibatasi maksimal 30% agar tidak bocor halus.",
-      "Tabungan & Investasi (Savings) minimal 20% untuk pertumbuhan kekayaan bersih.",
-      "Jika ada cicilan utang konsumtif, pangkas pos Wants untuk mempercepat pelunasan.",
-    ],
-    applicabilityIndonesia:
-      "Sangat relevan untuk kelas pekerja perkotaan di Indonesia. Jika biaya hidup tinggi (sandwich generation), modifikasi menjadi 50/20/25/5 (5% proteksi BPJS/asuransi). Cocok dipadukan dengan standar OJK DSR ≤30%.",
-    sources: [
-      { label: "All Your Worth: The Ultimate Lifetime Money Plan", url: "https://www.amazon.com/All-Your-Worth-Ultimate-Lifetime/dp/0743269888" },
-      { label: "CNBC: 50/30/20 Rule Explained", url: "https://www.cnbc.com/select/what-is-the-50-30-20-rule/" },
-    ],
-    bookOrWork: "All Your Worth: The Ultimate Lifetime Money Plan",
-    yearPublished: "2005",
-  },
-  {
     id: "morgan_housel",
+    rank: 1,
     author: "Morgan Housel",
     nationality: "Amerika Serikat",
-    role: "Partner Collaborative Fund & Penulis Buku Best-Seller 'The Psychology of Money'",
-    title: "Psikologi Uang: Kekayaan Adalah Apa yang Tidak Anda Lihat",
+    role: "Partner Collaborative Fund & Penulis 'The Psychology of Money'",
+    title: "Psikologi Uang: Wealth ≠ Income, Menemukan 'Enough' & Menghindari Kesalahan Fatal",
     quote:
-      "Menjadi kaya (wealthy) adalah memiliki pilihan, fleksibilitas, dan kebebasan waktu — bukan sekadar memamerkan barang mahal yang dibeli dengan utang.",
-    coreRule: "Ego Management, Savings Rate & Staying Wealthy",
+      "Mengelola uang dengan baik tidak banyak berhubungan dengan seberapa pintar Anda, melainkan bagaimana Anda berperilaku. Menjadi kaya adalah menjaga apa yang tidak terlihat.",
+    coreRule: "Perilaku > Rumus Rumit, Konsep 'Enough', dan Wealth Acceleration Index",
     explanation:
-      "Housel mengajarkan bahwa kesuksesan finansial 80% ditentukan oleh perilaku emosional (psikologi) dan hanya 20% pengetahuan matematis. Menekan ego dan rasa ingin pamer (*keeping up with the Joneses*) adalah tuas penghematan nomor satu.",
+      "Housel menekankan bahwa keberhasilan finansial 80% ditentukan oleh psikologi dan pengendalian ego, bukan sekadar formula matematika. Kunci membangun kekayaan bukan semata-mata 'bagaimana gaji saya naik', melainkan 'dari income yang masuk, berapa rupiah yang berhasil dikonversi menjadi aset produktif tanpa tergerus gaya hidup (lifestyle inflation)'.",
     keyTakeaways: [
-      "Savings Rate (tingkat tabungan) lebih krusial daripada sekadar mengejar return investasi tinggi.",
-      "Ruang untuk kesalahan (Room for Error): miliki dana darurat yang lebih dari cukup agar bisa tidur nyenyak.",
-      "Kekayaan sejati adalah aset produktif tak terlihat yang menghasilkan passive income, bukan tagihan barang mewah.",
-      "Kebutuhan Anda di masa depan mungkin berbeda drastis dari hari ini — jaga fleksibilitas finansial.",
+      "Wealth ≠ Income: Penghasilan tinggi tanpa tabungan hanyalah konsumsi tinggi, bukan kekayaan.",
+      "Konsep 'Enough': Sadari titik cukup agar kenaikan income menghasilkan percepatan surplus kas.",
+      "Kekuatan Waktu Compounding: Meniru Grace Groner — konsistensi kecil dalam waktu lama mengalahkan spekulasi.",
+      "Room for Error: Miliki dana darurat tebal agar tidak terpaksa menjual aset saat pasar jatuh.",
     ],
     applicabilityIndonesia:
-      "Pencegah efektif fenomena 'FOMO' gaya hidup media sosial dan jebakan paylater di kalangan generasi muda Indonesia. Relevan dengan budaya konsumtif Lebaran dan liburan akhir tahun.",
+      "Mencegah jebakan FOMO gaya hidup media sosial, paylater konsumtif, dan kebiasaan menaikkan gaya hidup secepat kenaikan gaji di kalangan keluarga muda Indonesia.",
     sources: [
-      { label: "The Psychology of Money (Morgan Housel, 2020)", url: "https://www.collaborativefund.com/blog/the-psychology-of-money/" },
-      { label: "Morgan Housel's Blog – Collaborative Fund", url: "https://www.collaborativefund.com/blog/" },
+      { label: "Collaborative Fund – The Psychology of Money", url: "https://collabfund.com/blog/the-psychology-of-money/" },
+      { label: "Getting Wealthy vs. Staying Wealthy", url: "https://collabfund.com/blog/getting-wealthy-vs-staying-wealthy/" },
     ],
-    bookOrWork: "The Psychology of Money",
+    bookOrWork: "The Psychology of Money (2020)",
     yearPublished: "2020",
+    categoryTag: "Mindset",
   },
   {
-    id: "dave_ramsey",
-    author: "Dave Ramsey",
+    id: "ramit_sethi",
+    rank: 2,
+    author: "Ramit Sethi",
     nationality: "Amerika Serikat",
-    role: "Pakar Pembebasan Utang, Host Podcast & Pencipta 7 Baby Steps",
-    title: "7 Baby Steps & Metode Bola Salju Utang (Debt Snowball)",
+    role: "Penulis 'I Will Teach You to Be Rich' & Pakar Sistem Cash Flow Otomatis",
+    title: "Sistem Otomasi Cash Flow & Definisi 'Rich Life' Personal",
     quote:
-      "Utang adalah beban terbesar penghalang kemerdekaan finansial. Bunuh utang terkecil terlebih dahulu untuk membangun momentum psikologis kemenangan.",
-    coreRule: "Debt Snowball Method & Zero Debt Lifestyle",
+      "Berhentilah merasa bersalah karena membeli kopi Rp 20.000. Bangun sistem otomatis sehingga uang Anda langsung bekerja untuk hal-hal besar yang benar-benar penting bagi keluarga Anda.",
+    coreRule: "Conscious Spending & 5-Layer Financial Hierarchy System",
     explanation:
-      "Ramsey menyarankan melunasi utang dari nominal saldo terkecil terlebih dahulu tanpa melihat suku bunga (Debt Snowball). Kemenangan melunasi 1 utang akan memberi dorongan psikologis dahsyat untuk menaklukkan utang berikutnya.",
+      "Ramit mengajarkan bahwa budgeting tidak boleh menyiksa keluarga. Daripada memperdebatkan pengeluaran remeh, bangun sistem transfer otomatis (autodebet) pada H+1 gajian. Definisikan 'Rich Life' keluarga Anda: tinggal serumah bersama pasangan, anak terjamin, orang tua terbantu, dan pensiun tanpa cemas.",
     keyTakeaways: [
-      "Baby Step 1: Kumpulkan Dana Darurat Pemula (Rp 5-10 Juta) secepat kilat.",
-      "Baby Step 2: Lunasi semua utang non-KPR dengan metode Debt Snowball.",
-      "Baby Step 3: Lengkapi Dana Darurat Penuh (3-6 bulan pengeluaran).",
-      "Baby Step 4: Investasikan 15% pendapatan ke dana pensiun jangka panjang.",
+      "Conscious Spending: Hemat ekstrem pada hal tidak penting, alokasikan berlimpah untuk hal berharga.",
+      "Sistem Otomasi: Hubungkan rekening penerima gaji langsung ke tabungan darurat, investasi, dan tagihan.",
+      "Hirarki Anggaran 5-Layer: Survival (≤50%) → Protection (5-10%) → Goals (10-15%) → Wealth (20-30%) → Enjoyment (5-10%).",
+      "Fokus pada 'Big Wins': Nego gaji, bebas utang berbunga tinggi, dan automasi investasi memberi dampak 1000× lebih besar dari sekadar memangkas kopi.",
     ],
     applicabilityIndonesia:
-      "Sangat ampuh untuk masyarakat yang terjerat multi-utang (pinjol, paylater, kartu kredit, KTA) agar memiliki arah pelunasan bertahap yang realistis. Sesuaikan Baby Step 1 dengan Rp 5 Juta minimum.",
+      "Terapkan dengan autodebet rekening gajian (BCA/Mandiri/BRI) ke RDPU Bibit/Bareksa dan autodebet premi BPJS/asuransi di awal bulan agar tidak ada rupiah yang tercecer.",
     sources: [
-      { label: "Dave Ramsey 7 Baby Steps", url: "https://www.ramseysolutions.com/dave-ramsey-7-baby-steps" },
-      { label: "The Total Money Makeover", url: "https://www.daveramsey.com/store/product/the-total-money-makeover-book" },
+      { label: "I Will Teach You to Be Rich (Hachette Book Group)", url: "https://www.iwillteachyoutoberich.com/" },
+      { label: "Conscious Spending Plan Guide", url: "https://www.iwillteachyoutoberich.com/conscious-spending-basics/" },
     ],
-    bookOrWork: "The Total Money Makeover",
-    yearPublished: "2003",
+    bookOrWork: "I Will Teach You to Be Rich (2009/2019)",
+    yearPublished: "2019",
+    categoryTag: "Sistem",
   },
   {
-    id: "robert_kiyosaki",
-    author: "Robert T. Kiyosaki",
-    nationality: "Amerika Serikat (keturunan Jepang)",
-    role: "Pengusaha, Investor, & Penulis Buku 'Rich Dad Poor Dad'",
-    title: "Aset vs Liabilitas — Beli Aset, Bukan Kemewahan",
-    quote:
-      "Orang kaya membeli aset. Orang miskin hanya punya pengeluaran. Kelas menengah membeli liabilitas sambil mengira mereka membeli aset.",
-    coreRule: "Cash Flow Quadrant & Aset yang Menghasilkan Passive Income",
-    explanation:
-      "Kiyosaki mengajarkan perbedaan fundamental antara aset (menghasilkan uang masuk) dan liabilitas (mengeluarkan uang). Rumah tempat tinggal adalah liabilitas, bukan aset. Investasi yang menghasilkan passive income adalah aset sejati.",
-    keyTakeaways: [
-      "Pindah kuadran dari E (Employee) dan S (Self-employed) ke B (Business Owner) dan I (Investor).",
-      "Bangun passive income stream: sewa properti, dividen saham, royalti bisnis.",
-      "Jangan berinvestasi untuk barang konsumtif — investasikan terlebih dahulu, habiskan sisanya.",
-      "Financial IQ: pahami laporan keuangan pribadi (neraca aset-liabilitas) Anda sendiri.",
-    ],
-    applicabilityIndonesia:
-      "Konteks properti di Indonesia berbeda — KPR yang disewa bisa menjadi aset jika rental yield > cicilan. Relevan untuk transisi dari karyawan menjadi investor aktif melalui instrumen seperti saham, reksadana, dan DIRE.",
-    sources: [
-      { label: "Rich Dad Poor Dad (1997)", url: "https://www.richdad.com/rich-dad-poor-dad" },
-      { label: "Cashflow Quadrant", url: "https://www.richdad.com/cashflow-quadrant" },
-    ],
-    bookOrWork: "Rich Dad Poor Dad",
-    yearPublished: "1997",
-  },
-  {
-    id: "john_bogle",
-    author: "John C. Bogle",
-    nationality: "Amerika Serikat",
-    role: "Pendiri Vanguard Group & Penggagas Investasi Indeks Pasif",
-    title: "Investasi Indeks Pasif — Menang dengan Tidak Kalah",
-    quote:
-      "Jangan cari jarum dalam tumpukan jerami — beli saja seluruh tumpukan jeraminya.",
-    coreRule: "Index Fund Investing & Low Cost Strategy",
-    explanation:
-      "Bogle membuktikan bahwa mayoritas fund manager aktif gagal mengalahkan return pasar dalam jangka panjang setelah dikurangi biaya. Investasi pada indeks pasar dengan biaya rendah (expense ratio rendah) secara konsisten mengalahkan strategi aktif dalam 20+ tahun.",
-    keyTakeaways: [
-      "Pilih reksa dana indeks dengan total expense ratio (TER) serendah mungkin (<1% per tahun).",
-      "Jangan market timing — lakukan DCA (Dollar Cost Averaging) secara konsisten.",
-      "Diversifikasi pada pasar luas, bukan hanya satu sektor.",
-      "Stay the course: jangan panik jual saat koreksi pasar. Tetap investasi rutin.",
-    ],
-    applicabilityIndonesia:
-      "Terapkan dengan investasi rutin di Reksadana Indeks IDX30 atau IDX80 melalui Bibit/Bareksa dengan TER rendah. Hindari biaya transaksi yang menggerus return jangka panjang.",
-    sources: [
-      { label: "The Little Book of Common Sense Investing (2007)", url: "https://www.vanguard.com/bogle_site/lib/sp20050901.html" },
-      { label: "Vanguard Index Fund Research", url: "https://www.vanguard.com/research" },
-    ],
-    bookOrWork: "The Little Book of Common Sense Investing",
-    yearPublished: "2007",
-  },
-  {
-    id: "peter_lynch",
-    author: "Peter Lynch",
-    nationality: "Amerika Serikat",
-    role: "Mantan Manajer Fidelity Magellan Fund — Legenda Wall Street",
-    title: "Invest in What You Know — Temukan Multi-Bagger dari Kehidupan Sehari-hari",
-    quote:
-      "Investasi terbaik ada di depan Anda. Jika Anda tahu produk bagus sebelum analis Wall Street menyadarinya, Anda memiliki keuntungan nyata.",
-    coreRule: "Invest in What You Know & Fundamental Stock Picking",
-    explanation:
-      "Lynch percaya investor individual memiliki keunggulan atas fund manager karena bisa mengamati tren konsumen dari kehidupan sehari-hari. Temukan perusahaan bagus sebelum pasar menyadarinya dengan memahami bisnis yang Anda gunakan sendiri.",
-    keyTakeaways: [
-      "Teliti 5-10 saham perusahaan yang produknya Anda gunakan setiap hari.",
-      "Cari saham 'ten-bagger': perusahaan dengan potensi tumbuh 10× lipat.",
-      "Pahami cerita di balik saham: mengapa bisnis ini akan bertumbuh?",
-      "Jangan diversifikasi terlalu banyak (over-diversification) — fokus pada 5-10 saham terbaik Anda.",
-    ],
-    applicabilityIndonesia:
-      "Terapkan di saham IHSG: bank digital (GOTO, BUKA), consumer staples (INDF, ICBP, UNVR), infrastruktur digital (TLKM). Manfaatkan insider knowledge industri Anda untuk menemukan peluang.",
-    sources: [
-      { label: "One Up on Wall Street (1989)", url: "https://www.amazon.com/One-Up-Wall-Street-Already/dp/0743200403" },
-      { label: "Beating the Street (1993)", url: "https://www.amazon.com/Beating-Street-Peter-Lynch/dp/0671891634" },
-    ],
-    bookOrWork: "One Up on Wall Street",
-    yearPublished: "1989",
-  },
-  {
-    id: "rhenald_kasali",
-    author: "Prof. Rhenald Kasali",
+    id: "ojk_indonesia",
+    rank: 3,
+    author: "OJK & CFP® Indonesia",
     nationality: "Indonesia",
-    role: "Guru Besar Manajemen UI & Pakar Transformasi Bisnis Indonesia",
-    title: "Disruption Mindset — Adaptasi Finansial di Era Digital Indonesia",
+    role: "Otoritas Jasa Keuangan & Financial Planning Standards Board Indonesia",
+    title: "Standar Rasio Kesehatan Keuangan Rumah Tangga Indonesia & Kepatuhan PAYDI",
     quote:
-      "Bukan yang terkuat atau terpintar yang bertahan, melainkan yang paling adaptif terhadap perubahan. Begitu pula dengan keuangan Anda di era digital.",
-    coreRule: "Digital Financial Literacy & Self-Disruption",
+      "Perencanaan keuangan keluarga di Indonesia harus berdiri kokoh di atas kepatuhan rasio resmi: DSR cicilan ≤30-35%, dana darurat likuid 3-6×, dan proteksi risiko terukur.",
+    coreRule: "Kerangka Keuangan Sehat OJK: Rasio Likuiditas, DSR, BPJS & Kepatuhan SEOJK 5/2022",
     explanation:
-      "Kasali menekankan bahwa revolusi digital menciptakan peluang baru bagi masyarakat Indonesia untuk mengakses produk investasi (reksa dana, SBN ritel, saham) melalui teknologi fintech, namun juga membawa risiko penipuan investasi bodong dan pinjaman online ilegal.",
+      "OJK menetapkan benchmark kesehatan keuangan rumah tangga di Indonesia: dana darurat 3-6× pengeluaran, rasio utang maksimal 30-35% penghasilan, dan tabungan minimal 10-20%. Untuk asuransi, OJK mewajibkan transparansi penuh pada produk PAYDI (Unit Link) agar nasabah paham pemisahan antara biaya proteksi dan risiko fluktuasi investasi.",
     keyTakeaways: [
-      "Manfaatkan fintech OJK-terdaftar untuk investasi otomatis (Bibit, Bareksa, Ajaib).",
-      "Kenali ciri investasi bodong: return tidak masuk akal (>30%/tahun tanpa risiko).",
-      "Literasi digital keuangan: pahami fee, TER, dan biaya tersembunyi sebelum investasi.",
-      "Bangun digital income stream: konten kreator, afiliasi, atau marketplace online.",
+      "Plafon DSR (Debt Service Ratio) ≤30-35%: Total cicilan kredit tidak boleh melebihi 35% income.",
+      "Fondasi Dana Darurat: Simpan 3-6× pengeluaran rutin di instrumen likuid (RDPU/Tabungan LPS).",
+      "Lapisan Proteksi Wajib: BPJS Kesehatan & Ketenagakerjaan aktif sebagai lapisan proteksi pertama.",
+      "SEOJK 5/2022 PAYDI: Pahami rincian biaya akuisisi asuransi, biaya pengelolaan, dan nilai tunai.",
     ],
     applicabilityIndonesia:
-      "Sangat relevan untuk generasi milenial dan Gen Z Indonesia yang aktif di platform digital. Framework ini memandu adaptasi keuangan dari tabungan konvensional ke ekosistem fintech OJK.",
+      "Fondasi hukum dan operasional wajib bagi setiap keluarga di Indonesia. Semua instrumen investasi yang dipilih harus berizin OJK & dijamin LPS.",
     sources: [
-      { label: "Disruption (Prof. Rhenald Kasali, 2017)", url: "https://rhenaldkasali.com/buku/" },
-      { label: "Self Disruption", url: "https://rhenaldkasali.com" },
+      { label: "OJK – Buku 9 Perencanaan Keuangan", url: "https://sikapiuangmu.ojk.go.id" },
+      { label: "Regulasi PAYDI – SEOJK 5/SEOJK.05/2022", url: "https://www.ojk.go.id" },
     ],
-    bookOrWork: "Disruption",
-    yearPublished: "2017",
+    bookOrWork: "Buku Saku Literasi & Perencanaan Keuangan OJK",
+    yearPublished: "2024",
+    categoryTag: "Kepatuhan",
   },
   {
-    id: "george_clason",
-    author: "George S. Clason",
+    id: "buffett_munger",
+    rank: 4,
+    author: "Warren Buffett & Charlie Munger",
     nationality: "Amerika Serikat",
-    role: "Penulis Klasik Finansial Paling Abadi Sepanjang Masa",
-    title: "The Richest Man in Babylon — 7 Hukum Emas Keuangan",
+    role: "Chairman & Vice Chairman Berkshire Hathaway",
+    title: "Prinsip Compounding, Anti-Leverage & Lingkaran Kompetensi (Circle of Competence)",
     quote:
-      "Setiap koin yang Anda simpan adalah budak yang bekerja untuk Anda. Setiap koin yang Anda habiskan tanpa pikir panjang adalah hilangnya budak masa depan Anda.",
-    coreRule: "Pay Yourself First (10% Rule) & Make Money Work for You",
+      "Rule No. 1: Jangan pernah kehilangan uang. Rule No. 2: Jangan pernah lupa Rule No. 1. Tetaplah berada di dalam lingkaran kompetensi Anda dan hindari utang berlebih yang bisa menghentikan permainan.",
+    coreRule: "Preserve the Ability to Play the Game & Margin of Safety",
     explanation:
-      "Clason merangkum 7 hukum kekayaan abadi dalam alegori Babilonia kuno. Hukum utama: simpan minimal 1/10 (10%) dari setiap penghasilan sebagai wajib bayar kepada diri sendiri sebelum membayar orang lain.",
+      "Buffett dan Munger bukan guru budgeting harian, melainkan filosofi menjaga keberlangsungan aset. Kunci sukses adalah 'Preserve the ability to stay in the game' — hindari leverage/utang yang memaksa Anda bangkrut saat krisis, jangan berinvestasi pada hal yang tidak dipahami (unit link tanpa tahu biaya, crypto FOMO, trading saham spekulatif), dan pahami: Price is what you pay, value is what you get.",
     keyTakeaways: [
-      "Hukum ke-1: Mulai mengisi kantong Anda (simpan 10% sebelum pengeluaran apapun).",
-      "Hukum ke-2: Kendalikan pengeluaran — batas biaya hidup agar tidak melebihi 90% penghasilan.",
-      "Hukum ke-3: Buat emas bekerja untuk Anda — investasikan tabungan ke instrumen produktif.",
-      "Hukum ke-7: Kembangkan kemampuan dan penghasilan Anda terus-menerus.",
+      "Stay Inside Circle of Competence: Jangan beli produk keuangan yang mekanismenya tidak Anda pahami.",
+      "Anti-Leverage: Jangan gunakan pinjaman/utang untuk spekulasi atau membebani cash flow keluarga.",
+      "Price vs Value: Jangan tertipu premi murah, tetapi teliti nilai pertanggungan dan manfaat riilnya.",
+      "Compounding Sabar: Pohon yang rindang hari ini ditanam dari bibit disiplin bertahun-tahun yang lalu.",
     ],
     applicabilityIndonesia:
-      "Aturan 10% ini adalah minimum. Untuk konteks Indonesia dengan inflasi 4-5% dan biaya hidup yang tinggi, idealkan di 20-30%. Mulai dari autodebet Rp 500.000/bulan jika masih fresh graduate.",
+      "Hindari godaan 'saham gorengan' TikTok, robot trading ilegal, atau mengambil cicilan KPR/mobil yang mencekik arus kas bulanan.",
     sources: [
-      { label: "The Richest Man in Babylon (1926)", url: "https://www.amazon.com/Richest-Man-Babylon-George-Clason/dp/0451205367" },
+      { label: "Berkshire Hathaway Shareholder Letters", url: "https://www.berkshirehathaway.com/letters/letters.html" },
+      { label: "Poor Charlie's Almanack", url: "https://www.poorcharliesalmanack.com/" },
     ],
-    bookOrWork: "The Richest Man in Babylon",
-    yearPublished: "1926",
+    bookOrWork: "Berkshire Hathaway Annual Letters (1977–2024)",
+    yearPublished: "2024",
+    categoryTag: "Investasi",
+  },
+  {
+    id: "vanguard_bogle",
+    rank: 5,
+    author: "Vanguard Group & John C. Bogle",
+    nationality: "Amerika Serikat",
+    role: "Pendiri Vanguard Group & Pelopor Investasi Biaya Rendah",
+    title: "4 Pilar Investasi: Goals, Balance, Cost, Discipline & Time Horizon Buckets",
+    quote:
+      "Jangan mencari jarum di tumpukan jerami — beli saja seluruh tumpukan jeraminya dengan biaya serendah mungkin dan pertahankan disiplin alokasi aset.",
+    coreRule: "Vanguard 4 Principles & Pemetaan Portfolio Time Horizon",
+    explanation:
+      "Vanguard menyederhanakan kesuksesan investasi ke dalam 4 pilar: (1) Goals (tujuan terukur), (2) Balance (diversifikasi alokasi aset), (3) Cost (biaya pengelolaan minimal), (4) Discipline (tetap rutin saat pasar naik maupun turun). Vanguard mengajarkan bahwa bukan saham apa yang Anda pilih, melainkan seberapa tepat instrumen dicocokkan dengan horizon waktu kebutuhan.",
+    keyTakeaways: [
+      "Bucket < 1 Tahun (Likuid): Tabungan / RDPU / Deposito LPS — dana darurat & operasional.",
+      "Bucket 1–3 Tahun (Jangka Pendek): SBN Ritel (ORI/SR) / RDPT — persiapan DP rumah/renovasi.",
+      "Bucket 3–7 Tahun (Menengah): Reksadana Campuran / Pendapatan Tetap — dana pendidikan anak SD-SMP.",
+      "Bucket > 7–10 Tahun (Panjang): Reksadana Indeks IDX30 / Saham Bluechip — dana pensiun hari tua.",
+    ],
+    applicabilityIndonesia:
+      "Gunakan Reksadana Indeks IDX30/LQ45 dan SBN Ritel Kemenkeu yang berbiaya rendah (TER < 1%), hindari produk dengan fee manajemen tinggi.",
+    sources: [
+      { label: "Vanguard Principles for Investing Success", url: "https://ownyourfuture.vanguard.com/" },
+      { label: "The Little Book of Common Sense Investing", url: "https://www.vanguard.com/" },
+    ],
+    bookOrWork: "The Little Book of Common Sense Investing (2007)",
+    yearPublished: "2007",
+    categoryTag: "Investasi",
+  },
+  {
+    id: "jl_collins",
+    rank: 6,
+    author: "JL Collins",
+    nationality: "Amerika Serikat",
+    role: "Penulis 'The Simple Path to Wealth' & Pelopor Gerakan FIRE",
+    title: "Jalan Sederhana Menuju Kebebasan Finansial & Kekuatan Saving Rate",
+    quote:
+      "Tingkat tabungan (saving rate) adalah tuas paling dahsyat untuk mencapai kebebasan finansial. Sederhanakan portofolio Anda, hindari utang, dan biarkan waktu bekerja.",
+    coreRule: "High Saving Rate, Simplicity, F.U. Money & Rule of 25×",
+    explanation:
+      "Collins membuktikan bahwa kompleksitas seringkali merusak hasil finansial. Anda tidak perlu 17 rekening atau 40 lembar spreadsheet untuk kaya. Kuncinya sederhana: miliki F.U. Money (dana kebebasan memilih), naikkan saving rate di atas 30%, dan investasikan pada indeks pasar secara konsisten. Target kebebasan finansial tercapai saat aset produktif mencapai 25× pengeluaran tahunan (Aturan Penarikan 4%).",
+    keyTakeaways: [
+      "Saving Rate is King: Kekayaan = Income × Saving Rate × Waktu × Return.",
+      "F.U. Money: Memiliki cadangan aset memberi kebebasan berkata 'tidak' pada situasi kerja yang merugikan keluarga.",
+      "Hindari Over-Engineering: Sistem yang sederhana lebih mudah dipatuhi selama 20 tahun daripada sistem rumit.",
+      "Rule of 25×: Akumulasi aset investable hingga 25× pengeluaran tahunan sebagai tolok ukur Financial Independence.",
+    ],
+    applicabilityIndonesia:
+      "Di Indonesia, jangan telan mentah-mentah 100% saham AS VTSAX. Gunakan kombinasi SBN Ritel rupiah + Reksadana Indeks IDX30 yang sesuai dengan kebutuhan rupiah keluarga.",
+    sources: [
+      { label: "JL Collins – The Simple Path to Wealth", url: "https://jlcollinsnh.com/" },
+      { label: "Stock Series Part 1: How I Failed My Daughter", url: "https://jlcollinsnh.com/stock-series/" },
+    ],
+    bookOrWork: "The Simple Path to Wealth (2016)",
+    yearPublished: "2016",
+    categoryTag: "Sistem",
+  },
+  {
+    id: "benjamin_graham",
+    rank: 7,
+    author: "Benjamin Graham",
+    nationality: "Amerika Serikat",
+    role: "Bapak Value Investing, Dosen Warren Buffett di Columbia University",
+    title: "Margin of Safety: Bantalan Pengaman Mutlak dalam Keuangan",
+    quote:
+      "Fungsi margin of safety pada dasarnya adalah membuat prediksi masa depan yang akurat menjadi tidak perlu. Margin ini menyerap ketidakpastian dan kesalahan kalkulasi.",
+    coreRule: "Margin of Safety Formula pada Cash Flow & Portofolio",
+    explanation:
+      "Dalam The Intelligent Investor, Graham merumuskan bahwa inti perlindungan investasi adalah 'Margin of Safety'. Ketika dibawa ke personal finance keluarga: jika pengeluaran rutin Rp 10 Jt dan pemasukan Rp 19,2 Jt, ada bantalan pengaman Rp 9,2 Jt. Margin of safety memastikan jika terjadi PHK, sakit, atau krisis ekonomi, keuangan keluarga tidak langsung hancur.",
+    keyTakeaways: [
+      "Margin of Safety Cash Flow = (Total Income − Biaya Pokok Survival) ÷ Total Income × 100%.",
+      "Jangan Hidup di 'Zero Margin': Income Rp 15 Jt dengan pengeluaran Rp 15 Jt adalah bom waktu.",
+      "Buffer Likuiditas: Selalu miliki cadangan kas yang cukup agar tidak terpaksa menjual aset saat pasar terkoreksi.",
+      "Disiplin Nilai: Beli instrumen di bawah estimasi nilai intrinsiknya, bukan karena euforia pasar.",
+    ],
+    applicabilityIndonesia:
+      "Keluarga di Indonesia harus menjaga Margin of Safety minimal 30-40% dari total pendapatan untuk mengantisipasi inflasi pangan dan fluktuasi ekonomi.",
+    sources: [
+      { label: "The Intelligent Investor (Chapter 8 & 20)", url: "https://www.investmenttheory.org" },
+      { label: "Security Analysis by Benjamin Graham", url: "https://www.cfainstitute.org/" },
+    ],
+    bookOrWork: "The Intelligent Investor (1949)",
+    yearPublished: "1949",
+    categoryTag: "Proteksi",
+  },
+  {
+    id: "stanley_danko",
+    rank: 8,
+    author: "Thomas J. Stanley & William D. Danko",
+    nationality: "Amerika Serikat",
+    role: "Peneliti & Penulis Buku Legendaris 'The Millionaire Next Door'",
+    title: "The Millionaire Next Door: Income Affluent vs Balance-Sheet Affluent",
+    quote:
+      "Banyak orang yang penampilannya seperti jutawan sebenarnya tidak memiliki kekayaan, sedangkan jutawan sejati hidup bersahaja di sebelah rumah Anda.",
+    coreRule: "Net Worth Formula: (Usia × Income Tahunan) ÷ 10 & Kategori PAW vs UAW",
+    explanation:
+      "Stanley & Danko meneliti ribuan jutawan dan menemukan perbedaan mencolok antara 'Income Affluent' (penghasilan besar tapi konsumtif, aset kecil) dengan 'Balance-Sheet Affluent' (hidup bersahaja, rajin menabung, aset bersih tinggi). Ukuran keberhasilan finansial bukanlah besarnya slip gaji, melainkan seberapa cepat Kekayaan Bersih (Net Worth) bertumbuh setiap tahun.",
+    keyTakeaways: [
+      "Rumus Expected Net Worth: Target Kekayaan Bersih Ideal = (Usia × Total Income Tahunan) ÷ 10.",
+      "Prodigious Accumulator of Wealth (PAW): Net worth aktual ≥ 2× dari expected net worth.",
+      "Under Accumulator of Wealth (UAW): Net worth aktual < 0.5× dari expected net worth (waspada!).",
+      "Live Below Your Means: Gaya hidup di bawah kemampuan adalah karakteristik 80%+ jutawan mandiri.",
+    ],
+    applicabilityIndonesia:
+      "Tolak ukur evaluasi tahunan untuk keluarga muda: hitung Net Worth (Total Aset − Total Utang) setiap tanggal 31 Desember dan pantau kenaikan grafiknya.",
+    sources: [
+      { label: "The Millionaire Next Door Research", url: "https://www.themillionairenextdoor.com/" },
+      { label: "The Next Millionaire Next Door (2018)", url: "https://www.amazon.com/Next-Millionaire-Door-Enduring-Strategies/dp/1493035351" },
+    ],
+    bookOrWork: "The Millionaire Next Door (1996)",
+    yearPublished: "1996",
+    categoryTag: "Mindset",
+  },
+  {
+    id: "vicki_robin",
+    rank: 9,
+    author: "Vicki Robin & Joe Dominguez",
+    nationality: "Amerika Serikat",
+    role: "Aktivis Finansial & Penulis 'Your Money or Your Life'",
+    title: "Uang Adalah Energi Hidup: Menghitung Biaya Barang dalam Satuan Jam Kerja",
+    quote:
+      "Uang bukanlah sekadar angka di rekening — uang adalah waktu dan energi kehidupan yang Anda tukarkan. Berapa jam hidup Anda yang rela Anda bayarkan untuk barang ini?",
+    coreRule: "Real Hourly Wage & Life Energy Conversion Formula",
+    explanation:
+      "Vicki Robin mengajarkan kita melihat uang melalui kacamata 'Life Energy'. Jika Anda berpenghasilan Rp 14,7 Jt/bulan dan menghabiskan 200 jam untuk bekerja, lembur, perjalanan komuter, dan persiapan, maka upah riil Anda adalah Rp 73.500/jam. Ketika membeli barang seharga Rp 735.000, Anda sebenarnya menukar 10 jam umur hidup Anda.",
+    keyTakeaways: [
+      "Rumus Upah Riil per Jam = Take-Home Pay Bulanan ÷ (Jam Kerja + Komuter + Persiapan).",
+      "Biaya Energi Hidup = Harga Barang ÷ Upah Riil per Jam.",
+      "Pertanyaan Reflektif: 'Apakah barang/gaya hidup ini sebanding dengan X jam waktu hidup saya bersama keluarga?'",
+      "Mencapai Crossover Point: Saat passive income dari aset investasi melampaui biaya hidup bulanan.",
+    ],
+    applicabilityIndonesia:
+      "Sangat ampuh meredam godaan membeli gadget terbaru, motor baru cicilan mahal, atau nongkrong impulsif dengan mengkonversinya langsung ke jam lembur kerja.",
+    sources: [
+      { label: "Your Money or Your Life Official", url: "https://yourmoneyoryourlife.com/" },
+      { label: "The Crossover Point Concept", url: "https://yourmoneyoryourlife.com/book-summary/" },
+    ],
+    bookOrWork: "Your Money or Your Life (1992/2018)",
+    yearPublished: "2018",
+    categoryTag: "Filosofi Hidup",
+  },
+  {
+    id: "bill_perkins",
+    rank: 10,
+    author: "Bill Perkins",
+    nationality: "Amerika Serikat",
+    role: "Pengusaha Energi, Hedge Fund Manager & Penulis 'Die With Zero'",
+    title: "Die With Zero: Maksimalkan Pengalaman Hidup & Manfaatkan 'Time Windows'",
+    quote:
+      "Jangan menunda seluruh kebahagiaan hidup demi mengejar angka pensiun di usia tua. Uang yang bertumpuk tanpa pernah dinikmati bersama orang tercinta adalah potensi kehidupan yang terbuang sia-sia.",
+    coreRule: "Time Windows of Experiences & Memory Dividends",
+    explanation:
+      "Perkins memberikan perspektif penyeimbang yang elegan: tujuan menabung dan berinvestasi bukan untuk menumpuk uang sebanyak-banyaknya hingga meninggal, melainkan untuk memaksimalkan pengalaman hidup bernilai tinggi pada 'Time Windows' yang tepat. Liburan bersama anak balita, menemani orang tua selagi sehat, atau berpetualang dengan pasangan memiliki batas usia tertentu yang tidak bisa diulang di usia 70 tahun.",
+    keyTakeaways: [
+      "Time Windows: Pengalaman tertentu bernilai maksimal hanya pada rentang usia tertentu keluarga Anda.",
+      "Memory Dividends: Kenangan indah yang dibangun saat muda akan terus menghasilkan dividen kebahagiaan seumur hidup.",
+      "Jangan Ekstrem Menunda Hidup: Begitu dana darurat aman dan investasi rutin berjalan, nikmati surplus untuk keluarga tanpa rasa bersalah.",
+      "Warisan Cerdas: Berikan bantuan finansial kepada anak dan orang tua saat mereka paling membutuhkan, bukan menunggu Anda wafat.",
+    ],
+    applicabilityIndonesia:
+      "Mengimbangi budaya menabung ekstrem agar kepala keluarga tetap mengalokasikan anggaran membahagiakan istri, mudik bersama orang tua, dan rekreasi anak.",
+    sources: [
+      { label: "Die With Zero by Bill Perkins", url: "https://www.diewithzerobook.com/" },
+      { label: "Bill Perkins Reddit AMA on Money & Experiences", url: "https://www.reddit.com/r/IAmA/comments/i058bd" },
+    ],
+    bookOrWork: "Die With Zero (2020)",
+    yearPublished: "2020",
+    categoryTag: "Filosofi Hidup",
   },
 ];
 
-// ─── OJK Financial Standards ──────────────────────────────────────────────────
+// ─── Financial University Curriculum (8 Semester Belajar Mandiri) ─────────────
+
+export const financialUniversityCurriculum: FinancialUniversitySemester[] = [
+  {
+    semester: 1,
+    semesterName: "Semester 1 — Money Mindset & Psychology",
+    bookTitle: "The Psychology of Money",
+    author: "Morgan Housel",
+    category: "Mindset",
+    focusTopics: ["Wealth vs Income", "Konsep 'Enough'", "Perilaku vs Matematika", "Compounding & Luck"],
+    keyQuestion: "Dari penghasilan yang masuk setiap bulan, berapa yang berhasil berubah menjadi aset nyata?",
+    readingAdvice: "Fokus pada Chapter 'Never Enough' dan 'Freedom'. Pahami bahwa ego adalah pemotong kekayaan terbesar.",
+    sourceUrl: "https://collabfund.com/blog/book-the-psychology-of-money/",
+  },
+  {
+    semester: 2,
+    semesterName: "Semester 2 — Personal Finance & Cash Flow System",
+    bookTitle: "I Will Teach You to Be Rich",
+    author: "Ramit Sethi",
+    category: "Sistem",
+    focusTopics: ["Otomasi Transfer", "Conscious Spending", "Definisi Rich Life", "Hirarki 5-Layer"],
+    keyQuestion: "Apakah uang Anda sudah bekerja otomatis menuju hal-hal penting tanpa harus dipikirkan setiap hari?",
+    readingAdvice: "Terapkan program praktis otomatisasi rekening bank dan buat pos anggaran Rich Life keluarga.",
+    sourceUrl: "https://www.iwillteachyoutoberich.com/",
+  },
+  {
+    semester: 3,
+    semesterName: "Semester 3 — Standar Regulasi & Ekosistem Indonesia",
+    bookTitle: "Buku Perencanaan Keuangan OJK & Panduan CFP",
+    author: "OJK & FPSB Indonesia",
+    category: "Kepatuhan",
+    focusTopics: ["Rasio DSR ≤30%", "Dana Darurat 3-6×", "BPJS SJSN", "Kepatuhan PAYDI SEOJK 5/2022"],
+    keyQuestion: "Apakah seluruh indikator rasio keuangan keluarga Anda sudah lolos standar kepatuhan OJK?",
+    readingAdvice: "Unduh materi Sikapi Uangmu OJK dan pastikan kepesertaan BPJS aktif serta utang terkendali.",
+    sourceUrl: "https://sikapiuangmu.ojk.go.id",
+  },
+  {
+    semester: 4,
+    semesterName: "Semester 4 — Fondasi Investasi & Margin of Safety",
+    bookTitle: "The Intelligent Investor (Chapter 8 & 20)",
+    author: "Benjamin Graham",
+    category: "Proteksi",
+    focusTopics: ["Margin of Safety", "Mr. Market Fluctuations", "Disiplin Nilai vs Spekulasi"],
+    keyQuestion: "Seberapa tebal bantalan pengaman keuangan keluarga Anda jika terjadi krisis tak terduga?",
+    readingAdvice: "Jangan baca seluruh 500 halaman dulu. Fokus mendalam pada Bab 8 (Fluktuasi Pasar) dan Bab 20 (Margin of Safety).",
+    sourceUrl: "https://www.investmenttheory.org",
+  },
+  {
+    semester: 5,
+    semesterName: "Semester 5 — Investasi Pasif & Kesederhanaan",
+    bookTitle: "The Simple Path to Wealth",
+    author: "JL Collins",
+    category: "Investasi",
+    focusTopics: ["Saving Rate Tinggi", "Index Fund Investing", "F.U. Money", "Rule of 25×"],
+    keyQuestion: "Berapa persentase saving rate Anda dan kapan portofolio mencapai 25× pengeluaran tahunan?",
+    readingAdvice: "Pelajari cara menyederhanakan alokasi aset tanpa terjebak over-engineering 17 aplikasi.",
+    sourceUrl: "https://jlcollinsnh.com/",
+  },
+  {
+    semester: 6,
+    semesterName: "Semester 6 — Kekayaan Bersih & Gaya Hidup",
+    bookTitle: "The Millionaire Next Door",
+    author: "Thomas J. Stanley & William D. Danko",
+    category: "Mindset",
+    focusTopics: ["Income Affluent vs Balance-Sheet Affluent", "Rumus Expected Net Worth", "Kategori PAW vs UAW"],
+    keyQuestion: "Apakah Anda seorang Prodigious Accumulator of Wealth (PAW) atau sekadar berpenghasilan tinggi tapi boros?",
+    readingAdvice: "Hitung Net Worth tahunan Anda dengan rumus (Usia × Income Tahunan) ÷ 10.",
+    sourceUrl: "https://www.themillionairenextdoor.com/",
+  },
+  {
+    semester: 7,
+    semesterName: "Semester 7 — Waktu Hidup & Makna Uang",
+    bookTitle: "Your Money or Your Life",
+    author: "Vicki Robin & Joe Dominguez",
+    category: "Filosofi Hidup",
+    focusTopics: ["Life Energy Concept", "Upah Riil per Jam", "Crossover Point"],
+    keyQuestion: "Berapa jam umur kehidupan Anda yang sebenarnya Anda tukarkan untuk setiap pengeluaran?",
+    readingAdvice: "Konversikan harga barang impian ke satuan jam kerja nyata untuk menyaring pembelian impulsif.",
+    sourceUrl: "https://yourmoneyoryourlife.com/",
+  },
+  {
+    semester: 8,
+    semesterName: "Semester 8 — Desain Kehidupan & Pengalaman",
+    bookTitle: "Die With Zero",
+    author: "Bill Perkins",
+    category: "Filosofi Hidup",
+    focusTopics: ["Time Windows of Experience", "Memory Dividends", "Keseimbangan Wealth & Life"],
+    keyQuestion: "Pengalaman keluarga berharga apa yang harus Anda wujudkan sekarang sebelum fase usia berlalu?",
+    readingAdvice: "Alokasikan pos 'Enjoyment' tanpa rasa bersalah setelah seluruh fondasi OJK dan investasi terpenuhi.",
+    sourceUrl: "https://www.diewithzerobook.com/",
+  },
+];
+
+// ─── 10 Aturan Keuangan Keluarga (Financial Manifesto) ─────────────────────────
+
+export const tenFamilyFinancialRules: FamilyFinancialRule[] = [
+  {
+    ruleNumber: 1,
+    title: "Hidup di Bawah Kemampuan (Live Below Your Means)",
+    principle: "Gaya hidup tidak boleh naik secepat kenaikan penghasilan keluarga.",
+    guruInfluence: "Stanley & Danko / Morgan Housel",
+    practicalAction: "Setiap kenaikan gaji, minimal 50-70% dari kenaikan dialokasikan langsung ke tabungan/investasi.",
+  },
+  {
+    ruleNumber: 2,
+    title: "Pisahkan Uang Jangka Pendek dari Risiko Pasar",
+    principle: "Jangan gunakan instrumen fluktuatif untuk kebutuhan yang akan dipakai dalam < 2 tahun.",
+    guruInfluence: "Vanguard / John Bogle",
+    practicalAction: "Dana darurat dan DP rumah jangka pendek wajib di simpan di RDPU, Deposito LPS, atau SBN Ritel.",
+  },
+  {
+    ruleNumber: 3,
+    title: "Selalu Miliki Margin of Safety yang Tebal",
+    principle: "Selalu sediakan jarak aman antara penghasilan dan biaya hidup pokok.",
+    guruInfluence: "Benjamin Graham",
+    practicalAction: "Jaga biaya survival keluarga ≤ 50% dari total income agar tahan terhadap goncangan ekonomi.",
+  },
+  {
+    ruleNumber: 4,
+    title: "Lindungi Penghasilan Sebelum Mengejar Return Investasi",
+    principle: "Keluarga tidak boleh jatuh miskin hanya karena satu musibah kesehatan atau tutup usia.",
+    guruInfluence: "OJK / Dave Ramsey / Warren Buffett",
+    practicalAction: "Aktifkan BPJS Kesehatan & Ketenagakerjaan serta miliki Asuransi Jiwa Murni (UP 8-10× income).",
+  },
+  {
+    ruleNumber: 5,
+    title: "Beli Asuransi Berdasarkan Risiko Riil, Bukan Target Agen",
+    principle: "Price is what you pay, value is what you get. Pahami biaya dan manfaat riil polis.",
+    guruInfluence: "Warren Buffett / OJK SEOJK 5/2022",
+    practicalAction: "Hindari mencampur proteksi dengan investasi tanpa memahami transparansi biaya akuisisi.",
+  },
+  {
+    ruleNumber: 6,
+    title: "Naikkan Saving Rate Secara Konsisten",
+    principle: "Tingkat tabungan (saving rate) adalah driver nomor 1 dalam pembentukan kekayaan bersih.",
+    guruInfluence: "JL Collins",
+    practicalAction: "Targetkan Saving & Investment Rate keluarga bertumbuh bertahap menuju 25%–35%+.",
+  },
+  {
+    ruleNumber: 7,
+    title: "Jangan Pernah Mengambil Utang Konsumtif",
+    principle: "Preserve the ability to play the game — utang berbunga tinggi menghancurkan cash flow.",
+    guruInfluence: "Dave Ramsey / Warren Buffett",
+    practicalAction: "Lunasi kartu kredit dan paylater hingga 0%. Gunakan utang hanya untuk KPR properti pertama (DSR ≤30%).",
+  },
+  {
+    ruleNumber: 8,
+    title: "Tetap Berada di Dalam Lingkaran Kompetensi (Circle of Competence)",
+    principle: "Jangan menaruh uang pada instrumen atau bisnis yang tidak Anda pahami mekanismenya.",
+    guruInfluence: "Warren Buffett & Charlie Munger",
+    practicalAction: "Fokus pada instrumen sederhana berizin OJK (SBN Ritel, Indeks IDX30, RDPU) daripada FOMO spekulatif.",
+  },
+  {
+    ruleNumber: 9,
+    title: "Prioritaskan Biaya Rendah, Diversifikasi & Disiplin",
+    principle: "Kendalikan apa yang bisa Anda kendalikan: biaya, alokasi aset, dan disiplin waktu.",
+    guruInfluence: "Vanguard / Burton Malkiel",
+    practicalAction: "Pilih instrumen dengan Expense Ratio rendah (<1%) dan lakukan Dollar-Cost Averaging setiap bulan.",
+  },
+  {
+    ruleNumber: 10,
+    title: "Uang Harus Melayani Kehidupan, Bukan Menjadi Berhala",
+    principle: "Kekayaan sejati adalah kebebasan waktu, keluarga bahagia, dan kemampuan untuk memberi.",
+    guruInfluence: "Ramit Sethi / Vicki Robin / Bill Perkins",
+    practicalAction: "Nikmati surplus halal untuk membahagiakan pasangan, anak, orang tua, dan berbagi kepada sesama.",
+  },
+];
+
+// ─── 5-Layer Financial Hierarchy System (Ramit Sethi Adapted) ─────────────────
+
+export const fiveLayerHierarchyFramework: FiveLayerHierarchyItem[] = [
+  {
+    layer: 1,
+    name: "Layer 1 — Survival (Kebutuhan Pokok)",
+    subtitle: "Makan, tempat tinggal, utilitas, transportasi, & tanggungan keluarga dasar",
+    targetPercentRange: "40% – 50%",
+    color: "from-blue-600 to-indigo-700",
+    itemsIncluded: ["Belanja Dapur & Makanan Pokok", "Sewa Rumah / Operasional Hunian", "Listrik, Air & Internet", "Transportasi Harian", "Nafkah Orang Tua Pokok"],
+    ojkGuideline: "Maksimal 50% pendapatan agar tidak memicu defisit anggaran rumah tangga.",
+    guruPhilosophy: "Benjamin Graham: Menjaga survival cost rendah menciptakan 'Margin of Safety' kas yang tebal.",
+  },
+  {
+    layer: 2,
+    name: "Layer 2 — Protection (Bantalan Pengaman & Risiko)",
+    subtitle: "BPJS Kesehatan, BPJS Ketenagakerjaan, Asuransi Jiwa/Kritis, & Dana Darurat",
+    targetPercentRange: "5% – 10%",
+    color: "from-emerald-600 to-teal-700",
+    itemsIncluded: ["Iuran BPJS Kesehatan & Ketenagakerjaan", "Premi Asuransi Jiwa Murni (UP 10×)", "Premi Penyakit Kritis", "Cicilan Pembentukan Dana Darurat"],
+    ojkGuideline: "OJK merekomendasikan alokasi premi sekitar 5% dan dana darurat likuid 3-6× pengeluaran.",
+    guruPhilosophy: "Warren Buffett & Dave Ramsey: Lindungi lantai dasar keluarga sebelum mengejar return investasi.",
+  },
+  {
+    layer: 3,
+    name: "Layer 3 — Goals (Sasaran Strategis Keluarga)",
+    subtitle: "DP Rumah KPR pertama, Dana Pendidikan Anak, & Renovasi Hunian",
+    targetPercentRange: "10% – 15%",
+    color: "from-amber-600 to-orange-700",
+    itemsIncluded: ["Tabungan DP Rumah Impian", "Sinking Fund Pendidikan Anak (SD-Kuliah)", "Dana Pembelian Kendaraan Keluarga", "Persiapan Pindah Domisili"],
+    ojkGuideline: "Kunci sasaran masa depan dengan instrumen fixed income berizin OJK (SBN Ritel/Deposito).",
+    guruPhilosophy: "Vanguard Principle: Pisahkan portfolio sasaran berdasarkan Horizon Waktu kebutuhan nyata.",
+  },
+  {
+    layer: 4,
+    name: "Layer 4 — Wealth & Compounding (Investasi Pertumbuhan)",
+    subtitle: "Reksadana Indeks IDX30, SBN Ritel, Saham Bluechip, & Aset Produktif",
+    targetPercentRange: "20% – 30%",
+    color: "from-purple-600 to-violet-700",
+    itemsIncluded: ["Investasi Rutin Indeks Saham (IDX30/LQ45)", "SBN Ritel (ORI/SR/ST)", "Akumulasi Emas Logam Mulia", "Aset Penghasil Passive Income"],
+    ojkGuideline: "Minimal 10-20% OJK, diakselerasi menjadi 20-30% untuk fase akumulasi usia produktif.",
+    guruPhilosophy: "JL Collins & Morgan Housel: Mesin utama pengganda kekayaan menuju Rule of 25× Financial Freedom.",
+  },
+  {
+    layer: 5,
+    name: "Layer 5 — Enjoyment & Giving (Rich Life & Makna)",
+    subtitle: "Rekreasi keluarga, hobi, kencan pasangan, sedekah, & membahagiakan orang tua",
+    targetPercentRange: "5% – 10%",
+    color: "from-rose-600 to-pink-700",
+    itemsIncluded: ["Liburan / Mudik Bersama Keluarga", "Makan Enak Bersama Pasangan", "Hobi & Pengembangan Diri", "Zakat, Infaq, Sedekah & Hadiah Orang Tua"],
+    ojkGuideline: "Maksimal 10-15% agar gaya hidup tetap terkontrol dan tidak memicu utang konsumtif.",
+    guruPhilosophy: "Bill Perkins (Die With Zero) & Ramit Sethi: Uang harus melayani kebahagiaan hidup keluarga saat ini.",
+  },
+];
+
+// ─── Standar Rasio Keuangan OJK Indonesia ─────────────────────────────────────
 
 export const ojkStandards: OJKFinancialStandard[] = [
   {
-    category: "Beban Hutang & Cicilan",
-    ratioName: "Debt-to-Income Ratio (DSR / DTI)",
-    healthyBenchmark: "< 30% dari penghasilan bulanan",
-    warningBenchmark: "30% - 40% (Zona Kuning)",
-    dangerBenchmark: "> 40% (Zona Merah / Over-leverage)",
-    formula: "(Total Semua Cicilan Bulanan ÷ Total Pemasukan Bersih) × 100%",
+    category: "Rasio Dana Darurat (Liquidity Ratio)",
+    ratioName: "Rasio Likuiditas Dana Darurat",
+    healthyBenchmark: "≥ 3–6× pengeluaran bulanan (Lajang: 3-6×, Menikah: 6-9×, Anak: 9-12×)",
+    warningBenchmark: "1–3× pengeluaran bulanan",
+    dangerBenchmark: "< 1× pengeluaran bulanan (Rawan krisis)",
+    formula: "Total Aset Likuid (Kas + Tabungan + Deposito + RDPU) ÷ Pengeluaran Rutin Bulanan",
     whyItMatters:
-      "Standar OJK & Perbankan Indonesia menetapkan bahwa total cicilan (KPR + Kendaraan + Kartu Kredit) maksimal 30-35% agar arus kas keluarga tidak rentan gagal bayar saat terjadi guncangan ekonomi.",
-    source: "OJK – POJK No. 42/POJK.03/2017 tentang Kualitas Aset",
-    sourceUrl: "https://ojk.go.id/id/regulasi/Pages/POJK-Tentang-Kualitas-Aset-Bank-Umum.aspx",
-  },
-  {
-    category: "Likuiditas & Ketahanan",
-    ratioName: "Rasio Dana Darurat (Emergency Fund Ratio)",
-    healthyBenchmark: "3 - 6x Pengeluaran (Lajang), 6 - 12x (Menikah/Wirausaha)",
-    warningBenchmark: "1 - 2x Pengeluaran",
-    dangerBenchmark: "< 1x Pengeluaran (Rentan Krisis)",
-    formula: "Total Kas Likuid ÷ Total Pengeluaran Rutin Bulanan",
-    whyItMatters:
-      "Melindungi keluarga dari risiko PHK, penurunan omset bisnis, atau musibah mendadak tanpa perlu berutang atau mencairkan aset investasi saat rugi.",
-    source: "OJK – Sikapiuangmu: Panduan Dana Darurat",
-    sourceUrl: "https://sikapiuangmu.ojk.go.id/FrontEnd/CMS/Article/20",
-  },
-  {
-    category: "Akumulasi Kekayaan",
-    ratioName: "Rasio Menabung & Investasi (Savings Ratio)",
-    healthyBenchmark: "≥ 20% dari total pemasukan bulanan",
-    warningBenchmark: "10% - 19%",
-    dangerBenchmark: "< 10% (Lambat mencapai tujuan finansial)",
-    formula: "(Alokasi Tabungan + Investasi Bulanan ÷ Total Pemasukan) × 100%",
-    whyItMatters:
-      "Semakin tinggi rasio menabung, semakin cepat Anda mencapai kebebasan finansial (Financial Independence / FIRE) berkat keajaiban bunga berbunga (compounding interest).",
-    source: "OJK – Sikapiuangmu: Menabung & Investasi",
-    sourceUrl: "https://sikapiuangmu.ojk.go.id/FrontEnd/CMS/Category/14",
-  },
-  {
-    category: "Kesehatan Neraca",
-    ratioName: "Rasio Solvabilitas & Kekayaan Bersih (Net Worth)",
-    healthyBenchmark: "Kekayaan Bersih > Total Hutang (Positif & Bertumbuh)",
-    warningBenchmark: "Aset = Total Hutang",
-    dangerBenchmark: "Kekayaan Bersih Negatif (Hutang > Total Aset)",
-    formula: "Total Seluruh Aset (Kas, Saham, Properti) − Total Seluruh Kewajiban Hutang",
-    whyItMatters:
-      "Mengukur nilai kekayaan murni Anda yang sebenarnya setelah semua kewajiban utang dilunasi.",
-    source: "CFP Indonesia – FPSB Standard Financial Ratios",
-    sourceUrl: "https://fpaindonesia.or.id/",
-  },
-  {
-    category: "Proteksi Keluarga",
-    ratioName: "Rasio Premi Asuransi (Insurance-to-Income)",
-    healthyBenchmark: "3% - 10% dari total penghasilan bulanan",
-    warningBenchmark: "< 3% (Kurang terlindungi)",
-    dangerBenchmark: "> 15% (Terlalu tinggi, membebani cashflow)",
-    formula: "(Total Premi Asuransi Bulanan ÷ Total Pemasukan) × 100%",
-    whyItMatters:
-      "Asuransi adalah fondasi keuangan keluarga. Tanpa proteksi memadai, satu kejadian tak terduga (sakit kritis, kecelakaan, meninggal) bisa menghapus seluruh akumulasi aset yang dibangun bertahun-tahun.",
-    source: "AAJI – Panduan Perencanaan Proteksi 2024",
-    sourceUrl: "https://aaji.or.id/",
-  },
-  {
-    category: "Beban Kebutuhan Pokok",
-    ratioName: "Rasio Kebutuhan Pokok (Needs Ratio)",
-    healthyBenchmark: "≤ 50% dari penghasilan (Standar 50/30/20)",
-    warningBenchmark: "50% - 65% (Sandwich generation / kota besar)",
-    dangerBenchmark: "> 65% (Tidak ada ruang untuk tabungan & proteksi)",
-    formula: "(Kebutuhan Pokok Bulanan ÷ Total Pemasukan) × 100%",
-    whyItMatters:
-      "Jika kebutuhan pokok melebihi 65% income, hampir tidak ada ruang untuk menabung, investasi, atau membayar premi asuransi — kondisi rentan finansial jangka panjang.",
-    source: "Elizabeth Warren & Tyagi – All Your Worth (2005) & OJK Literasi 2024",
+      "Melindungi keluarga dari risiko kehilangan mata pencaharian, sakit mendadak, atau kerusakan aset tanpa harus berutang ke pinjol atau menjual aset investasi saat rugi.",
+    source: "OJK — Buku 9 Perencanaan Keuangan Keluarga & FPSB Indonesia",
     sourceUrl: "https://sikapiuangmu.ojk.go.id",
+  },
+  {
+    category: "Batas Beban Utang (Debt Service Ratio)",
+    ratioName: "Debt Service Ratio (DSR)",
+    healthyBenchmark: "≤ 30% dari total pemasukan bulanan",
+    warningBenchmark: "30% – 35% (Batas maksimal kepatuhan OJK)",
+    dangerBenchmark: "> 35% (Kategori bahaya gagal bayar & skor SLIK buruk)",
+    formula: "(Total Pembayaran Cicilan Utang Bulanan ÷ Total Pemasukan Bulanan) × 100%",
+    whyItMatters:
+      "Memastikan arus kas rumah tangga tidak tercekik oleh beban bunga. Menjaga skor SLIK OJK tetap lancar untuk pengajuan KPR rumah pertama.",
+    source: "Standar Batas Aman Analisis Kredit Perbankan OJK & Bank Indonesia",
+    sourceUrl: "https://ojk.go.id",
+  },
+  {
+    category: "Tingkat Tabungan & Investasi (Savings Ratio)",
+    ratioName: "Savings & Investment Rate",
+    healthyBenchmark: "≥ 20% – 35% dari total pemasukan bulanan",
+    warningBenchmark: "10% – 20% (Standar minimal OJK)",
+    dangerBenchmark: "< 10% (Kekayaan bersih sulit bertumbuh)",
+    formula: "(Total Alokasi Tabungan + Investasi Bulanan ÷ Total Pemasukan) × 100%",
+    whyItMatters:
+      "Kunci utama akselerasi kekayaan bersih (Wealth Accumulation). Tanpa saving rate memadai, kenaikan gaji hanya akan menjadi konsumsi yang menguap.",
+    source: "JL Collins & OJK Buku Saku Literasi Keuangan",
+    sourceUrl: "https://sikapiuangmu.ojk.go.id",
+  },
+  {
+    category: "Beban Kebutuhan Pokok (Survival Needs)",
+    ratioName: "Rasio Kebutuhan Hidup Pokok",
+    healthyBenchmark: "≤ 50% dari total pemasukan (Standar 50/30/20 & Graham)",
+    warningBenchmark: "50% – 65% (Kategori Sandwich Generation / Kota Besar)",
+    dangerBenchmark: "> 65% (Zero margin of safety — rentan kolaps)",
+    formula: "(Total Pengeluaran Kebutuhan Pokok ÷ Total Pemasukan) × 100%",
+    whyItMatters:
+      "Memberikan ruang nafas bagi proteksi asuransi, tabungan masa depan, dan dana darurat.",
+    source: "Benjamin Graham & Elizabeth Warren",
+    sourceUrl: "https://sikapiuangmu.ojk.go.id",
+  },
+  {
+    category: "Beban Proteksi Asuransi (Insurance Ratio)",
+    ratioName: "Rasio Premi Proteksi Asuransi",
+    healthyBenchmark: "5% – 10% dari total pemasukan bulanan",
+    warningBenchmark: "< 3% (Under-insured) atau 10% - 15% (Cukup tinggi)",
+    dangerBenchmark: "0% tanpa BPJS (Sangat berbahaya) atau > 20% (Over-insured / Terjebak PAYDI mahal)",
+    formula: "(Total Premi BPJS + Asuransi Murni ÷ Total Pemasukan) × 100%",
+    whyItMatters:
+      "Menjamin kesinambungan hidup keluarga jika pencari nafkah mengalami sakit kritis atau tutup usia.",
+    source: "AAJI & OJK SEOJK 5/2022",
+    sourceUrl: "https://aaji.or.id",
   },
 ];
 
-// ─── Local Indonesia Theories ─────────────────────────────────────────────────
+// ─── Local Indonesia Financial Institutions ───────────────────────────────────
 
 export const localFinancialTheories: LocalTheory[] = [
   {
     id: "bi_financial_framework",
     institution: "Bank Indonesia",
     country: "Indonesia",
-    title: "Kerangka Stabilitas Keuangan BI — Manajemen Risiko Individu",
+    title: "Kerangka Stabilitas Moneter BI — Suku Bunga Acuan & Mitigasi Inflasi",
     description:
-      "Bank Indonesia (BI) menetapkan kerangka stabilitas keuangan yang juga berlaku pada level individu: menjaga inflasi, mengelola utang, dan membangun cadangan devisa. Di level personal, prinsip ini diterjemahkan sebagai: waspadai inflasi nyata (4-5%/tahun di Indonesia), kelola utang di bawah batas aman, dan bangun 'cadangan devisa' berupa dana darurat & portofolio terdiversifikasi.",
+      "Bank Indonesia menetapkan BI-Rate yang memengaruhi suku bunga deposito, SBN, dan bunga pinjaman KPR. Di tingkat keluarga, prinsip ini mengajarkan pentingnya investasi dengan imbal hasil di atas inflasi riil Indonesia (4-6%/tahun).",
     keyPoints: [
-      "Inflasi Indonesia rata-rata 4-5%/tahun — return investasi harus melebihi inflasi untuk tumbuh riil.",
-      "BI Rate (suku bunga acuan) mempengaruhi KPR, obligasi, dan deposito Anda.",
-      "Diversifikasi mata uang: simpan sebagian aset dalam USD/emas sebagai hedge inflasi.",
-      "Obligasi Negara Ritel (SBN) dijamin pemerintah RI — alternatif deposito paling aman.",
+      "Inflasi riil Indonesia 4-6%/tahun — tabungan biasa bunga 0% membuat daya beli tergerus.",
+      "SBN Ritel (ORI, SR, ST, SBR) dijamin 100% negara dan bebas risiko gagal bayar.",
+      "Diversifikasi aset ke instrumen legal yang mengimbangi pergerakan suku bunga acuan.",
     ],
     applicability:
-      "Perhatikan pengumuman BI Rate — saat BI Rate turun, harga obligasi naik (keuntungan bagi pemegang SBN). Alokasikan sebagian tabungan ke SBN Ritel (ORI/SR) yang dijamin 100% oleh negara.",
-    source: "Bank Indonesia — Framework Stabilitas Sistem Keuangan",
-    sourceUrl: "https://www.bi.go.id/id/fungsi-utama/stabilitas-sistem-keuangan/default.aspx",
+      "Manfaatkan masa penerbitan SBN Ritel Kemenkeu dengan kupon menarik (6.4%+ p.a.) sebagai tempat parkir dana jangka menengah yang aman dan menguntungkan.",
+    source: "Bank Indonesia — Laporan Kebijakan Moneter & Stabilitas Sistem Keuangan",
+    sourceUrl: "https://www.bi.go.id",
     year: "2024",
   },
   {
     id: "ojk_literasi_keuangan",
     institution: "OJK (Otoritas Jasa Keuangan)",
     country: "Indonesia",
-    title: "Indeks Literasi & Inklusi Keuangan Indonesia 2024",
+    title: "Edukasi & Perlindungan Konsumen OJK — Anti Pinjol Ilegal & Investasi Bodong",
     description:
-      "Survei OJK 2024 menunjukkan bahwa indeks literasi keuangan Indonesia berada di angka 65.43% — artinya lebih dari 1/3 penduduk Indonesia masih belum paham produk dan layanan keuangan. OJK menetapkan 5 pilar literasi keuangan: perencanaan keuangan, tabungan, asuransi, investasi, dan perlindungan konsumen.",
+      "OJK mengatur seluruh lembaga jasa keuangan di Indonesia dan menyediakan kanal Sikapi Uangmu untuk edukasi masyarakat. OJK secara tegas melarang skema ponzi, robot trading ilegal, dan pinjol tidak berizin.",
     keyPoints: [
-      "Perencanaan Keuangan: buat anggaran bulanan berdasarkan 5 pos (kebutuhan, cicilan, asuransi, tabungan, keinginan).",
-      "Produk Investasi Legal: hanya gunakan instrumen yang terdaftar OJK (SBN, reksa dana, saham di BEI).",
-      "Hindari Investasi Bodong: ciri utama — return tidak masuk akal, tidak berizin OJK.",
-      "SLIK OJK: cek riwayat kredit Anda di idDebtor.ojk.go.id sebelum mengajukan pinjaman.",
+      "Hanya gunakan platform investasi berizin resmi OJK (BEI, Bareksa, Bibit, Pluang, dll).",
+      "Waspadai ciri investasi bodong: menjanjikan return pasti tinggi tanpa risiko.",
+      "Cek histori kredit Anda di SLIK OJK (idDebtor.ojk.go.id) sebelum mengajukan pinjaman rumah.",
     ],
     applicability:
-      "Gunakan platform resmi OJK: Sikapiuangmu (edukasi), idDebtor.ojk.go.id (cek kredit), dan kontak OJK 157 untuk pengaduan.",
-    source: "OJK — Survei Nasional Literasi & Inklusi Keuangan 2024",
-    sourceUrl: "https://ojk.go.id/id/berita-dan-kegiatan/siaran-pers/Pages/Survei-Nasional-Literasi-dan-Inklusi-Keuangan-2024.aspx",
+      "Selalu gunakan prinsip 2L dari OJK: Legal (berizin resmi) & Logis (imbal hasil masuk akal). Hubungi Kontak OJK 157 untuk verifikasi.",
+    source: "OJK — Edukasi & Perlindungan Konsumen Indonesia",
+    sourceUrl: "https://sikapiuangmu.ojk.go.id",
     year: "2024",
-  },
-  {
-    id: "fpsb_cfp_standard",
-    institution: "FPSB Indonesia / FPA Indonesia",
-    country: "Indonesia",
-    title: "Standar CFP Indonesia — 6 Langkah Perencanaan Keuangan Profesional",
-    description:
-      "Financial Planning Standards Board (FPSB) Indonesia menetapkan standar perencanaan keuangan komprehensif (CFP) yang mencakup 6 tahap profesional: (1) Menetapkan hubungan klien-perencana, (2) Mengumpulkan data, (3) Analisis data, (4) Menyusun rekomendasi, (5) Mengimplementasikan, (6) Monitoring berkala.",
-    keyPoints: [
-      "Perencanaan keuangan bukan one-time activity — review setiap 6-12 bulan.",
-      "Rasio keuangan standar CFP: DSR <30%, Savings >20%, Emergency Fund 3-12 bulan.",
-      "Perencanaan komprehensif mencakup: arus kas, asuransi, investasi, pajak, pensiun, warisan.",
-      "CFP adalah gelar berstandar internasional yang bisa dicari di fpaindonesia.or.id.",
-    ],
-    applicability:
-      "Gunakan FinPlan ini sebagai digital CFP self-assessment. Untuk kasus kompleks (warisan, pajak, bisnis), konsultasikan dengan CFP berlisensi di fpaindonesia.or.id.",
-    source: "FPSB / FPA Indonesia — Standar Perencanaan Keuangan 2024",
-    sourceUrl: "https://fpaindonesia.or.id/",
-    year: "2024",
-  },
-  {
-    id: "bi_sjsn_bpjs",
-    institution: "Kementerian Keuangan & BPJS",
-    country: "Indonesia",
-    title: "Sistem Jaminan Sosial Nasional (SJSN) — Fondasi Proteksi Dasar",
-    description:
-      "UU No. 40/2004 mewajibkan seluruh WNI terdaftar dalam SJSN melalui BPJS Kesehatan dan BPJS Ketenagakerjaan. BPJS Ketenagakerjaan menyediakan 4 program: Jaminan Hari Tua (JHT), Jaminan Pensiun (JP), Jaminan Kecelakaan Kerja (JKK), dan Jaminan Kematian (JKm).",
-    keyPoints: [
-      "JHT BPJS Ketenagakerjaan: bisa dicairkan saat pensiun (57 tahun) atau resign (tunggu 1 bulan).",
-      "Pastikan perusahaan Anda mendaftarkan dan membayar iuran BPJS Ketenagakerjaan secara rutin.",
-      "BPJS Kesehatan wajib aktif — denda keterlambatan dua setengah persen dari biaya rawat inap.",
-      "Pekerja mandiri (freelancer/pengusaha) wajib daftar BPJS mandiri.",
-    ],
-    applicability:
-      "Cek status kepesertaan BPJS Anda di aplikasi Mobile JKN dan JMO (Jamsostek Mobile). Pastikan iuran BPJS Ketenagakerjaan tidak ada tunggakan karena mempengaruhi klaim JHT.",
-    source: "BPJS Ketenagakerjaan & BPJS Kesehatan — Panduan 2024",
-    sourceUrl: "https://www.bpjsketenagakerjaan.go.id",
-    year: "2024",
-  },
-  {
-    id: "ojk_keuangan_sehat",
-    institution: "OJK",
-    country: "Indonesia",
-    title: "Kerangka Keuangan Sehat OJK — Empat Pilar Utama",
-    description:
-      "Otoritas Jasa Keuangan (OJK) mendefinisikan keuangan sehat melalui 4 pilar utama: (1) Perencanaan keuangan, (2) Pengelolaan pendapatan dan pengeluaran, (3) Proteksi melalui asuransi, dan (4) Investasi untuk pertumbuhan aset. OJK telah menetapkan standar literasi keuangan nasional melalui SNLKI (Strategi Nasional Literasi Keuangan Indonesia).",
-    keyPoints: [
-      "Rasio tabungan minimum ≥20% dari total penghasilan bulanan bersih.",
-      "Debt Service Ratio (DSR) maksimal 30% dari penghasilan untuk keuangan sehat.",
-      "Dana darurat minimal 3-12 bulan pengeluaran (3 bln single, 6 bln keluarga kecil, 12 bln keluarga besar).",
-      "Asuransi jiwa minimal 8-10x penghasilan tahunan untuk breadwinner keluarga.",
-      "Alokasikan minimal 10% penghasilan untuk asuransi dan perlindungan risiko.",
-    ],
-    applicability:
-      "Gunakan SNLKI OJK sebagai benchmark dasar sebelum memilih produk keuangan apapun. Pastikan DSR ≤30%, simpan dana darurat di deposito/reksa dana pasar uang yang terpisah dari rekening operasional, dan lindungi diri dengan BPJS Kesehatan + asuransi jiwa swasta.",
-    source: "OJK — Strategi Nasional Literasi Keuangan Indonesia (SNLKI) 2021-2025",
-    sourceUrl: "https://ojk.go.id/id/berita-dan-kegiatan/siaran-pers/Pages/Strategi-Nasional-Literasi-Keuangan-Indonesia-(SNLKI)-2021-2025.aspx",
-    year: "2021",
-  },
-  {
-    id: "bi_financial_deepening",
-    institution: "Bank Indonesia",
-    country: "Indonesia",
-    title: "Bank Indonesia — Pilar Pendalaman Pasar Keuangan & Inklusi Keuangan",
-    description:
-      "Bank Indonesia (BI) mendorong inklusi keuangan melalui program QRIS, SBN (Surat Berharga Negara) ritel, dan pengembangan pasar obligasi lokal. BI menetapkan target inflasi 2.5±1% per tahun sebagai acuan perencanaan keuangan jangka panjang.",
-    keyPoints: [
-      "Gunakan target inflasi BI (2.5±1%/tahun) sebagai asumsi dasar kalkulasi FIRE dan dana pendidikan.",
-      "SBN Ritel (ORI, SBR, Sukuk Ritel) menawarkan imbal hasil kompetitif dengan risiko sangat rendah (dijamin pemerintah).",
-      "QRIS dan perbankan digital memudahkan diversifikasi dan otomasi investasi rutin.",
-      "Investasi pada instrumen berbasis Rupiah melindungi dari risiko kurs bagi mayoritas pengeluaran di Indonesia.",
-      "Obligasi korporasi investment grade Indonesia menawarkan yield premium atas SBN.",
-    ],
-    applicability:
-      "Alokasikan 10-20% portofolio ke SBN Ritel (ORI/SBR) sebagai anchor yield rendah risiko. Gunakan asumsi inflasi 3-4% (konservatif) untuk proyeksi biaya pendidikan, biaya hidup pensiun, dan aset properti jangka panjang.",
-    source: "Bank Indonesia — Laporan Kebijakan Moneter & Rencana Strategis Inklusi Keuangan",
-    sourceUrl: "https://www.bi.go.id/id/publikasi/laporan/Pages/LPI_2023.aspx",
-    year: "2023",
-  },
-  {
-    id: "fpsb_cfp_indonesia",
-    institution: "FPSB Indonesia",
-    country: "Indonesia",
-    title: "FPSB — Framework CFP Indonesia: Proses 7 Langkah Perencanaan Keuangan",
-    description:
-      "Financial Planning Standards Board (FPSB) Indonesia menetapkan standar CFP (Certified Financial Planner) yang diakui internasional. Framework CFP mencakup 7 proses sistematis: (1) Bangun hubungan dengan klien, (2) Kumpulkan data & tujuan, (3) Analisis situasi keuangan, (4) Susun rekomendasi, (5) Presentasikan rencana, (6) Implementasikan, (7) Monitor & review berkala.",
-    keyPoints: [
-      "Perencanaan keuangan harus bersifat holistik: mencakup cashflow, investasi, pajak, asuransi, dan warisan.",
-      "Tujuan keuangan SMART: Specific, Measurable, Achievable, Relevant, Time-bound.",
-      "Review rencana keuangan minimal 1x per tahun atau saat ada perubahan kehidupan besar.",
-      "Diversifikasi portofolio berdasarkan profil risiko (konservatif/moderat/agresif) dan time horizon.",
-      "Pajak penghasilan final 15% untuk kupon SBN, 10% untuk dividen saham — hitung net-of-tax yield.",
-    ],
-    applicability:
-      "Gunakan framework CFP ini sebagai pedoman sistematis setiap tahun. Jadwalkan 'financial check-up' tahunan untuk mereview apakah alokasi aset, target goals, dan coverage asuransi masih sesuai dengan kondisi hidup Anda.",
-    source: "FPSB Indonesia — Standar Kompetensi & Etika CFP® Indonesia",
-    sourceUrl: "https://fpaindonesia.or.id/profesi-cfp/standar-kompetensi/",
-    year: "2022",
   },
   {
     id: "bpjs_protection_layer",
-    institution: "BPJS",
+    institution: "BPJS Kesehatan & BPJS Ketenagakerjaan",
     country: "Indonesia",
-    title: "BPJS — Lapisan Perlindungan Sosial Dasar: Kesehatan & Ketenagakerjaan",
+    title: "Sistem Jaminan Sosial Nasional (SJSN) — Perlindungan Dasar Warga Negara",
     description:
-      "BPJS Kesehatan dan BPJS Ketenagakerjaan merupakan fondasi wajib perlindungan sosial di Indonesia. BPJS Ketenagakerjaan mencakup: JHT (Jaminan Hari Tua), JP (Jaminan Pensiun), JKK (Jaminan Kecelakaan Kerja), JKm (Jaminan Kematian), dan JKP (Jaminan Kehilangan Pekerjaan).",
+      "BPJS Kesehatan dan Ketenagakerjaan (JHT, JP, JKK, JKm) merupakan lapisan proteksi lantai dasar (safety floor) yang wajib dimiliki sebelum membeli produk asuransi swasta komersial.",
     keyPoints: [
-      "BPJS Kesehatan: Pastikan iuran aktif — lindungi dari risiko biaya RS yang bisa mencapai ratusan juta rupiah.",
-      "JHT BPJS Ketenagakerjaan: Saldo bisa dicairkan setelah usia 56 tahun atau resign.",
-      "JP BPJS Ketenagakerjaan: Manfaat bulanan pensiun ± 0.5-3% gaji terakhir per tahun masa kerja.",
-      "Karyawan mandiri/freelancer bisa mendaftar BPJS mandiri — jangan lewatkan manfaat JHT & JKK.",
-      "BPJS hanya merupakan lapisan pertama (floor protection) — tambahkan asuransi swasta sebagai lapisan kedua.",
+      "BPJS Kesehatan wajib aktif untuk seluruh anggota keluarga guna mencegah risiko biaya rawat inap ratusan juta.",
+      "JHT (Jaminan Hari Tua) & JP (Jaminan Pensiun) adalah aset tabungan wajib karyawan yang dijamin negara.",
+      "Pekerja mandiri/freelancer wajib mendaftar program BPJS Ketenagakerjaan BPU (Bukan Penerima Upah).",
     ],
     applicability:
-      "Pastikan BPJS Kesehatan dan BPJS Ketenagakerjaan aktif sebelum membeli produk asuransi swasta apapun. Tambahkan asuransi jiwa swasta (min. 8-10x income/tahun) dan asuransi penyakit kritis sebagai lapisan pelengkap.",
-    source: "BPJS Ketenagakerjaan — Panduan Program & Manfaat Peserta",
-    sourceUrl: "https://www.bpjsketenagakerjaan.go.id/informasi-program.html",
-    year: "2023",
+      "Pastikan status BPJS keluarga aktif 100%. Lengkapi dengan asuransi jiwa swasta sebagai lapisan proteksi tambahan bagi pencari nafkah utama.",
+    source: "BPJS Ketenagakerjaan & BPJS Kesehatan Indonesia",
+    sourceUrl: "https://www.bpjsketenagakerjaan.go.id",
+    year: "2024",
   },
 ];
 
-// ─── Financial Formulas ───────────────────────────────────────────────────────
+// ─── Mathematical Formulas (Kalkulator & Metrik FinPlan) ──────────────────────
 
 export const financialFormulas = [
   {
+    id: "margin_of_safety_cf",
+    name: "Rumus Margin of Safety Cash Flow (Benjamin Graham)",
+    formula: "Margin of Safety (%) = ((Total Income − Biaya Pokok Survival) ÷ Total Income) × 100%",
+    example:
+      "Income keluarga Rp 19,2 Jt dan biaya kebutuhan pokok Rp 9,6 Jt → Margin of Safety = ((19,2 − 9,6) ÷ 19,2) × 100% = 50.0% (Sangat Kokoh!).",
+    explanation:
+      "Mengukur persentase ruang penyangga kas keluarga. Semakin tinggi persentase ini, semakin tahan keluarga Anda terhadap risiko PHK, penurunan omzet, atau kenaikan inflasi.",
+    source: "The Intelligent Investor — Benjamin Graham (Bab 20)",
+    sourceUrl: "https://www.investmenttheory.org",
+  },
+  {
+    id: "life_energy_vicki",
+    name: "Rumus Life Energy & Upah Riil per Jam (Vicki Robin)",
+    formula: "Upah Riil per Jam = Income Bersih Bulanan ÷ Total Jam Kerja Nyata (Kerja + Komuter)",
+    example:
+      "Gaji Rp 14,7 Jt dengan 200 jam kerja/komuter = Rp 73.500/jam. Barang seharga Rp 735.000 = Anda menukar 10 jam waktu hidup Anda!",
+    explanation:
+      "Mengkonversi rupiah ke satuan jam kehidupan manusia, memberikan rem psikologis alami untuk menghindari pembelian barang yang tidak memberi nilai sepadan.",
+    source: "Your Money or Your Life — Vicki Robin & Joe Dominguez",
+    sourceUrl: "https://yourmoneyoryourlife.com/",
+  },
+  {
+    id: "expected_net_worth",
+    name: "Rumus Expected Net Worth & PAW Status (Stanley & Danko)",
+    formula: "Target Net Worth Ideal = (Usia × Total Income Tahunan) ÷ 10",
+    example:
+      "Usia 30 tahun dengan income Rp 230 Jt/tahun → Target Net Worth = (30 × 230 Jt) ÷ 10 = Rp 690 Juta. Jika aset bersih Anda ≥ Rp 1,38 Miliar, Anda adalah PAW (Prodigious Accumulator of Wealth).",
+    explanation:
+      "Tolok ukur kekayaan riil karya Dr. Thomas J. Stanley untuk membedakan orang yang benar-benar kaya (balance-sheet affluent) dengan yang sekadar bergaya mewah (income affluent).",
+    source: "The Millionaire Next Door — Dr. Thomas J. Stanley (1996)",
+    sourceUrl: "https://www.themillionairenextdoor.com/",
+  },
+  {
+    id: "rule_25x_fire",
+    name: "Rumus Rule of 25× & Financial Independence (JL Collins / Trinity Study)",
+    formula: "Target FI Number = Pengeluaran Tahunan × 25 (Berdasarkan 4% Safe Withdrawal Rate)",
+    example:
+      "Pengeluaran keluarga Rp 15 Jt/bulan (Rp 180 Jt/tahun) → Target Aset Mandiri = Rp 180 Jt × 25 = Rp 4,5 Miliar. Dengan portofolio Rp 4,5 Miliar menghasilkan return 7-8%, keluarga bisa hidup mandiri selamanya.",
+    explanation:
+      "Rumus ilmiah gerak kemerdekaan finansial yang membuktikan berapa banyak portofolio investable yang dibutuhkan untuk menutup seluruh biaya hidup tanpa menggerus modal pokok.",
+    source: "Trinity Study (1998) & Simple Path to Wealth (JL Collins)",
+    sourceUrl: "https://jlcollinsnh.com/",
+  },
+  {
     id: "rule_72",
-    name: "Rule of 72 (Rumus Penggandaan Uang)",
+    name: "Rule of 72 (Rumus Waktu Penggandaan Uang Compounding)",
     formula: "Tahun Penggandaan = 72 ÷ Return Tahunan (%)",
     example:
-      "Jika investasi memberi imbal hasil 12% per tahun (cth: Saham/Index), uang Anda akan berlipat ganda 2x lipat dalam waktu 72 ÷ 12 = 6 tahun!",
+      "Jika investasi SBN/Indeks memberi imbal hasil 7.2% per tahun, modal Anda berlipat ganda 2× lipat dalam waktu 72 ÷ 7.2 = 10 tahun!",
     explanation:
-      "Aturan matematis praktis untuk mengetahui berapa tahun yang dibutuhkan uang Anda untuk menjadi 2x lipat tanpa kalkulator rumit.",
-    source: "Albert Einstein (dipopulerkan) — Prinsip Compound Interest",
+      "Aturan praktis untuk menghitung kecepatan compounding aset tanpa perlu kalkulator finansial rumit.",
+    source: "Albert Einstein (dipopulerkan) — Compound Interest Principle",
     sourceUrl: "https://www.investopedia.com/terms/r/ruleof72.asp",
   },
   {
-    id: "future_inflation",
-    name: "Rumus Nilai Masa Depan Terkikis Inflasi (Future Value)",
-    formula: "FV = Biaya Sekarang × (1 + Tingkat Inflasi)^Tahun",
+    id: "wealth_acceleration",
+    name: "Indeks Akselerasi Kekayaan (Wealth Acceleration Rate)",
+    formula: "Akselerasi Rate (%) = (Kenaikan Surplus Bulanan ÷ Kenaikan Total Income) × 100%",
     example:
-      "Uang kuliah Rp 100 Juta saat ini, dengan inflasi pendidikan 10% per tahun, dalam 10 tahun ke depan akan menjadi Rp 100 Jt × (1 + 0.10)^10 = Rp 259,37 Juta!",
+      "Gaji naik Rp 5 Jt (dari Rp 19 Jt ke Rp 24 Jt). Jika surplus tabungan naik Rp 4 Jt, Akselerasi Rate = (4 ÷ 5) × 100% = 80.0% (Sangat Sehat, Anti-Lifestyle Creep!).",
     explanation:
-      "Alasan mengapa menaruh seluruh uang di tabungan biasa dengan bunga 0.1% membuat nilai riil kekayaan Anda tergerus setiap tahun.",
-    source: "Prinsip Time Value of Money — CFA Institute",
-    sourceUrl: "https://www.cfainstitute.org/",
-  },
-  {
-    id: "net_worth_target",
-    name: "Rumus Target Kekayaan Bersih Ideal (The Millionaire Next Door)",
-    formula: "Target Net Worth = (Usia × Total Penghasilan Tahunan) ÷ 10",
-    example:
-      "Jika Anda berusia 30 tahun dengan penghasilan Rp 120 Juta/tahun, target kekayaan bersih ideal Anda saat ini adalah (30 × Rp 120 Jt) ÷ 10 = Rp 360 Juta.",
-    explanation:
-      "Tolok ukur standar internasional karya Dr. Thomas J. Stanley untuk menguji apakah Anda seorang Accumulator of Wealth (PAW) yang handal.",
-    source: "The Millionaire Next Door — Dr. Thomas J. Stanley (1996)",
-    sourceUrl: "https://www.amazon.com/Millionaire-Next-Door-Surprising-Americas/dp/1589795474",
-  },
-  {
-    id: "fire_number",
-    name: "Rumus FIRE Number — Target Dana Pensiun",
-    formula: "FIRE Number = Pengeluaran Tahunan × 25 (Aturan 4%)",
-    example:
-      "Jika pengeluaran bulanan Anda Rp 10 Jt (Rp 120 Jt/tahun), FIRE Number Anda = Rp 120 Jt × 25 = Rp 3 Miliar. Dengan portofolio Rp 3 Miliar dan withdrawal rate 4%/tahun, Anda bisa pensiun selamanya.",
-    explanation:
-      "Aturan 4% (Trinity Study) menyatakan bahwa portofolio investasi bisa bertahan seumur hidup jika Anda menarik maksimal 4% per tahun dari total nilai portofolio.",
-    source: "Trinity Study (1998) — William Bengen, CFP",
-    sourceUrl: "https://www.investopedia.com/terms/f/four-percent-rule.asp",
+      "Mengukur ketahanan keluarga terhadap 'lifestyle inflation'. Menjaga agar kenaikan gaji tidak habis ditelan gaya hidup.",
+    source: "Morgan Housel — Collaborative Fund",
+    sourceUrl: "https://collabfund.com/blog/the-psychology-of-money/",
   },
 ];
-

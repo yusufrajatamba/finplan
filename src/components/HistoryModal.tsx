@@ -38,17 +38,17 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150">
       <div className="bg-white dark:bg-slate-900 rounded-3xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-blue-900/60 flex items-center justify-between bg-[#002266] text-white">
           <div className="flex items-center space-x-3">
-            <div className="p-2 rounded-xl bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-400">
+            <div className="p-2 rounded-xl bg-[#0055B8] text-white border border-blue-400/30">
               <History className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="font-bold text-slate-900 dark:text-white text-base">
-                History Profiling & Sesi Perencanaan
+              <h2 className="font-bold text-white text-base">
+                Arsip & Riwayat Profiling Nasabah
               </h2>
-              <p className="text-xs text-slate-500">
-                Daftar {history.length} profil perorangan/keluarga yang tersimpan
+              <p className="text-xs text-blue-200">
+                Daftar {history.length} snapshot sesi perencanaan finansial yang tersimpan lokal
               </p>
             </div>
           </div>
@@ -67,7 +67,7 @@ export const HistoryModal: React.FC<HistoryModalProps> = ({
             )}
             <button
               onClick={onClose}
-              className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+              className="p-2 text-blue-200 hover:text-white rounded-xl hover:bg-white/10 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>

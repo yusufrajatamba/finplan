@@ -50,7 +50,7 @@ export const AIChatModal: React.FC<AIChatModalProps> = ({
     {
       id: "welcome",
       role: "assistant",
-      content: `Halo **${profile.fullName || "Sobat FinPlan"}**! 👋 Saya adalah **Coach FinPlan Bot** bersertifikasi CFP & OJK.\n\nSeluruh data keuangan, cicilan, dan target Anda telah tersambung. **Pilih topik pertanyaan di bawah** untuk mendapatkan analisis dan rekomendasi langkah aksi finansial yang tepat untuk Anda.`,
+      content: `Selamat datang di **Layanan Konsultasi FinPlan CFP®**, **${profile.fullName || "Bapak/Ibu"}**! 👋\n\nSeluruh data profil, arus kas, kewajiban utang, dan target finansial Anda telah terhubung secara terenkripsi. Silakan pilih topik di bawah ini untuk mendapatkan rekomendasi dan analisis perencanaan keuangan objektif sesuai kaidah Certified Financial Planner (CFP®) & standar OJK.`,
       timestamp: new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" }),
     },
   ]);
@@ -106,7 +106,7 @@ export const AIChatModal: React.FC<AIChatModalProps> = ({
       icon: Compass,
       questions: [
         "Berapa modal yang dibutuhkan untuk pensiun aman dengan aturan SWR 4% Trinity Study?",
-        "Bagaimana membagi 11 pos anggaran agar tidak ada uang yang bocor halus?",
+        "Bagaimana membagi pos anggaran agar tidak ada uang yang bocor halus?",
       ],
     },
   ];
@@ -215,7 +215,7 @@ export const AIChatModal: React.FC<AIChatModalProps> = ({
       const assistantMsg: AIChatMessage = {
         id: `assistant_${Date.now()}`,
         role: "assistant",
-        content: `Evaluasi CFP untuk ${profile.fullName || "Klien"}: Berdasarkan total pemasukan Rp ${((cashflow.monthlyMainIncome || 0) + (cashflow.monthlySideIncome || 0)).toLocaleString("id-ID")}/bln, pastikan dana darurat minimal 6x pengeluaran pokok telah aman di RDPU dan batas total cicilan tidak melampaui 30% pendapatan bulanan.`,
+        content: `Evaluasi CFP untuk ${profile.fullName || "Nasabah"}: Berdasarkan total pemasukan Rp ${((cashflow.monthlyMainIncome || 0) + (cashflow.monthlySideIncome || 0)).toLocaleString("id-ID")}/bln, pastikan alokasi dana darurat minimal 6x pengeluaran telah aman di instrumen likuid (RDPU/Tabungan) dan batas total cicilan tidak melampaui 30% pendapatan bulanan.`,
         timestamp: new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" }),
       };
       setMessages((prev) => [...prev, assistantMsg]);
@@ -232,30 +232,32 @@ export const AIChatModal: React.FC<AIChatModalProps> = ({
         {/* Toast Notification */}
         {toastMessage && (
           <div className="absolute top-16 left-1/2 -translate-x-1/2 z-60 px-4 py-2 rounded-xl bg-slate-900 text-white text-xs font-semibold shadow-xl border border-white/20 flex items-center space-x-2 animate-bounce">
-            <Sparkles className="w-4 h-4 text-amber-400" />
+            <ShieldCheck className="w-4 h-4 text-emerald-400" />
             <span>{toastMessage}</span>
           </div>
         )}
 
         {/* Modal Header */}
-        <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-gradient-to-r from-purple-700 via-indigo-700 to-slate-900 text-white">
+        <div className="px-6 py-4 border-b border-blue-900/60 flex items-center justify-between bg-[#002266] text-white">
           <div className="flex items-center space-x-3">
-            <div className="p-2.5 rounded-2xl bg-white/20 backdrop-blur-xs">
-              <Bot className="w-5 h-5 text-white" />
+            <div className="p-2.5 rounded-2xl bg-[#0055B8] border border-blue-400/30">
+              <ShieldCheck className="w-5 h-5 text-white" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <h2 className="font-bold text-base">CFP Financial Bot & Konsultan AI</h2>
-                <span className="px-2 py-0.5 rounded-full bg-emerald-400/30 text-emerald-100 text-[10px] font-bold">
-                  Data Terverifikasi
+                <h2 className="font-bold text-base">Halo FinPlan — Penasihat Finansial CFP®</h2>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold border border-emerald-500/40">
+                  Standar OJK
                 </span>
               </div>
-              <p className="text-xs text-purple-200">Panduan terstruktur berbasis data riil keuangan Anda</p>
+              <p className="text-xs text-blue-200">
+                Konsultasi interaktif perencanaan keuangan, cicilan KPR, dan alokasi investasi
+              </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-white/80 hover:text-white rounded-xl hover:bg-white/10 cursor-pointer"
+            className="p-2 text-blue-200 hover:text-white rounded-xl hover:bg-white/10 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>

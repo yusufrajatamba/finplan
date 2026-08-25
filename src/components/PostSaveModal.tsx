@@ -38,7 +38,7 @@ export const PostSaveModal: React.FC<PostSaveModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150">
       <div className="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full flex flex-col shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-        {/* Header with Green Accent */}
+        {/* Header with Blue Accent */}
         <div className="px-6 pt-6 pb-4 text-center border-b border-slate-100 dark:border-slate-800 relative">
           <button
             onClick={onClose}
@@ -47,15 +47,15 @@ export const PostSaveModal: React.FC<PostSaveModalProps> = ({
             <X className="w-5 h-5" />
           </button>
 
-          <div className="w-14 h-14 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto mb-3 shadow-inner">
+          <div className="w-14 h-14 rounded-2xl bg-blue-100 dark:bg-blue-950 text-[#003399] dark:text-blue-300 flex items-center justify-center mx-auto mb-3 shadow-inner border border-blue-200 dark:border-blue-800">
             <CheckCircle2 className="w-8 h-8" />
           </div>
 
           <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
-            Profil Berhasil Disimpan ke History!
+            Snapshot Profiling Berhasil Disimpan!
           </h2>
           <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
-            Snapshot rencana keuangan untuk <b>{profile.fullName || "Klien"}</b> telah diarsipkan secara aman.
+            Dokumen perencanaan keuangan untuk <b>{profile.fullName || "Nasabah"}</b> telah tersimpan di arsip riwayat browser.
           </p>
         </div>
 

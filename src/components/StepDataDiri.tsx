@@ -109,28 +109,28 @@ export const StepDataDiri: React.FC<StepDataDiriProps> = ({
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-6 sm:p-8 text-white shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-semibold mb-3">
-            <User className="w-3.5 h-3.5" />
-            <span>Langkah 1 dari 8 • Profiling Lengkap</span>
+      <div className="bg-gradient-to-r from-[#003399] via-[#0047BA] to-[#0055B8] rounded-2xl p-5 sm:p-6 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-blue-800/40">
+        <div className="space-y-1.5 flex-1">
+          <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-sm text-xs font-bold border border-white/20">
+            <User className="w-3.5 h-3.5 text-blue-200" />
+            <span>Langkah 1 dari 7 • Profiling Nasabah</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Informasi Data Diri & Rencana Kehidupan
+          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+            Data Diri & Profil Keluarga
           </h1>
-          <p className="text-emerald-100 text-sm sm:text-base mt-2 leading-relaxed">
-            Data pribadi, rencana domisili, kemampuan, dan kondisi kesehatan Anda menjadi fondasi vital bagi AI untuk menghitung kebutuhan proteksi jiwa, pos anggaran tempat tinggal, dan kapasitas earning power.
+          <p className="text-blue-100/90 text-xs sm:text-sm leading-relaxed max-w-4xl">
+            Informasi pribadi, rencana tempat tinggal, dan profil tanggungan keluarga untuk analisis kebutuhan proteksi jiwa serta alokasi dana darurat standar CFP® & OJK.
           </p>
         </div>
 
         {onAddNewProfile && (
-          <div className="shrink-0 flex items-center">
+          <div className="shrink-0">
             <button
               onClick={onAddNewProfile}
-              className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-bold border border-white/25 shadow-sm transition-all cursor-pointer"
+              className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-bold border border-white/25 shadow-xs transition-all cursor-pointer"
               title="Buat profil baru untuk orang yang berbeda"
             >
-              <UserPlus className="w-4 h-4 text-emerald-200" />
+              <UserPlus className="w-4 h-4 text-blue-200" />
               <span>+ Profil Baru</span>
             </button>
           </div>
@@ -142,12 +142,12 @@ export const StepDataDiri: React.FC<StepDataDiriProps> = ({
         {/* Card 1: Identitas & Keluarga */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-5">
           <div className="flex items-center space-x-3 pb-3 border-b border-slate-100 dark:border-slate-800">
-            <div className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400">
+            <div className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-[#003399] dark:text-blue-400">
               <User className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="font-semibold text-slate-900 dark:text-white">Identitas & Status Keluarga</h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Profil demografi dasar</p>
+              <h2 className="font-bold text-slate-900 dark:text-white text-base">Identitas & Status Keluarga</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Profil demografi dasar nasabah</p>
             </div>
           </div>
 
@@ -299,11 +299,11 @@ export const StepDataDiri: React.FC<StepDataDiriProps> = ({
         {/* Card 2: Tempat Tinggal & Rencana Domisili */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-5">
           <div className="flex items-center space-x-3 pb-3 border-b border-slate-100 dark:border-slate-800">
-            <div className="p-2 rounded-xl bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400">
+            <div className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-[#003399] dark:text-blue-400">
               <MapPin className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="font-semibold text-slate-900 dark:text-white">Tempat Tinggal & Domisili</h2>
+              <h2 className="font-bold text-slate-900 dark:text-white text-base">Tempat Tinggal & Domisili</h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">Kondisi saat ini & rencana hunian masa depan</p>
             </div>
           </div>
@@ -370,12 +370,12 @@ export const StepDataDiri: React.FC<StepDataDiriProps> = ({
         {/* Card 3: Kemampuan, Bakat & Minat */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-5">
           <div className="flex items-center space-x-3 pb-3 border-b border-slate-100 dark:border-slate-800">
-            <div className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+            <div className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-[#003399] dark:text-blue-400">
               <Award className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="font-semibold text-slate-900 dark:text-white">Kemampuan, Bakat & Minat</h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Potensi penghasilan sampingan & passion</p>
+              <h2 className="font-bold text-slate-900 dark:text-white text-base">Kemampuan, Bakat & Minat</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Potensi penghasilan sampingan & earning power</p>
             </div>
           </div>
 
@@ -468,11 +468,11 @@ export const StepDataDiri: React.FC<StepDataDiriProps> = ({
         {/* Card 4: Kondisi Kesehatan & Proteksi */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-5">
           <div className="flex items-center space-x-3 pb-3 border-b border-slate-100 dark:border-slate-800">
-            <div className="p-2 rounded-xl bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400">
+            <div className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-[#003399] dark:text-blue-400">
               <Heart className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="font-semibold text-slate-900 dark:text-white">Kondisi Kesehatan & Proteksi</h2>
+              <h2 className="font-bold text-slate-900 dark:text-white text-base">Kondisi Kesehatan & Proteksi</h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">Analisis risiko kesehatan & asuransi</p>
             </div>
           </div>
@@ -549,9 +549,9 @@ export const StepDataDiri: React.FC<StepDataDiriProps> = ({
       <div className="flex justify-end pt-4">
         <button
           onClick={onNext}
-          className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md shadow-emerald-500/20 hover:scale-[1.02] transition-all cursor-pointer"
+          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#003399] hover:bg-[#002266] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
         >
-          <span>Lanjut ke Langkah 2: Profile Keuangan</span>
+          <span>Lanjut ke Langkah 2: Arus Kas & Aset</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

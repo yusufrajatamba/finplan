@@ -879,3 +879,185 @@ export function generateDeterministicFinancialPlan(data: {
     strategicMilestones,
   };
 }
+
+// ─── Mathematical Helpers for Global Gurus & OJK Framework ───────────────────
+
+export interface LifeEnergyResult {
+  realHourlyWage: number;
+  hoursRequired: number;
+  daysRequired: number;
+  reflectionMessage: string;
+}
+
+export function calculateLifeEnergy(
+  monthlyIncome: number,
+  monthlyWorkHours: number = 200,
+  expenseAmount: number = 0
+): LifeEnergyResult {
+  const safeIncome = Math.max(1, monthlyIncome);
+  const safeHours = Math.max(1, monthlyWorkHours);
+  const realHourlyWage = safeIncome / safeHours;
+  const hoursRequired = expenseAmount / realHourlyWage;
+  const daysRequired = hoursRequired / 8;
+
+  let reflectionMessage = "";
+  if (hoursRequired < 1) {
+    reflectionMessage = "Pengeluaran ringan — setara kurang dari 1 jam kerja Anda.";
+  } else if (hoursRequired <= 8) {
+    reflectionMessage = `Pengeluaran ini setara dengan ${hoursRequired.toFixed(1)} jam (sekitar ${daysRequired.toFixed(1)} hari kerja penuh) waktu hidup Anda.`;
+  } else if (hoursRequired <= 40) {
+    reflectionMessage = `Pengeluaran ini setara dengan ${daysRequired.toFixed(1)} hari kerja (${(hoursRequired / 40).toFixed(1)} minggu jam kerja Anda). Pastikan memberi nilai bermakna!`;
+  } else {
+    reflectionMessage = `Pengeluaran besar: setara dengan ${(hoursRequired / 160).toFixed(1)} bulan waktu hidup Anda. Pertimbangkan matang-matang!`;
+  }
+
+  return {
+    realHourlyWage: Math.round(realHourlyWage),
+    hoursRequired: parseFloat(hoursRequired.toFixed(1)),
+    daysRequired: parseFloat(daysRequired.toFixed(1)),
+    reflectionMessage,
+  };
+}
+
+export interface MarginOfSafetyResult {
+  marginAmount: number;
+  marginPercent: number;
+  status: "Sangat Kokoh (Aman)" | "Cukup Sehat" | "Riskan (Zero Margin)";
+  statusColor: string;
+  recommendation: string;
+}
+
+export function calculateMarginOfSafety(
+  totalIncome: number,
+  baselineLivingCost: number
+): MarginOfSafetyResult {
+  if (totalIncome <= 0) {
+    return {
+      marginAmount: 0,
+      marginPercent: 0,
+      status: "Riskan (Zero Margin)",
+      statusColor: "text-rose-600",
+      recommendation: "Pemasukan belum terisi atau nol.",
+    };
+  }
+
+  const marginAmount = Math.max(0, totalIncome - baselineLivingCost);
+  const marginPercent = (marginAmount / totalIncome) * 100;
+
+  let status: MarginOfSafetyResult["status"] = "Riskan (Zero Margin)";
+  let statusColor = "text-rose-600";
+  let recommendation = "";
+
+  if (marginPercent >= 35) {
+    status = "Sangat Kokoh (Aman)";
+    statusColor = "text-emerald-600 dark:text-emerald-400";
+    recommendation = `Margin kas keluarga sangat aman (${marginPercent.toFixed(1)}%). Sisa surplus Rp ${marginAmount.toLocaleString("id-ID")}/bln memberi daya tahan kuat terhadap risiko krisis.`;
+  } else if (marginPercent >= 15) {
+    status = "Cukup Sehat";
+    statusColor = "text-amber-600 dark:text-amber-400";
+    recommendation = `Margin kas keluarga moderat (${marginPercent.toFixed(1)}%). Kurangi pengeluaran sekunder untuk mempertebal bantalan pengaman kas.`;
+  } else {
+    status = "Riskan (Zero Margin)";
+    statusColor = "text-rose-600 dark:text-rose-400";
+    recommendation = `Margin kas terlalu tipis (${marginPercent.toFixed(1)}%). Keluarga berisiko mengalami defisit jika ada kenaikan inflasi atau kejadian tak terduga.`;
+  }
+
+  return {
+    marginAmount,
+    marginPercent: parseFloat(marginPercent.toFixed(1)),
+    status,
+    statusColor,
+    recommendation,
+  };
+}
+
+export interface ExpectedNetWorthResult {
+  expectedNetWorth: number;
+  actualNetWorth: number;
+  wealthRatio: number;
+  category: "Prodigious Accumulator of Wealth (PAW)" | "Average Accumulator of Wealth (AAW)" | "Under Accumulator of Wealth (UAW)";
+  categoryBadge: string;
+  explanation: string;
+}
+
+export function calculateExpectedNetWorth(
+  age: number,
+  annualIncome: number,
+  actualNetWorth: number
+): ExpectedNetWorthResult {
+  const safeAge = Math.max(18, age || 25);
+  const expectedNetWorth = Math.round((safeAge * Math.max(0, annualIncome)) / 10);
+  const wealthRatio = expectedNetWorth > 0 ? actualNetWorth / expectedNetWorth : 0;
+
+  let category: ExpectedNetWorthResult["category"] = "Average Accumulator of Wealth (AAW)";
+  let categoryBadge = "bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300";
+  let explanation = "";
+
+  if (wealthRatio >= 2.0) {
+    category = "Prodigious Accumulator of Wealth (PAW)";
+    categoryBadge = "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300";
+    explanation = "Luar biasa! Kekayaan bersih Anda ≥ 2× tolok ukur ideal. Anda adalah pembangun aset sejati (Balance-Sheet Affluent) berdisiplin tinggi.";
+  } else if (wealthRatio >= 0.5) {
+    category = "Average Accumulator of Wealth (AAW)";
+    categoryBadge = "bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300";
+    explanation = "Kekayaan bersih Anda berada di kisaran wajar rata-rata. Terus tingkatkan saving rate untuk melompat ke kategori PAW.";
+  } else {
+    category = "Under Accumulator of Wealth (UAW)";
+    categoryBadge = "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300";
+    explanation = "Kekayaan bersih Anda masih di bawah 0.5× target ideal usia Anda. Fokus pada pelunasan utang dan akumulasi aset tabungan & investasi.";
+  }
+
+  return {
+    expectedNetWorth,
+    actualNetWorth,
+    wealthRatio: parseFloat(wealthRatio.toFixed(2)),
+    category,
+    categoryBadge,
+    explanation,
+  };
+}
+
+export interface RuleOf25xResult {
+  annualLivingCost: number;
+  fiTargetNumber: number;
+  currentInvestments: number;
+  progressPercent: number;
+  estimatedYearsToFI: number;
+  monthlyPassiveIncomeAtFI: number;
+}
+
+export function calculateRuleOf25x(
+  annualLivingCost: number,
+  currentInvestments: number,
+  monthlySavings: number,
+  annualReturn: number = 0.07
+): RuleOf25xResult {
+  const safeAnnualCost = Math.max(12_000_000, annualLivingCost);
+  const fiTargetNumber = safeAnnualCost * 25;
+  const currentInv = Math.max(0, currentInvestments);
+  const progressPercent = Math.min(100, (currentInv / fiTargetNumber) * 100);
+  const monthlyPassiveIncomeAtFI = Math.round((fiTargetNumber * 0.04) / 12);
+
+  // Approximate years to reach target with monthly compound savings
+  let estimatedYearsToFI = 30;
+  if (monthlySavings > 0) {
+    const monthlyRate = annualReturn / 12;
+    let balance = currentInv;
+    let months = 0;
+    while (balance < fiTargetNumber && months < 600) {
+      balance = balance * (1 + monthlyRate) + monthlySavings;
+      months++;
+    }
+    estimatedYearsToFI = Math.round(months / 12);
+  }
+
+  return {
+    annualLivingCost: safeAnnualCost,
+    fiTargetNumber,
+    currentInvestments: currentInv,
+    progressPercent: parseFloat(progressPercent.toFixed(1)),
+    estimatedYearsToFI,
+    monthlyPassiveIncomeAtFI,
+  };
+}
+

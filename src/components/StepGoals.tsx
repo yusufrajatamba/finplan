@@ -158,19 +158,17 @@ export const StepGoals: React.FC<StepGoalsProps> = ({
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-purple-600 to-indigo-700 rounded-2xl p-6 sm:p-8 text-white shadow-lg">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-semibold mb-3">
-            <Target className="w-3.5 h-3.5" />
-            <span>Langkah 4 dari 8 • Target & Goals Impian</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Target Keuangan, Hunian, Kendaraan & Pendidikan Anak
-          </h1>
-          <p className="text-purple-100 text-sm sm:text-base mt-2 leading-relaxed">
-            Tentukan tujuan finansial jangka pendek dan panjang Anda. AI akan menghitung alokasi tabungan bulanan yang diperlukan dan memilihkan instrumen investasi yang paling sesuai.
-          </p>
+      <div className="bg-gradient-to-r from-[#003399] via-[#0047BA] to-[#0055B8] rounded-2xl p-5 sm:p-6 text-white shadow-md border border-blue-800/40 space-y-1.5">
+        <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-sm text-xs font-bold border border-white/20">
+          <Target className="w-3.5 h-3.5 text-blue-200" />
+          <span>Langkah 4 dari 7 • Target Finansial</span>
         </div>
+        <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+          Target Finansial & Sasaran Masa Depan
+        </h1>
+        <p className="text-blue-100/90 text-xs sm:text-sm leading-relaxed max-w-4xl">
+          Tentukan sasaran dana darurat, pembelian hunian, kendaraan, dana pendidikan anak, hingga rencana pensiun mandiri sesuai standar CFP® & OJK.
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -653,17 +651,17 @@ export const StepGoals: React.FC<StepGoalsProps> = ({
       <div className="flex justify-between items-center pt-4">
         <button
           onClick={onPrev}
-          className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+          className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Kembali ke Profile Karier</span>
+          <span>Kembali ke Profil Karier</span>
         </button>
 
         <button
           onClick={onNext}
-          className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md shadow-emerald-500/20 hover:scale-[1.02] transition-all cursor-pointer"
+          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#003399] hover:bg-[#002266] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
         >
-          <span>Lanjut ke Langkah 5: Teori Keuangan</span>
+          <span>Lanjut ke Langkah 5: Profil Risiko</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

@@ -130,12 +130,12 @@ export const StepProfilRisiko: React.FC<StepProfilRisikoProps> = ({
       obligasi = 30;
       saham = 45;
       emas = 10;
-      instruments = ["Saham Blue Chip IHSG", "Reksadana Saham", "Obligasi ORI/SR", "Emas"];
+      instruments = ["Reksadana Saham", "Saham Bluechip BEI", "SBN Ritel Tenor Panjang", "Emas"];
     } else {
       profileType = "Agresif";
-      desc = "Anda memiliki horizon investasi jangka panjang dan memaksimalkan potensi imbal hasil saham/ekuitas tinggi.";
+      desc = "Anda berfokus pada maksimalisasi imbal hasil jangka panjang dan sangat toleran terhadap volatilitas pasar.";
       horizon = "> 10 Tahun";
-      tolerance = "Siap menghadapi volatilitas pasar tinggi demi akumulasi aset masif.";
+      tolerance = "Siap menerima volatilitas tinggi demi imbal hasil maksimal.";
       pasarUang = 10;
       obligasi = 20;
       saham = 55;
@@ -163,61 +163,54 @@ export const StepProfilRisiko: React.FC<StepProfilRisikoProps> = ({
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-amber-600 to-orange-700 rounded-2xl p-6 sm:p-8 text-white shadow-lg">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-xs text-xs font-semibold mb-3">
-            <ShieldAlert className="w-3.5 h-3.5" />
-            <span>Langkah 6 dari 8 • Analisis Toleransi Risiko</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Kuesioner Profil Risiko & Alokasi Portofolio
-          </h1>
-          <p className="text-amber-100 text-sm sm:text-base mt-2 leading-relaxed">
-            Menjawab 4 pertanyaan ini membantu AI menentukan porsi instrumen investasi (Pasar Uang, SBN/Obligasi, Saham, Emas) yang tepat agar rencana finansial tidak membebani ketenangan pikiran Anda.
-          </p>
+      <div className="bg-gradient-to-r from-[#003399] via-[#0047BA] to-[#0055B8] rounded-2xl p-5 sm:p-6 text-white shadow-md border border-blue-800/40 space-y-1.5">
+        <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-sm text-xs font-bold border border-white/20">
+          <ShieldAlert className="w-3.5 h-3.5 text-blue-200" />
+          <span>Langkah 5 dari 7 • Profil Risiko Investasi</span>
         </div>
+        <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+          Profil Risiko & Toleransi Investasi
+        </h1>
+        <p className="text-blue-100/90 text-xs sm:text-sm leading-relaxed max-w-4xl">
+          Asesmen psikologi dan toleransi risiko untuk memetakan alokasi aset yang proporsional antara instrumen likuid, pendapatan tetap, dan pertumbuhan.
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Questions Column */}
-        <div className="lg:col-span-2 space-y-5">
+        <div className="lg:col-span-2 space-y-4">
           {RISK_QUESTIONS.map((q, idx) => (
             <div
               key={q.id}
-              className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-4"
+              className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-3"
             >
-              <div className="flex items-start space-x-3">
-                <span className="flex items-center justify-center w-6 h-6 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 text-xs font-bold shrink-0 mt-0.5">
-                  {idx + 1}
-                </span>
-                <h3 className="text-sm font-semibold text-slate-900 dark:text-white leading-snug">
-                  {q.question}
-                </h3>
-              </div>
-
-              <div className="space-y-2.5 pt-1 pl-9">
+              <h3 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
+                {idx + 1}. {q.question}
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {q.options.map((opt) => {
                   const isSelected = answers[q.id] === opt.score;
                   return (
                     <button
                       key={opt.score}
-                      type="button"
                       onClick={() => handleSelectOption(q.id, opt.score)}
-                      className={`w-full text-left p-3.5 rounded-xl border text-xs font-medium transition-all flex items-center justify-between cursor-pointer ${
+                      className={`text-left p-3 rounded-xl border text-xs transition-all cursor-pointer ${
                         isSelected
-                          ? "bg-amber-50 dark:bg-amber-950/40 border-amber-500 text-amber-950 dark:text-amber-200 shadow-xs"
-                          : "bg-slate-50/70 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+                          ? "bg-blue-50 dark:bg-blue-950/50 border-[#003399] text-[#003399] dark:text-blue-200 font-semibold shadow-xs"
+                          : "bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
                       }`}
                     >
-                      <span className="pr-3">{opt.text}</span>
-                      <div
-                        className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${
-                          isSelected
-                            ? "border-amber-600 bg-amber-600 text-white"
-                            : "border-slate-300 dark:border-slate-600"
-                        }`}
-                      >
-                        {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                      <div className="flex items-start space-x-2">
+                        <div
+                          className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 mt-0.5 ${
+                            isSelected
+                              ? "border-[#003399] bg-[#003399] text-white"
+                              : "border-slate-400"
+                          }`}
+                        >
+                          {isSelected && <span className="text-[10px] font-bold">✓</span>}
+                        </div>
+                        <span>{opt.text}</span>
                       </div>
                     </button>
                   );
@@ -227,46 +220,46 @@ export const StepProfilRisiko: React.FC<StepProfilRisikoProps> = ({
           ))}
         </div>
 
-        {/* Result & Recommendation Summary */}
-        <div className="space-y-6">
+        {/* Live Result Sidebar */}
+        <div className="lg:col-span-1">
           <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-5 sticky top-20">
-            <div className="flex items-center space-x-3 pb-3 border-b border-slate-100 dark:border-slate-800">
-              <div className="p-2 rounded-xl bg-amber-50 dark:bg-amber-950 text-amber-600">
-                <PieChart className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="font-bold text-slate-900 dark:text-white text-sm">Hasil Profil Risiko</h3>
-                <p className="text-xs text-slate-500">Skor Total: {riskData.totalScore || 12}</p>
-              </div>
+            <div className="flex items-center space-x-2 pb-3 border-b border-slate-100 dark:border-slate-800">
+              <Award className="w-5 h-5 text-[#003399] dark:text-blue-400" />
+              <h3 className="font-bold text-slate-900 dark:text-white text-sm">
+                Hasil Profil Risiko Anda
+              </h3>
             </div>
 
-            <div className="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/60 text-center space-y-1.5">
-              <span className="text-xs font-semibold text-amber-800 dark:text-amber-300 uppercase tracking-wider">
-                Kategori Profil Investor
+            <div className="text-center p-4 rounded-2xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block">
+                Kategori Profil
               </span>
-              <div className="text-2xl font-extrabold text-amber-950 dark:text-amber-100">
+              <span className="text-xl font-black text-[#003399] dark:text-blue-400 block mt-1">
                 {riskData.profileType}
-              </div>
-              <p className="text-xs text-amber-900/80 dark:text-amber-200/80 pt-1 leading-relaxed">
-                {riskData.summaryDescription}
-              </p>
+              </span>
+              <span className="text-xs text-slate-500 mt-1 block">
+                Skor: {riskData.totalScore} / {riskData.maxScore}
+              </span>
             </div>
 
-            {/* Asset Allocation Bars */}
+            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+              {riskData.summaryDescription}
+            </p>
+
             <div className="space-y-3 pt-2">
               <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
-                Rekomendasi Alokasi Portofolio:
+                Alokasi Aset Rekomendasi:
               </h4>
 
               <div className="space-y-2">
                 <div>
                   <div className="flex justify-between text-xs font-semibold mb-1">
-                    <span className="text-slate-700 dark:text-slate-300">Pasar Uang & Kas Likuid</span>
-                    <span className="text-blue-600">{riskData.recommendedAssetAllocation?.pasarUangDeposito}%</span>
+                    <span className="text-slate-700 dark:text-slate-300">Pasar Uang / Deposito</span>
+                    <span className="text-[#003399] dark:text-blue-400">{riskData.recommendedAssetAllocation?.pasarUangDeposito}%</span>
                   </div>
                   <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                     <div
-                      className="bg-blue-500 h-full rounded-full"
+                      className="bg-blue-600 h-full rounded-full"
                       style={{ width: `${riskData.recommendedAssetAllocation?.pasarUangDeposito}%` }}
                     />
                   </div>
@@ -274,7 +267,7 @@ export const StepProfilRisiko: React.FC<StepProfilRisikoProps> = ({
 
                 <div>
                   <div className="flex justify-between text-xs font-semibold mb-1">
-                    <span className="text-slate-700 dark:text-slate-300">Obligasi Negara & SBN</span>
+                    <span className="text-slate-700 dark:text-slate-300">Obligasi / SBN Ritel</span>
                     <span className="text-emerald-600">{riskData.recommendedAssetAllocation?.obligasiSBN}%</span>
                   </div>
                   <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
@@ -287,7 +280,7 @@ export const StepProfilRisiko: React.FC<StepProfilRisikoProps> = ({
 
                 <div>
                   <div className="flex justify-between text-xs font-semibold mb-1">
-                    <span className="text-slate-700 dark:text-slate-300">Saham & Reksadana Saham</span>
+                    <span className="text-slate-700 dark:text-slate-300">Saham / Ekuitas</span>
                     <span className="text-amber-600">{riskData.recommendedAssetAllocation?.sahamEquity}%</span>
                   </div>
                   <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
@@ -320,17 +313,17 @@ export const StepProfilRisiko: React.FC<StepProfilRisikoProps> = ({
       <div className="flex justify-between items-center pt-4">
         <button
           onClick={onPrev}
-          className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+          className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Kembali ke Teori Keuangan</span>
+          <span>Kembali ke Target Finansial</span>
         </button>
 
         <button
           onClick={onNext}
-          className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md shadow-emerald-500/20 hover:scale-[1.02] transition-all cursor-pointer"
+          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#003399] hover:bg-[#002266] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
         >
-          <span>Buat Rencana Finansial (Langkah 7 & 8)</span>
+          <span>Lanjut ke Langkah 6: Evaluasi Rasio & Standar OJK</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

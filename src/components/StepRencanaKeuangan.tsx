@@ -49,6 +49,12 @@ import {
 import { generateFinancialPlanPDF, PDFExportOptions } from "../utils/pdfExport";
 import { generateTailoredGranularBudget } from "../utils/dynamicBudgetPosts";
 import { generateMasterFinancialPrompt, openInChatGPT, openInGemini, openInClaude } from "../utils/aiPromptExporter";
+import {
+  calculateLifeEnergy,
+  calculateMarginOfSafety,
+  calculateExpectedNetWorth,
+  calculateRuleOf25x,
+} from "../utils/financialCalculations";
 import { PosKeuanganTable } from "./PosKeuanganTable";
 import { RoadmapPertahunDetail } from "./RoadmapPertahunDetail";
 import { TimingDecisionMatrix } from "./TimingDecisionMatrix";
@@ -207,70 +213,75 @@ export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
   );
 
   const isMarried = profile.maritalStatus === "Menikah";
-  const dependentsCount = profile.dependents || 0;
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-emerald-950 to-teal-950 rounded-2xl p-6 sm:p-8 text-white shadow-xl border border-emerald-900/40">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-semibold mb-3">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Langkah 7 & 8 • Comprehensive Financial Blueprint</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-              Rencana Keuangan Komprehensif & Simulasi Eksekusi
-            </h1>
-            <p className="text-slate-300 text-sm sm:text-base mt-2 leading-relaxed">
-              Arsitektur perencanaan finansial Anda dirancang menggabungkan AI Certified Financial Planner (CFP) engine dan simulasi kalkulasi manual yang fleksibel.
-            </p>
+      <div className="bg-gradient-to-r from-[#002266] via-[#003399] to-[#0055B8] rounded-2xl p-5 sm:p-6 text-white shadow-xl border border-blue-900/60 space-y-4">
+        {/* Top: Title & Description */}
+        <div className="space-y-1.5">
+          <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/15 text-blue-100 border border-white/25 text-xs font-bold">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Langkah 7 dari 7 • Executive Financial Statement</span>
           </div>
+          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+            Rencana Keuangan Komprehensif & Roadmap Strategis
+          </h1>
+          <p className="text-blue-100/90 text-xs sm:text-sm leading-relaxed max-w-4xl">
+            Laporan rekomendasi berstandar CFP® & kepatuhan OJK memuat alokasi anggaran, proteksi asuransi, proyeksi kekayaan bersih, dan peta jalan tahunan.
+          </p>
+        </div>
 
-          {/* Quick Action Toolbar */}
-          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+        {/* Action Toolbar */}
+        <div className="pt-3.5 border-t border-white/15 flex flex-wrap items-center justify-between gap-3">
+          {/* Primary Action Buttons */}
+          <div className="flex flex-wrap items-center gap-2.5">
             <button
               onClick={onGenerateAIPlan}
               disabled={isLoadingAI}
-              className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-md shadow-emerald-900/40 cursor-pointer disabled:opacity-50"
+              className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-white text-[#003399] hover:bg-blue-50 text-xs font-bold transition-all shadow-md cursor-pointer disabled:opacity-50"
             >
               <RefreshCw className={`w-4 h-4 ${isLoadingAI ? "animate-spin" : ""}`} />
-              <span>{isLoadingAI ? "Menyusun Rencana..." : "Refresh AI Plan"}</span>
+              <span>{isLoadingAI ? "Memproses Data..." : "Perbarui Analisis"}</span>
             </button>
 
             <button
-              onClick={onSaveToHistory}
-              className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold border border-white/20 transition-all cursor-pointer"
+              onClick={handleOpenExportModal}
+              disabled={!plan}
+              className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-[#0055B8] hover:bg-[#0047BA] text-white text-xs font-bold transition-all shadow-md cursor-pointer disabled:opacity-50 border border-blue-400/40"
             >
-              <Save className="w-4 h-4 text-teal-300" />
-              <span>Simpan ke History</span>
+              <Download className="w-4 h-4" />
+              <span>Unduh Laporan PDF</span>
+            </button>
+          </div>
+
+          {/* Secondary Action Buttons */}
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={onSaveToHistory}
+              className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-semibold border border-white/20 transition-all cursor-pointer"
+            >
+              <Save className="w-4 h-4 text-blue-200" />
+              <span>Simpan Snapshot</span>
             </button>
 
             {onAddNewProfile && (
               <button
                 onClick={onAddNewProfile}
-                className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-teal-600/80 hover:bg-teal-500 text-white text-xs font-bold border border-teal-400/30 transition-all cursor-pointer shadow-xs"
-                title="Tambah profil untuk orang yang berbeda"
+                className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-semibold border border-white/20 transition-all cursor-pointer"
+                title="Buat Sesi Profiling Baru untuk Orang Lain"
               >
-                <UserPlus className="w-4 h-4" />
+                <UserPlus className="w-4 h-4 text-blue-200" />
                 <span>+ Profil Baru</span>
               </button>
             )}
 
             <button
-              onClick={handleOpenExportModal}
-              className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold border border-white/20 transition-all cursor-pointer"
-            >
-              <Download className="w-4 h-4 text-emerald-300" />
-              <span>Export PDF</span>
-            </button>
-
-            <button
               onClick={onOpenAIChat}
-              className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold transition-all shadow-md cursor-pointer"
+              className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-[#001A4E] hover:bg-[#00143D] text-white text-xs font-bold transition-all shadow-md cursor-pointer border border-blue-700/50"
             >
-              <MessageSquare className="w-4 h-4" />
-              <span>Tanya AI Advisor</span>
+              <MessageSquare className="w-4 h-4 text-blue-300" />
+              <span>Konsultasi Advisor</span>
             </button>
           </div>
         </div>
@@ -278,12 +289,9 @@ export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
 
       {/* ─── CASHFLOW & NET WORTH OVERVIEW DASHBOARD ─── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* 1. Total Income */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-emerald-200/80 dark:border-emerald-900/50 shadow-xs space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400">
-              Total Pemasukan
-            </span>
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400">Total Pemasukan</span>
             <div className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400">
               <ArrowUpRight className="w-4 h-4" />
             </div>
@@ -292,18 +300,11 @@ export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
             Rp {totalMonthlyIncome.toLocaleString("id-ID")}
             <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 ml-1">/bulan</span>
           </div>
-          <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight">
-            Gaji Utama: Rp {(cashflow.monthlyMainIncome || 0).toLocaleString("id-ID")}
-            {isMarried && cashflow.partnerMainIncome ? ` • Pasangan: Rp ${cashflow.partnerMainIncome.toLocaleString("id-ID")}` : ""}
-          </p>
         </div>
 
-        {/* 2. Total Expenses */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-rose-200/80 dark:border-rose-900/50 shadow-xs space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-rose-800 dark:text-rose-400">
-              Total Pengeluaran
-            </span>
+            <span className="text-xs font-bold uppercase tracking-wider text-rose-800 dark:text-rose-400">Total Pengeluaran</span>
             <div className="p-2 rounded-xl bg-rose-50 dark:bg-rose-950/70 text-rose-600 dark:text-rose-400">
               <ArrowDownRight className="w-4 h-4" />
             </div>
@@ -312,17 +313,11 @@ export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
             Rp {totalMonthlyExpenses.toLocaleString("id-ID")}
             <span className="text-xs font-semibold text-slate-400 dark:text-slate-500 ml-1">/bulan</span>
           </div>
-          <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight">
-            Living: Rp {livingCost.toLocaleString("id-ID")} • Cicilan: Rp {totalDebtsMonthly.toLocaleString("id-ID")} • Asuransi: Rp {existingInsurance.toLocaleString("id-ID")}
-          </p>
         </div>
 
-        {/* 3. Net Cashflow Surplus */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-blue-200/80 dark:border-blue-900/50 shadow-xs space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-blue-800 dark:text-blue-400">
-              Surplus Kas Bersih
-            </span>
+            <span className="text-xs font-bold uppercase tracking-wider text-blue-800 dark:text-blue-400">Surplus Kas Bersih</span>
             <div className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/70 text-blue-600 dark:text-blue-400">
               <Wallet className="w-4 h-4" />
             </div>
@@ -336,21 +331,20 @@ export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
           </p>
         </div>
 
-        {/* 4. Total Net Worth */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-purple-200/80 dark:border-purple-900/50 shadow-xs space-y-2">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-purple-800 dark:text-purple-400">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-800 dark:text-slate-300">
               Total Kekayaan Bersih
             </span>
-            <div className="p-2 rounded-xl bg-purple-50 dark:bg-purple-950/70 text-purple-600 dark:text-purple-400">
+            <div className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/70 text-[#003399] dark:text-blue-400">
               <Coins className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-extrabold text-purple-700 dark:text-purple-300">
+          <div className="text-2xl font-extrabold text-[#003399] dark:text-blue-300">
             Rp {currentNetWorth.toLocaleString("id-ID")}
           </div>
           <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight">
-            Total Aset: Rp {totalAssets.toLocaleString("id-ID")} • Sisa Utang: Rp {totalDebtsRemaining.toLocaleString("id-ID")}
+            Total Aset (Rp {totalAssets.toLocaleString("id-ID")}) − Total Utang (Rp {totalDebtsRemaining.toLocaleString("id-ID")})
           </p>
         </div>
       </div>
@@ -529,6 +523,93 @@ export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
                     </div>
                   </div>
                 </div>
+
+                {/* 10 Gurus Behavioral & Growth Guardrails */}
+                <div className="pt-4 border-t border-slate-100 dark:border-slate-800">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center space-x-1.5">
+                      <Award className="w-4 h-4 text-[#003399] dark:text-blue-400" />
+                      <span>Evaluasi Pertumbuhan & Behavioral Guardrails (10 Guru Finansial):</span>
+                    </h3>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    {/* Graham Margin of Safety */}
+                    {(() => {
+                      const mos = calculateMarginOfSafety(totalMonthlyIncome, livingCost);
+                      return (
+                        <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 space-y-1">
+                          <div className="flex justify-between items-start">
+                            <span className="text-[11px] font-semibold text-slate-500">Margin of Safety</span>
+                            <span className="text-[10px] font-bold text-slate-400">Graham</span>
+                          </div>
+                          <span className={`text-base font-bold block ${mos.statusColor}`}>
+                            {mos.marginPercent}%
+                          </span>
+                          <span className="text-[10px] text-slate-500 block leading-tight">
+                            Buffer kas: Rp {(mos.marginAmount / 1_000_000).toFixed(1)} Jt/bln ({mos.status.split(" ")[0]})
+                          </span>
+                        </div>
+                      );
+                    })()}
+
+                    {/* Stanley & Danko PAW Status */}
+                    {(() => {
+                      const enw = calculateExpectedNetWorth(profile.age || 30, totalMonthlyIncome * 12, currentNetWorth);
+                      return (
+                        <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 space-y-1">
+                          <div className="flex justify-between items-start">
+                            <span className="text-[11px] font-semibold text-slate-500">Akumulator Kekayaan</span>
+                            <span className="text-[10px] font-bold text-slate-400">Stanley</span>
+                          </div>
+                          <span className="text-base font-bold block text-slate-900 dark:text-white">
+                            {enw.wealthRatio}× ({enw.category.split(" ")[0]})
+                          </span>
+                          <span className="text-[10px] text-slate-500 block leading-tight">
+                            Target ideal: Rp {(enw.expectedNetWorth / 1_000_000).toFixed(0)} Juta
+                          </span>
+                        </div>
+                      );
+                    })()}
+
+                    {/* JL Collins 25x FI Target */}
+                    {(() => {
+                      const fi = calculateRuleOf25x(totalMonthlyExpenses * 12, liquidCash + investmentAssets, netMonthlySurplus, 0.07);
+                      return (
+                        <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 space-y-1">
+                          <div className="flex justify-between items-start">
+                            <span className="text-[11px] font-semibold text-slate-500">Target 25× Rule FI</span>
+                            <span className="text-[10px] font-bold text-slate-400">JL Collins</span>
+                          </div>
+                          <span className="text-base font-bold block text-purple-600 dark:text-purple-400">
+                            Rp {(fi.fiTargetNumber / 1_000_000_000).toFixed(1)} Miliar
+                          </span>
+                          <span className="text-[10px] text-slate-500 block leading-tight">
+                            Tercapai {fi.progressPercent}% (~{fi.estimatedYearsToFI} thn lagi)
+                          </span>
+                        </div>
+                      );
+                    })()}
+
+                    {/* Vicki Robin Life Energy */}
+                    {(() => {
+                      const le = calculateLifeEnergy(totalMonthlyIncome, 200, livingCost);
+                      return (
+                        <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 space-y-1">
+                          <div className="flex justify-between items-start">
+                            <span className="text-[11px] font-semibold text-slate-500">Upah Riil Waktu Hidup</span>
+                            <span className="text-[10px] font-bold text-slate-400">Vicki Robin</span>
+                          </div>
+                          <span className="text-base font-bold block text-slate-900 dark:text-white">
+                            Rp {le.realHourlyWage.toLocaleString("id-ID")}/jam
+                          </span>
+                          <span className="text-[10px] text-slate-500 block leading-tight">
+                            Biaya hidup pokok = {le.hoursRequired} jam kerja/bln
+                          </span>
+                        </div>
+                      );
+                    })()}
+                  </div>
+                </div>
               </div>
 
               {/* Monthly Budget Allocations Card */}
@@ -661,7 +742,7 @@ export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
                       <div className="flex items-center space-x-2 text-purple-950 dark:text-purple-200 font-bold">
                         <Info className="w-4 h-4 text-purple-600 shrink-0" />
                         <span>
-                          💡 Alokasi Terdistribusi Otomatis Sesuai Profil: {profile.fullName || "Klien"} ({profile.maritalStatus || "Lajang"}, {dependentsCount} Tanggungan)
+                          💡 Alokasi Terdistribusi Otomatis Sesuai Profil: {profile.fullName || "Klien"} ({profile.maritalStatus || "Lajang"}, {profile.dependents || 0} Tanggungan)
                         </span>
                       </div>
                       <p className="leading-relaxed">
@@ -985,7 +1066,7 @@ export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
           className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Kembali ke Profil Risiko</span>
+          <span>Kembali ke Evaluasi Rasio & Standar OJK</span>
         </button>
 
         <div className="flex items-center space-x-3">

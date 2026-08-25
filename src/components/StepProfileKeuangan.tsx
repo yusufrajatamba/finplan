@@ -147,19 +147,17 @@ export const StepProfileKeuangan: React.FC<StepProfileKeuanganProps> = ({
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-teal-600 to-emerald-700 rounded-2xl p-6 sm:p-8 text-white shadow-lg">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-semibold mb-3">
-            <Wallet className="w-3.5 h-3.5" />
-            <span>Langkah 2 dari 8 • Detail Arus Kas & Aset</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Profile Keuangan, Pengeluaran & Dana Tersedia
-          </h1>
-          <p className="text-teal-100 text-sm sm:text-base mt-2 leading-relaxed">
-            Catat sumber pemasukan aktif & pasif, rincian pengeluaran bulanan, potensi pengeluaran mendatang, serta akumulasi dana yang sudah Anda miliki saat ini.
-          </p>
+      <div className="bg-gradient-to-r from-[#003399] via-[#0047BA] to-[#0055B8] rounded-2xl p-5 sm:p-6 text-white shadow-md border border-blue-800/40 space-y-1.5">
+        <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-sm text-xs font-bold border border-white/20">
+          <Wallet className="w-3.5 h-3.5 text-blue-200" />
+          <span>Langkah 2 dari 7 • Arus Kas & Portofolio Aset</span>
         </div>
+        <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+          Arus Kas, Pengeluaran & Portofolio Aset
+        </h1>
+        <p className="text-blue-100/90 text-xs sm:text-sm leading-relaxed max-w-4xl">
+          Catat komponen pemasukan, alokasi pengeluaran rutin bulanan, kewajiban cicilan, serta akumulasi aset tabungan & investasi Anda untuk evaluasi kesehatan finansial.
+        </p>
       </div>
 
       {/* Quick Summary Strip */}
@@ -565,7 +563,7 @@ export const StepProfileKeuangan: React.FC<StepProfileKeuanganProps> = ({
       <div className="flex justify-between items-center pt-4">
         <button
           onClick={onPrev}
-          className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+          className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Kembali ke Data Diri</span>
@@ -573,9 +571,9 @@ export const StepProfileKeuangan: React.FC<StepProfileKeuanganProps> = ({
 
         <button
           onClick={onNext}
-          className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md shadow-emerald-500/20 hover:scale-[1.02] transition-all cursor-pointer"
+          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#003399] hover:bg-[#002266] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
         >
-          <span>Lanjut ke Langkah 3: Profile Karier</span>
+          <span>Lanjut ke Langkah 3: Profil Karier</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

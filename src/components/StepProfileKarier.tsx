@@ -98,30 +98,28 @@ export const StepProfileKarier: React.FC<StepProfileKarierProps> = ({
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-2xl p-6 sm:p-8 text-white shadow-lg">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-semibold mb-3">
-            <Briefcase className="w-3.5 h-3.5" />
-            <span>Langkah 3 dari 8 • Stabilitas & Prospek Karier</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Profile Karier, Pekerjaan & Manajemen Risiko
-          </h1>
-          <p className="text-indigo-100 text-sm sm:text-base mt-2 leading-relaxed">
-            Pekerjaan, stabilitas industri, risiko PHK, dan potensi kenaikan gaji tahunan menentukan ketebalan dana darurat dan proyeksi kenaikan earning power masa depan Anda.
-          </p>
+      <div className="bg-gradient-to-r from-[#003399] via-[#0047BA] to-[#0055B8] rounded-2xl p-5 sm:p-6 text-white shadow-md border border-blue-800/40 space-y-1.5">
+        <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-sm text-xs font-bold border border-white/20">
+          <Briefcase className="w-3.5 h-3.5 text-blue-200" />
+          <span>Langkah 3 dari 7 • Stabilitas & Prospek Karier</span>
         </div>
+        <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+          Profil Karier & Pertumbuhan Penghasilan
+        </h1>
+        <p className="text-blue-100/90 text-xs sm:text-sm leading-relaxed max-w-4xl">
+          Evaluasi stabilitas pekerjaan, potensi kenaikan penghasilan, dan mitigasi risiko pendapatan untuk memproyeksikan earning power jangka panjang.
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Form Karier Pribadi (Suami / User) */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-5">
           <div className="flex items-center space-x-3 pb-3 border-b border-slate-100 dark:border-slate-800">
-            <div className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+            <div className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-[#003399] dark:text-blue-400">
               <Briefcase className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="font-semibold text-slate-900 dark:text-white">Profile Karier Pribadi</h2>
+              <h2 className="font-bold text-slate-900 dark:text-white text-base">Profil Karier Pribadi</h2>
               <p className="text-xs text-slate-500 dark:text-slate-400">Data pekerjaan & rencana pertumbuhan karier Anda</p>
             </div>
           </div>
@@ -391,17 +389,17 @@ export const StepProfileKarier: React.FC<StepProfileKarierProps> = ({
       <div className="flex justify-between items-center pt-4">
         <button
           onClick={onPrev}
-          className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+          className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Kembali ke Profile Keuangan</span>
+          <span>Kembali ke Arus Kas</span>
         </button>
 
         <button
           onClick={onNext}
-          className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md shadow-emerald-500/20 hover:scale-[1.02] transition-all cursor-pointer"
+          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#003399] hover:bg-[#002266] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
         >
-          <span>Lanjut ke Langkah 4: Target & Goals</span>
+          <span>Lanjut ke Langkah 4: Target Goals</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

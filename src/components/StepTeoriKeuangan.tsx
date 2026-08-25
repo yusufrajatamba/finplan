@@ -1,6 +1,20 @@
 import React, { useState } from "react";
-import { financialGurusTheories, ojkStandards, financialFormulas, localFinancialTheories } from "../data/financialTheoryData";
+import {
+  financialGurusTheories,
+  ojkStandards,
+  financialFormulas,
+  localFinancialTheories,
+  financialUniversityCurriculum,
+  tenFamilyFinancialRules,
+  fiveLayerHierarchyFramework,
+} from "../data/financialTheoryData";
 import { CashflowData, UserProfile } from "../types";
+import {
+  calculateLifeEnergy,
+  calculateMarginOfSafety,
+  calculateExpectedNetWorth,
+  calculateRuleOf25x,
+} from "../utils/financialCalculations";
 import {
   BookOpen,
   Calculator,
@@ -17,6 +31,18 @@ import {
   ExternalLink,
   Globe,
   Building2,
+  ShieldCheck,
+  Shield,
+  Layers,
+  GraduationCap,
+  Clock,
+  Wallet,
+  Coins,
+  Compass,
+  Check,
+  Bookmark,
+  ChevronRight,
+  HelpCircle,
 } from "lucide-react";
 
 interface StepTeoriKeuanganProps {
@@ -32,10 +58,10 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
   onNext,
   onPrev,
 }) => {
-  const [activeTab, setActiveTab] = useState<"ojk_ratios" | "gurus" | "calculator" | "local_indonesia">("ojk_ratios");
-  const [selectedGuruId, setSelectedGuruId] = useState<string>("warren_buffett");
+  const [activeTab, setActiveTab] = useState<"ojk_ratios" | "gurus" | "hierarchy_5layer" | "curriculum_manifesto">("ojk_ratios");
+  const [selectedGuruId, setSelectedGuruId] = useState<string>("morgan_housel");
 
-  // User financial calculations for comparison
+  // User financial calculations for live comparison
   const totalIncome =
     (cashflow.monthlyMainIncome || 0) +
     (cashflow.monthlySideIncome || 0) +
@@ -45,147 +71,240 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
     (cashflow.investmentPassiveIncome || 0);
 
   const totalDebtsMonthly = (cashflow.debts || []).reduce((acc, d) => acc + (d.monthlyPayment || 0), 0);
-  const totalRoutineExpenses =
+  const totalDebtsOutstanding = (cashflow.debts || []).reduce((acc, d) => acc + (d.totalRemaining || 0), 0);
+
+  const baselineLivingCost =
     (cashflow.monthlyNeeds || 0) +
     (cashflow.housingExpense || 0) +
     (cashflow.utilitiesExpense || 0) +
     (cashflow.transportationExpense || 0) +
-    (cashflow.monthlyWants || 0) +
     (cashflow.familySupportExpense || 0) +
-    (cashflow.educationCurrentExpense || 0) +
+    (cashflow.educationCurrentExpense || 0);
+
+  const totalRoutineExpenses =
+    baselineLivingCost +
+    (cashflow.monthlyWants || 0) +
     (cashflow.monthlyExistingInsurance || 0) +
     totalDebtsMonthly;
 
-  const monthlySurplus = totalIncome - totalRoutineExpenses;
-  const savingsRate = totalIncome > 0 ? (Math.max(0, monthlySurplus) / totalIncome) * 100 : 0;
+  const monthlySurplus = Math.max(0, totalIncome - totalRoutineExpenses);
+  const savingsRate = totalIncome > 0 ? (monthlySurplus / totalIncome) * 100 : 0;
   const dsrRate = totalIncome > 0 ? (totalDebtsMonthly / totalIncome) * 100 : 0;
-  const needsRate =
-    totalIncome > 0
-      ? ((cashflow.monthlyNeeds +
-          cashflow.housingExpense +
-          cashflow.utilitiesExpense +
-          cashflow.transportationExpense) /
-          totalIncome) *
-        100
-      : 0;
+  const needsRate = totalIncome > 0 ? (baselineLivingCost / totalIncome) * 100 : 0;
+  const insuranceRate = totalIncome > 0 ? ((cashflow.monthlyExistingInsurance || 0) / totalIncome) * 100 : 0;
 
-  // Rule of 72 simulator
-  const [rule72Return, setRule72Return] = useState<number>(10);
+  const liquidAssets = (cashflow.cashEmergencyFund || 0) + (cashflow.bankSavings || 0) + (cashflow.deposits || 0);
+  const investmentAssets = (cashflow.stocks || 0) + (cashflow.mutualFunds || 0) + (cashflow.gold || 0) + (cashflow.cryptoAssets || 0);
+  const physicalAssets = (cashflow.propertyValue || 0) + (cashflow.vehicleValue || 0) + (cashflow.otherAssets || 0);
+  const totalNetWorth = (liquidAssets + investmentAssets + physicalAssets) - totalDebtsOutstanding;
+
+  // Calculators State
+  const [lifeEnergyPrice, setLifeEnergyPrice] = useState<number>(750000);
+  const [workHoursPerMonth, setWorkHoursPerMonth] = useState<number>(200);
+  const [rule72Return, setRule72Return] = useState<number>(7.5);
+
+  const lifeEnergyResult = calculateLifeEnergy(totalIncome || 15000000, workHoursPerMonth, lifeEnergyPrice);
+  const marginOfSafetyResult = calculateMarginOfSafety(totalIncome, baselineLivingCost);
+  const expectedNetWorthResult = calculateExpectedNetWorth(profile.age || 30, totalIncome * 12, totalNetWorth);
+  const ruleOf25xResult = calculateRuleOf25x(totalRoutineExpenses * 12, investmentAssets + liquidAssets, monthlySurplus, 0.07);
+
   const yearsToDouble = rule72Return > 0 ? (72 / rule72Return).toFixed(1) : "0";
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-blue-600 to-cyan-700 rounded-2xl p-6 sm:p-8 text-white shadow-lg">
-        <div className="max-w-3xl">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-xs text-xs font-semibold mb-3">
-            <BookOpen className="w-3.5 h-3.5" />
-            <span>Langkah 5 dari 8 • Literasi & Edukasi Finansial</span>
+      <div className="bg-gradient-to-r from-[#003399] via-[#0047BA] to-[#0055B8] rounded-2xl p-5 sm:p-6 text-white shadow-md border border-blue-800/40 space-y-1.5">
+        <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-sm text-xs font-bold border border-white/20">
+          <BookOpen className="w-3.5 h-3.5 text-blue-200" />
+          <span>Langkah 6 dari 7 • Evaluasi Rasio & Standar OJK</span>
+        </div>
+        <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
+          Evaluasi Rasio Keuangan & Standar OJK
+        </h1>
+        <p className="text-blue-100/90 text-xs sm:text-sm leading-relaxed max-w-4xl">
+          Diagnosis kepatuhan rasio finansial keluarga Anda terhadap standar OJK dan filosofi 10 guru finansial dunia sebelum menghasilkan rencana keuangan komprehensif.
+        </p>
+      </div>
+
+      {/* Visual Roadmap Blueprint: "Peta Besar: Financially Healthy Itu Apa?" */}
+      <div className="rounded-2xl bg-[#002B66] text-white p-6 sm:p-7 shadow-lg border border-blue-900/60 space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-blue-200">
+              Family Financial Operating System
+            </span>
+            <h2 className="text-lg sm:text-xl font-bold text-white mt-0.5">
+              Peta Besar: Sebenarnya "Financially Healthy" Itu Apa?
+            </h2>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-            Teori Keuangan, Standar OJK & CFP Framework
-          </h1>
-          <p className="text-blue-100 text-sm sm:text-base mt-2 leading-relaxed">
-            Pahami benchmark rasio kesehatan keuangan berstandar Otoritas Jasa Keuangan (OJK), Certified Financial Planner (CFP), dan prinsip-prinsip pakar keuangan terkemuka sebelum mengeksekusi rencana.
-          </p>
+          <span className="text-xs font-bold px-3 py-1 rounded-full bg-white/15 text-blue-100 border border-white/20 self-start sm:self-auto">
+            Filosofi 10 Guru & Standar OJK
+          </span>
+        </div>
+
+        <p className="text-xs sm:text-sm text-blue-100 leading-relaxed max-w-4xl">
+          Kekayaan sejati bukanlah sekadar gaji besar atau memamerkan barang mewah. Kekayaan adalah proses mengubah penghasilan menjadi <strong>surplus kas</strong>, melindunginya dari risiko bencana, dan mengakumulasikannya ke dalam <strong>aset produktif</strong> yang melahirkan kebebasan waktu untuk keluarga Anda:
+        </p>
+
+        {/* Visual Pipeline Stack */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-center pt-1">
+          <div className="p-3.5 rounded-xl bg-white/10 border border-white/15">
+            <span className="text-[10px] font-bold text-blue-200 block">TAHAP 1</span>
+            <span className="text-xs font-bold text-white mt-1 block">Penghasilan</span>
+            <span className="text-[11px] text-blue-100">Gaji & Bisnis</span>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-white/10 border border-white/15">
+            <span className="text-[10px] font-bold text-blue-200 block">TAHAP 2</span>
+            <span className="text-xs font-bold text-white mt-1 block">Surplus Kas</span>
+            <span className="text-[11px] text-blue-100">Income − Living</span>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-white/10 border border-white/15">
+            <span className="text-[10px] font-bold text-blue-200 block">TAHAP 3</span>
+            <span className="text-xs font-bold text-white mt-1 block">Proteksi Risiko</span>
+            <span className="text-[11px] text-blue-100">BPJS & Asuransi</span>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-white/10 border border-white/15">
+            <span className="text-[10px] font-bold text-blue-200 block">TAHAP 4</span>
+            <span className="text-xs font-bold text-white mt-1 block">Aset Produktif</span>
+            <span className="text-[11px] text-blue-100">SBN, Emas, Saham</span>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-white/10 border border-white/15">
+            <span className="text-[10px] font-bold text-blue-200 block">TAHAP 5</span>
+            <span className="text-xs font-bold text-white mt-1 block">Bunga Majemuk</span>
+            <span className="text-[11px] text-blue-100">Waktu & Disiplin</span>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-blue-500/30 border border-blue-300/40">
+            <span className="text-[10px] font-bold text-blue-200 block">TAHAP 6</span>
+            <span className="text-xs font-bold text-white mt-1 block">Bebas Finansial</span>
+            <span className="text-[11px] text-blue-100">Kebebasan Waktu</span>
+          </div>
+        </div>
+
+        {/* 3 Musuh Utama */}
+        <div className="p-4 rounded-xl bg-amber-500/20 border border-amber-300/40 text-amber-100 text-xs sm:text-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-center space-x-2">
+            <AlertTriangle className="w-4 h-4 text-amber-300 shrink-0" />
+            <span>
+              <strong>3 Jebakan Utama Kekayaan:</strong> Inflasi Gaya Hidup • Utang Konsumtif • Nol Dana Darurat (Zero Margin of Safety).
+            </span>
+          </div>
+          <span className="text-[11px] font-semibold text-amber-200 shrink-0">Morgan Housel & Benjamin Graham</span>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-slate-200 dark:border-slate-800 space-x-2">
+      <div className="flex border-b border-slate-200 dark:border-slate-800 space-x-1 sm:space-x-3 overflow-x-auto scrollbar-none pb-0.5">
         <button
           onClick={() => setActiveTab("ojk_ratios")}
-          className={`px-4 py-2.5 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer ${
+          className={`px-3.5 py-2.5 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center space-x-1.5 ${
             activeTab === "ojk_ratios"
-              ? "border-blue-600 text-blue-600 dark:text-blue-400"
+              ? "border-[#003399] text-[#003399] dark:text-blue-400 font-bold"
               : "border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white"
           }`}
         >
-          Rasio Kesehatan OJK & Skor Anda
+          <Building2 className="w-4 h-4" />
+          <span>🏛️ Standar Rasio OJK & Skor Anda</span>
         </button>
 
         <button
           onClick={() => setActiveTab("gurus")}
-          className={`px-4 py-2.5 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer ${
+          className={`px-3.5 py-2.5 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center space-x-1.5 ${
             activeTab === "gurus"
-              ? "border-blue-600 text-blue-600 dark:text-blue-400"
+              ? "border-[#003399] text-[#003399] dark:text-blue-400 font-bold"
               : "border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white"
           }`}
         >
-          Teori & Framework Pakar Dunia
+          <Award className="w-4 h-4" />
+          <span>🧠 10 Guru Finansial Dunia</span>
         </button>
 
         <button
-          onClick={() => setActiveTab("calculator")}
-          className={`px-4 py-2.5 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer ${
-            activeTab === "calculator"
-              ? "border-blue-600 text-blue-600 dark:text-blue-400"
+          onClick={() => setActiveTab("hierarchy_5layer")}
+          className={`px-3.5 py-2.5 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center space-x-1.5 ${
+            activeTab === "hierarchy_5layer"
+              ? "border-[#003399] text-[#003399] dark:text-blue-400 font-bold"
               : "border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white"
           }`}
         >
-          Kalkulator & Formula Interaktif
+          <Layers className="w-4 h-4" />
+          <span>📊 Hirarki 5-Layer & Sinergi OJK</span>
         </button>
 
         <button
-          onClick={() => setActiveTab("local_indonesia")}
-          className={`px-4 py-2.5 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer ${
-            activeTab === "local_indonesia"
-              ? "border-blue-600 text-blue-600 dark:text-blue-400"
+          onClick={() => setActiveTab("curriculum_manifesto")}
+          className={`px-3.5 py-2.5 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center space-x-1.5 ${
+            activeTab === "curriculum_manifesto"
+              ? "border-[#003399] text-[#003399] dark:text-blue-400 font-bold"
               : "border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white"
           }`}
         >
-          🇮🇩 Kerangka Lokal Indonesia
+          <GraduationCap className="w-4 h-4" />
+          <span>🎓 Kurikulum 8 Semester & 10 Aturan</span>
         </button>
       </div>
 
-      {/* Tab 1: OJK Ratios with Live User Benchmark */}
+      {/* ─── TAB 1: Standar Rasio OJK & Skor Klien ─────────────────────────── */}
       {activeTab === "ojk_ratios" && (
         <div className="space-y-6 animate-in fade-in">
           {/* User Score Card */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs">
-            <h2 className="font-semibold text-slate-900 dark:text-white text-base mb-1">
-              Perbandingan Arus Kas Anda vs Standar Sehat OJK
-            </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mb-6">
-              Dihitung otomatis dari data pemasukan dan pengeluaran yang telah Anda masukkan pada langkah 2.
-            </p>
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-5 sm:p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100 dark:border-slate-800">
+              <div>
+                <h2 className="font-bold text-slate-900 dark:text-white text-base">
+                  Evaluasi Kesehatan Keuangan Anda vs Standar OJK & CFP®
+                </h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Dihitung otomatis dari data pemasukan Rp {totalIncome.toLocaleString("id-ID")}/bln yang telah Anda masukkan.
+                </p>
+              </div>
+              <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-950 text-[#003399] dark:text-blue-300 shrink-0 self-start sm:self-auto">
+                Kepatuhan OJK Terpantau
+              </span>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
               {/* Savings Rate Card */}
-              <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
-                <div className="flex justify-between items-start mb-2">
+              <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 space-y-2">
+                <div className="flex justify-between items-start">
                   <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">
-                    Rasio Tabungan / Investasi
+                    Saving & Investment
                   </span>
                   <span
                     className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
                       savingsRate >= 20
                         ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300"
+                        : savingsRate >= 10
+                        ? "bg-sky-100 text-sky-700 dark:bg-sky-950 dark:text-sky-300"
                         : "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300"
                     }`}
                   >
-                    {savingsRate >= 20 ? "SEHAT (≥20%)" : "PERLU DITINGKATKAN"}
+                    {savingsRate >= 20 ? "SANGAT BAIK" : savingsRate >= 10 ? "LULUS OJK" : "PERLU NAIK"}
                   </span>
                 </div>
-                <div className="text-2xl font-bold text-slate-900 dark:text-white">
+                <div className="text-2xl font-black text-slate-900 dark:text-white">
                   {savingsRate.toFixed(1)}%
                 </div>
-                <div className="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full mt-2 overflow-hidden">
+                <div className="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
                   <div
                     className={`h-full rounded-full ${savingsRate >= 20 ? "bg-emerald-500" : "bg-amber-500"}`}
-                    style={{ width: `${Math.min(100, savingsRate)}%` }}
+                    style={{ width: `${Math.min(100, savingsRate * 2.5)}%` }}
                   />
                 </div>
-                <p className="text-[11px] text-slate-500 mt-2">
-                  Standar OJK: Minimal 20% dari total pendapatan dialokasikan untuk tabungan & investasi.
+                <p className="text-[11px] text-slate-500">
+                  Standar OJK: Min. 10–20%. JL Collins: 25–35% untuk akselerasi FI.
                 </p>
               </div>
 
               {/* Debt Service Ratio Card */}
-              <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
-                <div className="flex justify-between items-start mb-2">
+              <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 space-y-2">
+                <div className="flex justify-between items-start">
                   <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">
-                    Rasio Cicilan Utang (DSR)
+                    Beban Cicilan (DSR)
                   </span>
                   <span
                     className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
@@ -194,50 +313,76 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
                         : "bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300"
                     }`}
                   >
-                    {dsrRate <= 30 ? "AMAN (≤30%)" : "RISIKO TINGGI (>30%)"}
+                    {dsrRate <= 30 ? "AMAN OJK (≤30%)" : "RISIKO TINGGI"}
                   </span>
                 </div>
-                <div className="text-2xl font-bold text-slate-900 dark:text-white">
+                <div className="text-2xl font-black text-slate-900 dark:text-white">
                   {dsrRate.toFixed(1)}%
                 </div>
-                <div className="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full mt-2 overflow-hidden">
+                <div className="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
                   <div
                     className={`h-full rounded-full ${dsrRate <= 30 ? "bg-emerald-500" : "bg-rose-500"}`}
-                    style={{ width: `${Math.min(100, dsrRate)}%` }}
+                    style={{ width: `${Math.min(100, (dsrRate / 35) * 100)}%` }}
                   />
                 </div>
-                <p className="text-[11px] text-slate-500 mt-2">
-                  Standar OJK: Maksimal cicilan utang bulanan 30-35% agar cashflow tidak tertekan.
+                <p className="text-[11px] text-slate-500">
+                  Plafon OJK: Maksimal 30–35% income. Buffett: Jauhi utang konsumtif.
                 </p>
               </div>
 
               {/* Needs Ratio Card */}
-              <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50">
-                <div className="flex justify-between items-start mb-2">
+              <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 space-y-2">
+                <div className="flex justify-between items-start">
                   <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">
-                    Rasio Kebutuhan Pokok
+                    Kebutuhan Pokok
                   </span>
                   <span
                     className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
-                      needsRate <= 55
+                      needsRate <= 50
                         ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300"
-                        : "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300"
+                        : needsRate <= 65
+                        ? "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300"
+                        : "bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300"
                     }`}
                   >
-                    {needsRate <= 55 ? "IDEAL (≤50%)" : "TINGGI (>50%)"}
+                    {needsRate <= 50 ? "IDEAL (≤50%)" : "MODERAT"}
                   </span>
                 </div>
-                <div className="text-2xl font-bold text-slate-900 dark:text-white">
+                <div className="text-2xl font-black text-slate-900 dark:text-white">
                   {needsRate.toFixed(1)}%
                 </div>
-                <div className="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full mt-2 overflow-hidden">
+                <div className="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
                   <div
-                    className={`h-full rounded-full ${needsRate <= 55 ? "bg-blue-500" : "bg-amber-500"}`}
+                    className={`h-full rounded-full ${needsRate <= 50 ? "bg-blue-500" : "bg-amber-500"}`}
                     style={{ width: `${Math.min(100, needsRate)}%` }}
                   />
                 </div>
-                <p className="text-[11px] text-slate-500 mt-2">
-                  Standar 50/30/20: Kebutuhan hidup pokok sebaiknya dijaga di kisaran 50% pendapatan.
+                <p className="text-[11px] text-slate-500">
+                  Standar 50/30/20 & Graham: Jaga kebutuhan pokok ≤ 50% untuk buffer kas.
+                </p>
+              </div>
+
+              {/* Margin of Safety Card */}
+              <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 space-y-2">
+                <div className="flex justify-between items-start">
+                  <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">
+                    Margin of Safety
+                  </span>
+                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold bg-emerald-100 dark:bg-emerald-950 ${marginOfSafetyResult.statusColor}`}>
+                    {marginOfSafetyResult.status.split(" ")[0]}
+                  </span>
+                </div>
+                <div className="text-2xl font-black text-slate-900 dark:text-white">
+                  {marginOfSafetyResult.marginPercent}%
+                </div>
+                <div className="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-teal-500"
+                    style={{ width: `${Math.min(100, marginOfSafetyResult.marginPercent)}%` }}
+                  />
+                </div>
+                <p className="text-[11px] text-slate-500">
+                  Benjamin Graham: Sisa surplus Rp {(marginOfSafetyResult.marginAmount / 1_000_000).toFixed(1)} Jt/bln penyerap krisis.
                 </p>
               </div>
             </div>
@@ -248,49 +393,95 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
             {ojkStandards.map((std) => (
               <div
                 key={std.ratioName}
-                className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-3"
+                className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-3 flex flex-col justify-between"
               >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 block">
+                <div className="space-y-3">
+                  {/* Top: Category & Target Benchmark Badge */}
+                  <div className="flex flex-wrap items-center justify-between gap-2 pb-1 border-b border-slate-100 dark:border-slate-800">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#003399] dark:text-blue-400">
                       {std.category}
                     </span>
-                    <h3 className="font-bold text-slate-900 dark:text-white text-sm mt-0.5">{std.ratioName}</h3>
-                    <p className="text-xs font-mono text-slate-600 dark:text-slate-300 mt-1">{std.formula}</p>
+                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-lg bg-blue-50 dark:bg-blue-950 text-[#003399] dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                      Target: {std.healthyBenchmark}
+                    </span>
                   </div>
-                  <span className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 shrink-0">
-                    {std.healthyBenchmark}
-                  </span>
+
+                  {/* Title */}
+                  <h3 className="font-bold text-slate-900 dark:text-white text-base">
+                    {std.ratioName}
+                  </h3>
+
+                  {/* Formula Box - Full Width */}
+                  <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-1">
+                      Rumus Rasio:
+                    </span>
+                    <span className="font-bold text-slate-900 dark:text-white block leading-relaxed">
+                      {std.formula}
+                    </span>
+                  </div>
+
+                  {/* Why it matters description */}
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                    {std.whyItMatters}
+                  </p>
                 </div>
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                  {std.whyItMatters}
-                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Local Regulatory Authorities (OJK, BI, BPJS) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            {localFinancialTheories.map((theory) => (
+              <div key={theory.id} className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-2.5">
+                <div className="flex items-center space-x-2">
+                  <Building2 className="w-4 h-4 text-[#003399] dark:text-blue-400" />
+                  <span className="font-bold text-xs text-slate-900 dark:text-white">{theory.institution}</span>
+                </div>
+                <h4 className="font-bold text-xs text-slate-800 dark:text-slate-200">{theory.title}</h4>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">{theory.description}</p>
+                <div className="pt-1">
+                  <a href={theory.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-[11px] text-[#003399] dark:text-blue-400 hover:underline font-semibold">
+                    <ExternalLink className="w-3 h-3 mr-1" />
+                    {theory.source}
+                  </a>
+                </div>
               </div>
             ))}
           </div>
         </div>
       )}
 
-      {/* Tab 2: Financial Gurus Framework */}
+      {/* ─── TAB 2: 10 Guru Finansial Dunia (Master Framework) ─────────────── */}
       {activeTab === "gurus" && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-in fade-in">
           {/* Guru Selector List */}
           <div className="space-y-2 lg:col-span-1">
+            <div className="px-2 py-1 text-xs font-bold text-slate-400 uppercase tracking-wider">
+              Peringkat Relevansi Finansial Keluarga
+            </div>
             {financialGurusTheories.map((guru) => (
               <button
                 key={guru.id}
                 onClick={() => setSelectedGuruId(guru.id)}
-                className={`w-full text-left p-4 rounded-xl border transition-all flex items-center justify-between cursor-pointer ${
+                className={`w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between cursor-pointer ${
                   selectedGuruId === guru.id
-                    ? "bg-blue-50/80 dark:bg-blue-950/40 border-blue-500 text-blue-950 dark:text-blue-100 shadow-xs"
+                    ? "bg-blue-50/90 dark:bg-blue-950/50 border-[#003399] text-[#003399] dark:text-blue-100 shadow-xs font-semibold"
                     : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
                 }`}
               >
-                <div>
-                  <h4 className="text-xs font-bold">{guru.author}</h4>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{guru.coreRule}</p>
+                <div className="min-w-0 pr-2">
+                  <div className="flex items-center space-x-1.5 mb-0.5">
+                    <span className={`text-[10px] px-1.5 py-0.2 rounded font-black ${
+                      guru.rank === 1 ? "bg-amber-100 text-amber-900" : guru.rank === 2 ? "bg-slate-200 text-slate-800" : guru.rank === 3 ? "bg-orange-100 text-orange-900" : "bg-blue-100 text-blue-900"
+                    }`}>
+                      #{guru.rank}
+                    </span>
+                    <h4 className="text-xs font-bold truncate text-slate-900 dark:text-white">{guru.author}</h4>
+                  </div>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{guru.title.split(":")[0]}</p>
                 </div>
-                <ArrowRight className={`w-4 h-4 ${selectedGuruId === guru.id ? "text-blue-600" : "text-slate-400"}`} />
+                <ChevronRight className={`w-4 h-4 shrink-0 ${selectedGuruId === guru.id ? "text-[#003399] dark:text-blue-400" : "text-slate-400"}`} />
               </button>
             ))}
           </div>
@@ -302,29 +493,41 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
                 financialGurusTheories.find((g) => g.id === selectedGuruId) || financialGurusTheories[0];
               return (
                 <div className="space-y-4">
-                  <div className="flex items-center space-x-3 pb-3 border-b border-slate-100 dark:border-slate-800">
-                    <div className="p-3 rounded-2xl bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400">
-                      <Award className="w-6 h-6" />
+                  <div className="flex items-start justify-between pb-3 border-b border-slate-100 dark:border-slate-800 gap-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="p-3 rounded-2xl bg-blue-100 dark:bg-blue-950 text-[#003399] dark:text-blue-400 font-black text-sm shadow-inner">
+                        #{guru.rank}
+                      </div>
+                      <div>
+                        <span className="text-[11px] font-bold text-[#003399] dark:text-blue-400 uppercase tracking-wider">
+                          {guru.role}
+                        </span>
+                        <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">{guru.author}</h2>
+                      </div>
                     </div>
-                    <div>
-                      <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
-                        {guru.role}
+                    {guru.categoryTag && (
+                      <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                        {guru.categoryTag}
                       </span>
-                      <h2 className="text-lg font-bold text-slate-900 dark:text-white">{guru.author}</h2>
-                    </div>
+                    )}
                   </div>
 
-                  <blockquote className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border-l-4 border-blue-500 text-xs italic text-slate-700 dark:text-slate-300">
+                  <blockquote className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border-l-4 border-[#003399] text-xs italic text-slate-700 dark:text-slate-300 leading-relaxed">
                     "{guru.quote}"
                   </blockquote>
 
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                    {guru.explanation}
-                  </p>
-
-                  <div className="space-y-2.5 pt-2">
+                  <div className="space-y-1.5">
                     <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
-                      Prinsip Kunci:
+                      Esensi Filosofi & Landasan:
+                    </h4>
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                      {guru.explanation}
+                    </p>
+                  </div>
+
+                  <div className="space-y-2 pt-2">
+                    <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+                      Poin Kunci & Tindakan Nyata:
                     </h4>
                     {guru.keyTakeaways.map((pt, i) => (
                       <div
@@ -337,9 +540,27 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
                     ))}
                   </div>
 
-                  <div className="p-4 rounded-xl bg-blue-50/60 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/40 text-xs text-blue-900 dark:text-blue-200">
-                    <strong>Penerapan di Indonesia:</strong> {guru.applicabilityIndonesia}
+                  <div className="p-4 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/40 text-xs text-blue-950 dark:text-blue-200 space-y-1">
+                    <span className="font-bold block">🇮🇩 Konteks & Penerapan di Indonesia:</span>
+                    <p className="leading-relaxed">{guru.applicabilityIndonesia}</p>
                   </div>
+
+                  {guru.sources && guru.sources.length > 0 && (
+                    <div className="pt-2 flex flex-wrap gap-3">
+                      {guru.sources.map((s, i) => (
+                        <a
+                          key={i}
+                          href={s.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center text-[11px] text-[#003399] dark:text-blue-400 hover:underline font-semibold"
+                        >
+                          <ExternalLink className="w-3 h-3 mr-1" />
+                          {s.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </div>
               );
             })()}
@@ -347,160 +568,153 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
         </div>
       )}
 
-      {/* Tab 3: Interactive Calculators */}
-      {activeTab === "calculator" && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in">
-          {/* Calculator 1: Rule of 72 */}
+      {/* ─── TAB 3: Hirarki 5-Layer & Sinergi OJK ──────────────────────────── */}
+      {activeTab === "hierarchy_5layer" && (
+        <div className="space-y-6 animate-in fade-in">
+          {/* Framework Overview Card */}
           <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-4">
-            <div className="flex items-center space-x-3 pb-3 border-b border-slate-100 dark:border-slate-800">
-              <div className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600">
-                <Calculator className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="font-bold text-slate-900 dark:text-white text-sm">
-                  Simulator Rule of 72 (Compound Interest)
-                </h3>
-                <p className="text-xs text-slate-500">Hitung berapa lama uang Anda berlipat ganda 2x lipat</p>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1.5">
-                Imbal Hasil Investasi Tahunan (% per tahun): {rule72Return}%
-              </label>
-              <input
-                type="range"
-                min="4"
-                max="25"
-                step="0.5"
-                value={rule72Return}
-                onChange={(e) => setRule72Return(parseFloat(e.target.value))}
-                className="w-full accent-indigo-600"
-              />
-              <div className="flex justify-between text-[11px] text-slate-400 mt-1">
-                <span>Deposito (4-5%)</span>
-                <span>SBN / Obligasi (6-7%)</span>
-                <span>Reksadana Saham (10-12%)</span>
-                <span>Saham Agresif (15%+)</span>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200/60 dark:border-indigo-800/60 text-center space-y-1">
-              <span className="text-xs font-medium text-indigo-900 dark:text-indigo-200">
-                Waktu untuk Lipat Ganda 2x:
+            <div className="max-w-3xl">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#003399] dark:text-blue-400">
+                Sistem Alokasi Kas Berjenjang (Ramit Sethi & OJK Framework)
               </span>
-              <div className="text-3xl font-extrabold text-indigo-600 dark:text-indigo-400">
-                {yearsToDouble} Tahun
-              </div>
-              <p className="text-[11px] text-slate-500 mt-1">
-                Formula: 72 ÷ {rule72Return}% = {yearsToDouble} tahun uang Rp 100 Juta Anda menjadi Rp 200 Juta.
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-1">
+                Family Financial Operating System 5-Layer
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
+                Uang Anda bukan sekadar dibagi secara kaku 50/30/20. Setiap Rp 1 memiliki pekerjaan yang disusun berdasarkan hirarki keamanan hidup: dari bertahan hidup (*Survival*), membangun perisai (*Protection*), mengejar impian keluarga (*Goals*), penggandaan kekayaan (*Wealth*), hingga menikmati hidup & berbagi (*Enjoyment*).
               </p>
             </div>
-          </div>
 
-          {/* Calculator 2: 50/30/20 Breakdown Simulator */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-4">
-            <div className="flex items-center space-x-3 pb-3 border-b border-slate-100 dark:border-slate-800">
-              <div className="p-2 rounded-xl bg-teal-50 dark:bg-teal-950 text-teal-600">
-                <Scale className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="font-bold text-slate-900 dark:text-white text-sm">
-                  Alokasi Ideal 50/30/20 dari Income Anda
-                </h3>
-                <p className="text-xs text-slate-500">
-                  Berdasarkan Total Income: Rp {totalIncome.toLocaleString("id-ID")}/bln
-                </p>
-              </div>
-            </div>
+            {/* Visual 5-Layer Stack */}
+            <div className="space-y-3 pt-2">
+              {fiveLayerHierarchyFramework.map((layer) => (
+                <div
+                  key={layer.layer}
+                  className="rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-800/40 space-y-3 transition-all hover:shadow-xs"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-8 h-8 rounded-xl bg-gradient-to-br ${layer.color} text-white flex items-center justify-center font-bold text-xs shadow-xs`}>
+                        L{layer.layer}
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-slate-900 dark:text-white text-sm">{layer.name}</h3>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400">{layer.subtitle}</p>
+                      </div>
+                    </div>
+                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 shrink-0 self-start sm:self-auto">
+                      Alokasi Target: {layer.targetPercentRange}
+                    </span>
+                  </div>
 
-            <div className="space-y-3">
-              <div className="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900">
-                <div className="flex justify-between text-xs font-bold text-blue-900 dark:text-blue-200">
-                  <span>50% Kebutuhan Pokok (Needs)</span>
-                  <span>Rp {(totalIncome * 0.5).toLocaleString("id-ID")}</span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                    <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300">
+                      <span className="font-bold block text-slate-900 dark:text-white mb-1">Pos yang Termasuk:</span>
+                      <ul className="space-y-0.5 text-[11px] text-slate-600 dark:text-slate-400">
+                        {layer.itemsIncluded.map((item, idx) => (
+                          <li key={idx}>• {item}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-blue-50/60 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/40 text-xs text-blue-950 dark:text-blue-200 space-y-1">
+                      <span className="font-bold block">🏛️ Standar OJK & Filosofi:</span>
+                      <p className="text-[11px] leading-relaxed">{layer.ojkGuideline}</p>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 italic mt-1">💡 {layer.guruPhilosophy}</p>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-[11px] text-slate-500 mt-1">Makan, sewa/kpr, utilitas, transportasi wajib.</p>
-              </div>
-
-              <div className="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-100 dark:border-purple-900">
-                <div className="flex justify-between text-xs font-bold text-purple-900 dark:text-purple-200">
-                  <span>30% Keinginan (Wants & Lifestyle)</span>
-                  <span>Rp {(totalIncome * 0.3).toLocaleString("id-ID")}</span>
-                </div>
-                <p className="text-[11px] text-slate-500 mt-1">Hangout, langganan streaming, liburan, hobi.</p>
-              </div>
-
-              <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900">
-                <div className="flex justify-between text-xs font-bold text-emerald-900 dark:text-emerald-200">
-                  <span>20% Tabungan & Investasi (Savings)</span>
-                  <span>Rp {(totalIncome * 0.2).toLocaleString("id-ID")}</span>
-                </div>
-                <p className="text-[11px] text-slate-500 mt-1">Dana darurat, saham, reksadana, dana pensiun.</p>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       )}
-      {/* Tab 4: Teori Lokal Indonesia */}
-      {activeTab === "local_indonesia" && (
-        <div className="space-y-6 animate-in fade-in">
-          <div className="bg-gradient-to-r from-red-700 to-red-800 dark:from-red-900 dark:to-red-950 rounded-2xl p-6 text-white">
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-3xl">🇮🇩</span>
+
+      {/* ─── TAB 4: Kurikulum 8 Semester & 10 Aturan Manifesto ────────────── */}
+      {activeTab === "curriculum_manifesto" && (
+        <div className="space-y-8 animate-in fade-in">
+          {/* Section 1: 10 Aturan Keuangan Keluarga (Financial Manifesto) */}
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-5">
+            <div className="flex items-center space-x-3 pb-3 border-b border-slate-100 dark:border-slate-800">
+              <div className="p-2.5 rounded-xl bg-blue-100 dark:bg-blue-950 text-[#003399] dark:text-blue-400">
+                <Bookmark className="w-5 h-5" />
+              </div>
               <div>
-                <h2 className="text-lg font-bold">Kerangka Keuangan Lokal Indonesia</h2>
-                <p className="text-red-200 text-xs">OJK · Bank Indonesia · FPSB · BPJS · CFP Indonesia</p>
+                <h2 className="font-bold text-slate-900 dark:text-white text-base">
+                  10 Aturan Keuangan Keluarga (Financial Manifesto)
+                </h2>
+                <p className="text-xs text-slate-500">
+                  Pedoman perilaku jangka panjang yang menyatukan prinsip Buffett, Housel, Collins, Graham, dan OJK.
+                </p>
               </div>
             </div>
-            <p className="text-red-100 text-sm leading-relaxed">
-              Standar, regulasi, dan framework perencanaan keuangan yang berlaku di Indonesia — bukan hanya teori internasional.
-            </p>
-          </div>
 
-          <div className="space-y-4">
-            {localFinancialTheories.map((theory) => (
-              <div key={theory.id} className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-900/40 flex items-center justify-center shrink-0">
-                    <Building2 className="w-5 h-5 text-red-600 dark:text-red-400" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              {tenFamilyFinancialRules.map((rule) => (
+                <div
+                  key={rule.ruleNumber}
+                  className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-800/40 space-y-1.5"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black px-2 py-0.5 rounded bg-[#003399] text-white">
+                      RULE #{rule.ruleNumber}
+                    </span>
+                    <span className="text-[10px] font-semibold text-slate-400">{rule.guruInfluence}</span>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <h3 className="font-bold text-slate-900 dark:text-white text-sm">{theory.title}</h3>
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300 font-bold">{theory.institution}</span>
-                    </div>
-                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mb-4">{theory.description}</p>
-                    <div className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 space-y-2 mb-4">
-                      <p className="text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">Poin Kunci:</p>
-                      <ul className="space-y-1.5">
-                        {theory.keyPoints.map((point, i) => (
-                          <li key={i} className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300">
-                            <span className="text-emerald-500 shrink-0 mt-0.5">✓</span>
-                            <span>{point}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900 mb-3">
-                      <p className="text-[11px] font-bold text-blue-700 dark:text-blue-300 mb-1">💡 Cara Menerapkan:</p>
-                      <p className="text-xs text-blue-800 dark:text-blue-200 leading-relaxed">{theory.applicability}</p>
-                    </div>
-                    <a href={theory.sourceUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-[11px] text-blue-600 dark:text-blue-400 hover:underline font-medium">
-                      <ExternalLink className="w-3 h-3" />
-                      {theory.source}
-                    </a>
+                  <h4 className="font-bold text-xs text-slate-900 dark:text-white">{rule.title}</h4>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 italic">"{rule.principle}"</p>
+                  <div className="pt-1 text-[11px] text-[#003399] dark:text-blue-300 font-medium">
+                    ✓ Tindakan: {rule.practicalAction}
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800">
-            <p className="text-xs text-amber-800 dark:text-amber-200 leading-relaxed">
-              <span className="font-bold">⚠️ Penting:</span> Informasi ini bersifat edukatif. Untuk kasus keuangan kompleks, konsultasikan dengan CFP berlisensi di{" "}
-              <a href="https://fpaindonesia.or.id" target="_blank" rel="noopener noreferrer" className="underline font-semibold">fpaindonesia.or.id</a>.
-            </p>
+          {/* Section 2: Financial University Curriculum (8 Semesters) */}
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-5">
+            <div className="flex items-center space-x-3 pb-3 border-b border-slate-100 dark:border-slate-800">
+              <div className="p-2.5 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400">
+                <GraduationCap className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="font-bold text-slate-900 dark:text-white text-base">
+                  Financial University — Roadmap Belajar Mandiri (8 Semester)
+                </h2>
+                <p className="text-xs text-slate-500">
+                  Urutan membaca buku & membangun sistem finansial bertahap tanpa over-engineering.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {financialUniversityCurriculum.map((sem) => (
+                <div
+                  key={sem.semester}
+                  className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/30 space-y-2.5"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300 uppercase">
+                      Semester {sem.semester}
+                    </span>
+                    <span className="text-[10px] font-semibold text-slate-400">{sem.category}</span>
+                  </div>
+
+                  <div>
+                    <h4 className="font-bold text-xs text-slate-900 dark:text-white">{sem.bookTitle}</h4>
+                    <span className="text-[11px] text-slate-500 dark:text-slate-400">Karya: {sem.author}</span>
+                  </div>
+
+                  <p className="text-xs text-purple-950 dark:text-purple-200 font-semibold">
+                    ❓ Pertanyaan Kunci: "{sem.keyQuestion}"
+                  </p>
+
+                  <div className="p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-300">
+                    <strong>Fokus Belajar:</strong> {sem.readingAdvice}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
@@ -509,17 +723,17 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
       <div className="flex justify-between items-center pt-4">
         <button
           onClick={onPrev}
-          className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
+          className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Kembali ke Target & Goals</span>
+          <span>Kembali ke Profil Risiko</span>
         </button>
 
         <button
           onClick={onNext}
-          className="inline-flex items-center space-x-2 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md shadow-emerald-500/20 hover:scale-[1.02] transition-all cursor-pointer"
+          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#003399] hover:bg-[#002266] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
         >
-          <span>Lanjut ke Langkah 6: Profil Risiko</span>
+          <span>Lanjut ke Langkah 7: Hasil Rencana Keuangan</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

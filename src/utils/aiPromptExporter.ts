@@ -1,7 +1,9 @@
+import { generateTailoredGranularBudget } from "./dynamicBudgetPosts";
+
 /**
  * AI Prompt Exporter Utility
- * Memformat seluruh knowledge base, rasio OJK, arus kas, dan profil klien
- * menjadi Master Prompt CFP yang siap dibuka/ditempel di akun ChatGPT, Google Gemini, atau Claude milik pengguna sendiri.
+ * Memformat seluruh data komprehensif FinPlan (11 Pos Anggaran, 4 Simulasi, Rasio OJK, Arus Kas)
+ * menjadi Master Prompt CFP super lengkap untuk ChatGPT, Google Gemini, atau Claude.
  */
 
 export function generateMasterFinancialPrompt(
@@ -19,75 +21,109 @@ export function generateMasterFinancialPrompt(
     (cashflow?.businessPassiveIncome || 0) +
     (cashflow?.investmentPassiveIncome || 0);
 
+  const totalLivingExpenses =
+    (cashflow?.monthlyHousing || 0) +
+    (cashflow?.monthlyFood || 0) +
+    (cashflow?.monthlyTransport || 0) +
+    (cashflow?.monthlyUtilities || 0) +
+    (cashflow?.monthlyLifestyle || 0) +
+    (cashflow?.monthlyInsurance || 0) +
+    (cashflow?.monthlyOther || 0);
+
   const totalDebtsMonthly = (cashflow?.debts || []).reduce(
     (acc: number, d: any) => acc + (d.monthlyPayment || 0),
     0
   );
   const dsr = totalIncome > 0 ? ((totalDebtsMonthly / totalIncome) * 100).toFixed(1) : "0";
+  const savingsRatio = totalIncome > 0 ? (((totalIncome - totalLivingExpenses - totalDebtsMonthly) / totalIncome) * 100).toFixed(1) : "0";
+
+  // Generate 11 Dynamic Budget Posts
+  const budgetPosts = generateTailoredGranularBudget(cashflow, totalIncome, goals, profile);
+  const budgetTableStr = budgetPosts
+    .map(
+      (p: any, idx: number) =>
+        `  ${idx + 1}. [${p.type.toUpperCase()}] ${p.name}: Rp ${p.amount.toLocaleString("id-ID")}/bln (${p.pct}%) - Kantong: ${p.accountRecommendation} (Aktif: ${p.timing})`
+    )
+    .join("\n");
 
   const debtsList = (cashflow?.debts || [])
     .map(
       (d: any, idx: number) =>
-        `  ${idx + 1}. ${d.name || "Cicilan"}: Rp ${(d.monthlyPayment || 0).toLocaleString("id-ID")}/bln (Sisa Pokok: Rp ${(d.remainingAmount || 0).toLocaleString("id-ID")})`
+        `  ${idx + 1}. ${d.name || "Cicilan"}: Angsuran Rp ${(d.monthlyPayment || 0).toLocaleString("id-ID")}/bln | Sisa Pokok: Rp ${(d.remainingAmount || 0).toLocaleString("id-ID")} | Bunga: ${d.interestRate || 0}%/thn`
     )
     .join("\n");
 
+  // Proyeksi 4 Simulasi
+  const compoundFv10 = Math.round(totalIncome * 0.2 * 12 * 10 * 1.55); // est 9%
+  const estHousePrice = goals?.housingTarget?.estimatedPrice || 650000000;
+  const kprAngsuran15 = Math.round((estHousePrice * 0.8 * 0.08) / 12 * 1.25);
+  const estCarPrice = goals?.vehicleTarget?.estimatedPrice || 250000000;
+
   return `Bertindaklah sebagai Perencana Keuangan Independen Bersertifikasi CFP (Certified Financial Planner) & Berlisensi OJK di Indonesia.
 
-Berikut adalah seluruh data profil, arus kas, aset, utang, dan target keuangan riil saya:
+Berikut adalah SELURUH DATA LENGKAP profil keuangan, arus kas, utang, pos anggaran, dan target saya yang telah dihitung oleh FinPlan App:
 
-👤 PROFIL KLIEN:
-- Nama Lengkap: ${profile?.fullName || "Klien FinPlan"}
+══════════════════════════════════════════════════════════════
+👤 1. PROFIL & DEMOGRAFI KLIEN
+══════════════════════════════════════════════════════════════
+- Nama Klien: ${profile?.fullName || "Klien FinPlan"}
 - Usia: ${profile?.age || 30} Tahun
 - Status Pernikahan: ${profile?.maritalStatus || "Lajang"}
 - Jumlah Tanggungan / Anak: ${profile?.dependents || 0} Orang
-- Pekerjaan: ${profile?.occupation || "Karyawan Swasta"}
+- Pekerjaan: ${profile?.occupation || "Karyawan"}
 
-💰 ARUS KAS BULANAN (CASHFLOW):
+══════════════════════════════════════════════════════════════
+💰 2. ARUS KAS BULANAN & RASIO KESEHATAN OJK
+══════════════════════════════════════════════════════════════
 - Total Pemasukan Bulanan: Rp ${totalIncome.toLocaleString("id-ID")}/bulan
+- Total Pengeluaran Hidup: Rp ${totalLivingExpenses.toLocaleString("id-ID")}/bulan
 - Total Cicilan Utang: Rp ${totalDebtsMonthly.toLocaleString("id-ID")}/bulan
-- Rasio Beban Utang (DSR): ${dsr}% (Standar Batas Aman OJK: ≤ 30%)
-${debtsList ? `Rincian Utang:\n${debtsList}` : "- Utang: Tidak memiliki cicilan aktif"}
-
-🏦 NERACA ASET & TABUNGAN:
-- Aset Likuid & Kas: Rp ${(cashflow?.liquidAssets || 0).toLocaleString("id-ID")}
-- Aset Investasi: Rp ${(cashflow?.investmentAssets || 0).toLocaleString("id-ID")}
-- Aset Properti/Personal: Rp ${(cashflow?.personalAssets || 0).toLocaleString("id-ID")}
-
-🎯 TARGET KEUANGAN & PROFIL RISIKO:
-- Profil Risiko Investasi: ${risk?.profileType || "Moderat"} (${risk?.score || 50}/100)
-- Target Beli Rumah: ${
-    goals?.housingTarget?.hasTarget
-      ? `Target Rp ${goals?.housingTarget?.estimatedPrice?.toLocaleString("id-ID")} dalam ${goals?.housingTarget?.targetYears || 3} tahun (DP Terkumpul: Rp ${(goals?.housingTarget?.downPaymentSaved || 0).toLocaleString("id-ID")})`
-      : "Belum direncanakan"
-  }
-- Target Kendaraan: ${
-    goals?.vehicleTarget?.hasTarget
-      ? `Target Rp ${goals?.vehicleTarget?.estimatedPrice?.toLocaleString("id-ID")} dalam ${goals?.vehicleTarget?.targetYears || 2} tahun`
-      : "Belum direncanakan"
-  }
-- Target Pensiun: Usia ${goals?.retirementAge || 55} Tahun
-
-📊 STATUS KESEHATAN FINANSIAL (CFP & OJK BENCHMARK):
+- Rasio Beban Utang (DSR): ${dsr}% (Batas Aman OJK: Maksimal 30%)
+- Rasio Tabungan (Savings Ratio): ${savingsRatio}% (Standar Sehat OJK: Minimal 20%)
 - Financial Health Score: ${plan?.healthScore?.overall || 50}/100
-- Metode Anggaran: 100% Zero-Based Budgeting (Kaidah Piramida Keuangan CFP: Fondasi Dana Darurat di RDPU $\\rightarrow$ Proteksi Asuransi UP 10x $\\rightarrow$ Investasi SBN/Saham DCA).
 
-PANDUAN MENJAWAB UNTUK AI:
-1. Sapa saya dengan ramah dan panggil nama saya (${profile?.fullName || "Sobat FinPlan"}).
-2. Berikan evaluasi objektif terhadap kondisi arus kas dan rasio utang (DSR) saya saat ini.
-3. Berikan 3 langkah aksi prioritas terpenting yang harus saya lakukan dalam 1-3 bulan ke depan.
-4. Rekomendasikan instrumen keuangan resmi di Indonesia (RDPU, SBN Ritel ORI/SR, RDPT, Saham IDX30, BPJS Kesehatan).
-5. Format jawaban dengan bullet point dan penekanan tebal (bold) yang rapi.`;
+${debtsList ? `Rincian Utang Riil:\n${debtsList}` : "Rincian Utang: Bersih / Tidak Ada Utang"}
+
+══════════════════════════════════════════════════════════════
+🏦 3. NERACA ASET & TABUNGAN
+══════════════════════════════════════════════════════════════
+- Aset Likuid & Kas/Tabungan: Rp ${(cashflow?.liquidAssets || 0).toLocaleString("id-ID")}
+- Aset Investasi (Saham, SBN, RDPU): Rp ${(cashflow?.investmentAssets || 0).toLocaleString("id-ID")}
+- Aset Personal (Hunian, Kendaraan): Rp ${(cashflow?.personalAssets || 0).toLocaleString("id-ID")}
+
+══════════════════════════════════════════════════════════════
+⚖️ 4. BLUEPRINT 11 POS ANGGARAN DINAMIS (100% ZERO-BASED BUDGETING)
+══════════════════════════════════════════════════════════════
+${budgetTableStr}
+
+══════════════════════════════════════════════════════════════
+🎯 5. TARGET KEUANGAN & HASIL 4 MODUL SIMULASI
+══════════════════════════════════════════════════════════════
+- Profil Risiko Investasi: ${risk?.profileType || "Moderat"}
+- Target Pensiun: Usia ${goals?.retirementAge || 55} Tahun (Target Dana SWR 4%: Rp ${Math.round(totalLivingExpenses * 12 * 25).toLocaleString("id-ID")})
+- Target Beli Rumah: ${goals?.housingTarget?.hasTarget ? `Rp ${estHousePrice.toLocaleString("id-ID")} (Estimasi KPR 15 Thn: ~Rp ${kprAngsuran15.toLocaleString("id-ID")}/bln, DP 20%: Rp ${Math.round(estHousePrice * 0.2).toLocaleString("id-ID")})` : "Belum Direncanakan"}
+- Target Kendaraan: ${goals?.vehicleTarget?.hasTarget ? `Rp ${estCarPrice.toLocaleString("id-ID")}` : "Belum Direncanakan"}
+- Proyeksi Akumulasi Bunga Majemuk 10 Tahun (9% Return): ~Rp ${compoundFv10.toLocaleString("id-ID")}
+
+══════════════════════════════════════════════════════════════
+📋 PANDUAN KONSULTASI UNTUK AI
+══════════════════════════════════════════════════════════════
+1. Sapa saya dengan ramah (${profile?.fullName || "Sobat FinPlan"}).
+2. Berikan analisis holistik dan 3 langkah prioritas aksi finansial terpenting yang harus saya lakukan saat ini berdasarkan angka-angka riil di atas.
+3. Rujuk instrumen keuangan resmi di Indonesia (RDPU untuk kas darurat, SBN Ritel ORI/SR untuk fixed income, Indeks IDX30 untuk jangka panjang, BPJS Kesehatan).
+4. Gunakan gaya bahasa profesional, solutif, empatik, serta format bullet point yang rapi.`;
 }
 
 export function openInChatGPT(prompt: string) {
   const encoded = encodeURIComponent(prompt);
-  // ChatGPT URL format with pre-filled prompt query
+  // Copy to clipboard as backup
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(prompt);
+  }
   window.open(`https://chatgpt.com/?q=${encoded}`, "_blank");
 }
 
 export function openInGemini(prompt: string) {
-  // Copy to clipboard first then open Gemini Web
   if (navigator.clipboard) {
     navigator.clipboard.writeText(prompt);
   }
@@ -100,3 +136,4 @@ export function openInClaude(prompt: string) {
   }
   window.open("https://claude.ai/new", "_blank");
 }
+

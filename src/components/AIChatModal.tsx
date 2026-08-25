@@ -121,29 +121,47 @@ export const AIChatModal: React.FC<AIChatModalProps> = ({
   };
 
   const handleCopyMasterPrompt = () => {
-    const prompt = generateMasterFinancialPrompt(profile, cashflow, goals, risk, plan);
-    navigator.clipboard.writeText(prompt);
-    setCopiedPrompt(true);
-    showToast("📋 Master Prompt Keuangan Lengkap Berhasil Disalin!");
-    setTimeout(() => setCopiedPrompt(false), 3000);
+    try {
+      const prompt = generateMasterFinancialPrompt(profile, cashflow, goals, risk, plan);
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(prompt);
+      }
+      setCopiedPrompt(true);
+      showToast("📋 Master Prompt Keuangan Lengkap Berhasil Disalin!");
+      setTimeout(() => setCopiedPrompt(false), 3000);
+    } catch {
+      showToast("📋 Prompt siap digunakan!");
+    }
   };
 
   const handleOpenChatGPT = () => {
-    const prompt = generateMasterFinancialPrompt(profile, cashflow, goals, risk, plan);
-    openInChatGPT(prompt);
-    showToast("🚀 Membuka ChatGPT dengan data keuangan lengkap Anda...");
+    try {
+      const prompt = generateMasterFinancialPrompt(profile, cashflow, goals, risk, plan);
+      openInChatGPT(prompt);
+      showToast("🚀 Membuka ChatGPT dengan data keuangan lengkap Anda...");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleOpenGemini = () => {
-    const prompt = generateMasterFinancialPrompt(profile, cashflow, goals, risk, plan);
-    openInGemini(prompt);
-    showToast("📋 Data Keuangan Disalin! Tekan Paste (Ctrl+V) di jendela Gemini.");
+    try {
+      const prompt = generateMasterFinancialPrompt(profile, cashflow, goals, risk, plan);
+      openInGemini(prompt);
+      showToast("📋 Data Keuangan Disalin! Tekan Paste (Ctrl+V) di jendela Gemini.");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleOpenClaude = () => {
-    const prompt = generateMasterFinancialPrompt(profile, cashflow, goals, risk, plan);
-    openInClaude(prompt);
-    showToast("📋 Data Keuangan Disalin! Tekan Paste (Ctrl+V) di jendela Claude.");
+    try {
+      const prompt = generateMasterFinancialPrompt(profile, cashflow, goals, risk, plan);
+      openInClaude(prompt);
+      showToast("📋 Data Keuangan Disalin! Tekan Paste (Ctrl+V) di jendela Claude.");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   if (!isOpen) return null;

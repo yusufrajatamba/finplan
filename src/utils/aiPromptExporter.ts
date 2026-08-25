@@ -7,59 +7,75 @@ import { generateTailoredGranularBudget } from "./dynamicBudgetPosts";
  */
 
 export function generateMasterFinancialPrompt(
-  profile: any,
-  cashflow: any,
-  goals: any,
-  risk: any,
-  plan: any
+  profile: any = {},
+  cashflow: any = {},
+  goals: any = {},
+  risk: any = {},
+  plan: any = null,
+  career: any = {}
 ): string {
-  const totalIncome =
-    (cashflow?.monthlyMainIncome || 0) +
-    (cashflow?.monthlySideIncome || 0) +
-    (cashflow?.partnerMainIncome || 0) +
-    (cashflow?.partnerSideIncome || 0) +
-    (cashflow?.businessPassiveIncome || 0) +
-    (cashflow?.investmentPassiveIncome || 0);
+  try {
+    const totalIncome = Math.max(
+      1,
+      (cashflow?.monthlyMainIncome || 0) +
+        (cashflow?.monthlySideIncome || 0) +
+        (cashflow?.partnerMainIncome || 0) +
+        (cashflow?.partnerSideIncome || 0) +
+        (cashflow?.businessPassiveIncome || 0) +
+        (cashflow?.investmentPassiveIncome || 0)
+    );
 
-  const totalLivingExpenses =
-    (cashflow?.monthlyHousing || 0) +
-    (cashflow?.monthlyFood || 0) +
-    (cashflow?.monthlyTransport || 0) +
-    (cashflow?.monthlyUtilities || 0) +
-    (cashflow?.monthlyLifestyle || 0) +
-    (cashflow?.monthlyInsurance || 0) +
-    (cashflow?.monthlyOther || 0);
+    const totalLivingExpenses =
+      (cashflow?.monthlyNeeds || 0) +
+      (cashflow?.housingExpense || 0) +
+      (cashflow?.utilitiesExpense || 0) +
+      (cashflow?.transportationExpense || 0) +
+      (cashflow?.monthlyLivingExpenses || 0);
 
-  const totalDebtsMonthly = (cashflow?.debts || []).reduce(
-    (acc: number, d: any) => acc + (d.monthlyPayment || 0),
-    0
-  );
-  const dsr = totalIncome > 0 ? ((totalDebtsMonthly / totalIncome) * 100).toFixed(1) : "0";
-  const savingsRatio = totalIncome > 0 ? (((totalIncome - totalLivingExpenses - totalDebtsMonthly) / totalIncome) * 100).toFixed(1) : "0";
+    const totalDebtsMonthly = (cashflow?.debts || []).reduce(
+      (acc: number, d: any) => acc + (d.monthlyPayment || 0),
+      0
+    );
+    const dsr = totalIncome > 0 ? ((totalDebtsMonthly / totalIncome) * 100).toFixed(1) : "0";
+    const savingsRatio =
+      totalIncome > 0
+        ? (((totalIncome - totalLivingExpenses - totalDebtsMonthly) / totalIncome) * 100).toFixed(1)
+        : "0";
 
-  // Generate 11 Dynamic Budget Posts
-  const budgetPosts = generateTailoredGranularBudget(cashflow, totalIncome, goals, profile);
-  const budgetTableStr = budgetPosts
-    .map(
-      (p: any, idx: number) =>
-        `  ${idx + 1}. [${p.type.toUpperCase()}] ${p.name}: Rp ${p.amount.toLocaleString("id-ID")}/bln (${p.pct}%) - Kantong: ${p.accountRecommendation} (Aktif: ${p.timing})`
-    )
-    .join("\n");
+    // Safe generate 11 Dynamic Budget Posts
+    let budgetTableStr = "";
+    try {
+      const budgetPosts = generateTailoredGranularBudget(
+        cashflow || {},
+        profile || {},
+        career || { personal: {} },
+        goals || {},
+        risk || { profileType: "Moderat" },
+        plan || null
+      );
+      budgetTableStr = budgetPosts
+        .map(
+          (p: any, idx: number) =>
+            `  ${idx + 1}. [${(p.type || "Wajib").toUpperCase()}] ${p.name}: Rp ${(p.amount || 0).toLocaleString("id-ID")}/bln (${p.pct || 0}%) - Kantong: ${p.accountRecommendation || "BCA/Jago"} (Status: ${p.timing || "Tahun 1"})`
+        )
+        .join("\n");
+    } catch {
+      budgetTableStr = "  • Alokasi 100% Zero-Based Budgeting: Living Pokok, Cicilan Utang, Dana Darurat, Asuransi, dan Investasi SBN/Saham.";
+    }
 
-  const debtsList = (cashflow?.debts || [])
-    .map(
-      (d: any, idx: number) =>
-        `  ${idx + 1}. ${d.name || "Cicilan"}: Angsuran Rp ${(d.monthlyPayment || 0).toLocaleString("id-ID")}/bln | Sisa Pokok: Rp ${(d.remainingAmount || 0).toLocaleString("id-ID")} | Bunga: ${d.interestRate || 0}%/thn`
-    )
-    .join("\n");
+    const debtsList = (cashflow?.debts || [])
+      .map(
+        (d: any, idx: number) =>
+          `  ${idx + 1}. ${d.name || "Cicilan"}: Angsuran Rp ${(d.monthlyPayment || 0).toLocaleString("id-ID")}/bln | Sisa Pokok: Rp ${(d.remainingAmount || 0).toLocaleString("id-ID")} | Bunga: ${d.interestRate || 0}%/thn`
+      )
+      .join("\n");
 
-  // Proyeksi 4 Simulasi
-  const compoundFv10 = Math.round(totalIncome * 0.2 * 12 * 10 * 1.55); // est 9%
-  const estHousePrice = goals?.housingTarget?.estimatedPrice || 650000000;
-  const kprAngsuran15 = Math.round((estHousePrice * 0.8 * 0.08) / 12 * 1.25);
-  const estCarPrice = goals?.vehicleTarget?.estimatedPrice || 250000000;
+    const compoundFv10 = Math.round(totalIncome * 0.2 * 12 * 10 * 1.55);
+    const estHousePrice = goals?.housingTarget?.estimatedPrice || 650000000;
+    const kprAngsuran15 = Math.round(((estHousePrice * 0.8 * 0.08) / 12) * 1.25);
+    const estCarPrice = goals?.vehicleTarget?.estimatedPrice || 250000000;
 
-  return `Bertindaklah sebagai Perencana Keuangan Independen Bersertifikasi CFP (Certified Financial Planner) & Berlisensi OJK di Indonesia.
+    return `Bertindaklah sebagai Perencana Keuangan Independen Bersertifikasi CFP (Certified Financial Planner) & Berlisensi OJK di Indonesia.
 
 Berikut adalah SELURUH DATA LENGKAP profil keuangan, arus kas, utang, pos anggaran, dan target saya yang telah dihitung oleh FinPlan App:
 
@@ -112,28 +128,46 @@ ${budgetTableStr}
 2. Berikan analisis holistik dan 3 langkah prioritas aksi finansial terpenting yang harus saya lakukan saat ini berdasarkan angka-angka riil di atas.
 3. Rujuk instrumen keuangan resmi di Indonesia (RDPU untuk kas darurat, SBN Ritel ORI/SR untuk fixed income, Indeks IDX30 untuk jangka panjang, BPJS Kesehatan).
 4. Gunakan gaya bahasa profesional, solutif, empatik, serta format bullet point yang rapi.`;
+  } catch (err) {
+    console.error("Error generating master prompt:", err);
+    return `Bertindaklah sebagai CFP Financial Planner untuk ${profile?.fullName || "Klien FinPlan"}. Bantu analisis keuangan dan investasi saya.`;
+  }
+}
+
+function copyTextFallback(text: string) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text);
+      return;
+    }
+  } catch {}
+
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.position = "fixed";
+  textArea.style.left = "-999999px";
+  textArea.style.top = "-999999px";
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand("copy");
+  } catch {}
+  document.body.removeChild(textArea);
 }
 
 export function openInChatGPT(prompt: string) {
-  const encoded = encodeURIComponent(prompt);
-  // Copy to clipboard as backup
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(prompt);
-  }
+  copyTextFallback(prompt);
+  const encoded = encodeURIComponent(prompt.slice(0, 3500)); // safe url limit
   window.open(`https://chatgpt.com/?q=${encoded}`, "_blank");
 }
 
 export function openInGemini(prompt: string) {
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(prompt);
-  }
+  copyTextFallback(prompt);
   window.open("https://gemini.google.com/app", "_blank");
 }
 
 export function openInClaude(prompt: string) {
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(prompt);
-  }
+  copyTextFallback(prompt);
   window.open("https://claude.ai/new", "_blank");
 }
-

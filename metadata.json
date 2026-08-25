@@ -1,0 +1,6 @@
+{
+  "name": "FinPlan Mandiri AI",
+  "description": "Aplikasi belajar & perencana keuangan mandiri dengan analisis profil risiko, arus kas, rekomendasi anggaran otomatis, simulasi investasi, asuransi, dan tips menabung terpersonalisasi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

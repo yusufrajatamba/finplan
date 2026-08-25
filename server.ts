@@ -509,39 +509,60 @@ PANDUAN MENJAWAB SEBAGAI CFP PROFESIONAL:
     if (!replyText) {
       const query = currentMessage.toLowerCase();
 
-      if (query.includes("utang") || query.includes("cicilan") || query.includes("pinjol") || query.includes("kartu kredit")) {
-        replyText = `Halo **${profile.fullName || "Sobat FinPlan"}**, berdasarkan analisis rasio utang (DSR saat ini ${dsr}%):\n\n` +
-          `1. **Batas Aman OJK:** Total cicilan bulanan idealnya maksimal **30% dari total pendapatan** (Rp ${Math.round(totalIncome * 0.3).toLocaleString("id-ID")}/bln).\n` +
-          `2. **Metode Pelunasan Tercepat:** Terapkan strategi **Debt Snowball** (lunasi utang ber-nominal terkecil untuk dorongan psikologis) atau **Debt Avalanche** (lunasi bunga tertinggi terlebih dahulu).\n` +
-          `3. **Tindakan Darurat:** Jika DSR > 50%, segera hubungi bank penerbit kredit untuk mengajukan **restrukturisasi perpanjangan tenor** guna menurunkan angsuran bulanan.`;
-      } else if (query.includes("rumah") || query.includes("kpr") || query.includes("dp")) {
+      if (query.includes("utang") || query.includes("cicilan") || query.includes("pinjol") || query.includes("kartu kredit") || query.includes("dsr")) {
+        replyText = `Halo **${profile.fullName || "Sobat FinPlan"}**, berdasarkan analisis rasio utang riil Anda (Total Cicilan: Rp ${totalDebtsMonthly.toLocaleString("id-ID")}/bln • DSR saat ini: **${dsr}%**):\n\n` +
+          `1. **Evaluasi Standar OJK (Batas Aman ≤ 30%):**\n   ${Number(dsr) <= 30 ? `✅ Rasio utang Anda saat ini (${dsr}%) masih berada dalam batas aman OJK (≤ 30%).` : `⚠️ Rasio utang Anda (${dsr}%) melebihi batas aman OJK 30%. Batas cicilan maksimal yang sehat untuk penghasilan Anda adalah **Rp ${Math.round(totalIncome * 0.3).toLocaleString("id-ID")}/bulan**.`}\n\n` +
+          `2. **Langkah Aksi Pelunasan Tercepat:**\n` +
+          `   • **Metode Debt Snowball:** Fokuskan surplus kas untuk melunasi utang dengan nominal terkecil lebih dahulu agar beban mental berkurang.\n` +
+          `   • **Metode Debt Avalanche:** Prioritaskan pinjaman dengan bunga tertinggi (seperti kartu kredit/pinjol) untuk menghentikan akumulasi bunga.\n\n` +
+          `3. **Rekomendasi CFP:** ${Number(dsr) > 30 ? "Segera hubungi bank kreditur untuk meminta restrukturisasi atau perpanjangan tenor cicilan guna menurunkan angsuran bulanan ke bawah 30%." : "Pertahankan kedisiplinan pembayaran tepat waktu dan hindari menambah kewajiban utang baru."}`;
+      } else if (query.includes("rasio") || query.includes("ojk") || query.includes("skor") || query.includes("sehat") || query.includes("aman") || query.includes("pengeluaran") || query.includes("gaji") || query.includes("arus kas")) {
+        replyText = `📊 **Ringkasan Evaluasi Kesehatan Finansial (Standar OJK & CFP) untuk ${profile.fullName || "Klien"}:**\n\n` +
+          `• **Total Pemasukan Bulanan:** Rp ${totalIncome.toLocaleString("id-ID")}/bulan\n` +
+          `• **Rasio Beban Utang (DSR):** **${dsr}%** (Batas Aman OJK: ≤ 30%) $\\rightarrow$ ${Number(dsr) <= 30 ? "✅ Aman" : "⚠️ Perlu Restrukturisasi"}\n` +
+          `• **Rasio Tabungan & Investasi:** Target minimal OJK adalah **≥ 20%** dari total pendapatan (Rp ${Math.round(totalIncome * 0.2).toLocaleString("id-ID")}/bln).\n` +
+          `• **Ketahanan Kas Darurat:** Target ideal untuk status ${profile.maritalStatus || "Lajang"} adalah **${profile.maritalStatus === "Menikah" ? "9" : "6"} bulan pengeluaran** di Reksadana Pasar Uang (RDPU).\n\n` +
+          `💡 **Saran Praktis:** Terapkan pemisahan rekening 3 kantong (Operasional, Dana Darurat/Sinking Fund, dan Investasi) dengan autodebet pada H+1 gajian.`;
+      } else if (query.includes("rumah") || query.includes("kpr") || query.includes("dp") || query.includes("properti")) {
         const estPrice = goals.housingTarget?.estimatedPrice || 650000000;
         const dp20 = Math.round(estPrice * 0.2);
-        replyText = `🏠 **Strategi Mempersiapkan Rumah Pertama (Rp ${estPrice.toLocaleString("id-ID")}):**\n\n` +
+        replyText = `🏠 **Strategi Mempersiapkan Rumah Pertama (Target: Rp ${estPrice.toLocaleString("id-ID")}):**\n\n` +
           `1. **Target DP Murni (20%):** Rp ${dp20.toLocaleString("id-ID")}.\n` +
           `2. **Cadangan Biaya Legalitas & Akad (5-7%):** Siapkan tambahan cash ~Rp ${Math.round(estPrice * 0.06).toLocaleString("id-ID")} untuk BPHTB, appraisal, provisi bank, dan notaris.\n` +
           `3. **Tempat Simpan Tabungan DP:** Simpan di instrumen likuid berimbal hasil stabil seperti **Reksadana Pendapatan Tetap (RDPT)** atau **SBN Ritel (SR/ORI)** agar nilainya tidak tergerus inflasi properti tahunan (+5-7%).\n` +
           `4. **Batas Cicilan KPR:** Pastikan angsuran bulanan nantinya tidak melebihi Rp ${Math.round(totalIncome * 0.25).toLocaleString("id-ID")}/bln (25% gaji).`;
-      } else if (query.includes("investasi") || query.includes("saham") || query.includes("reksadana") || query.includes("portofolio")) {
+      } else if (query.includes("investasi") || query.includes("saham") || query.includes("reksadana") || query.includes("portofolio") || query.includes("sbn") || query.includes("emas")) {
         replyText = `📈 **Rekomendasi Portofolio Sesuai Profil Risiko ${risk.profileType || "Moderat"}:**\n\n` +
           `1. **Fondasi Likuiditas (10-20%):** Reksadana Pasar Uang (RDPU) sebagai buffer kas dan dana siaga.\n` +
           `2. **Pertumbuhan Stabil (40-50%):** SBN Ritel Pemerintah (ORI/SR) & Obligasi Korporasi Rating AAA.\n` +
           `3. **Akselerasi Jangka Panjang (>5 Tahun, 30-40%):** Reksadana Indeks Saham IDX30, Saham Blue Chip Dividen, atau Emas Batangan.\n\n` +
           `💡 **Tips Eksekusi:** Gunakan metode *Dollar Cost Averaging (DCA)* secara autodebet pada H+1 setelah gajian agar investasi berjalan otomatis dan konsisten.`;
-      } else if (query.includes("darurat") || query.includes("emergency")) {
+      } else if (query.includes("darurat") || query.includes("emergency") || query.includes("tabungan")) {
         const targetMonths = profile.maritalStatus === "Menikah" ? 9 : 6;
         replyText = `🛡️ **Panduan Dana Darurat Keluarga:**\n\n` +
           `1. **Target Ketahanan Kas:** Untuk status **${profile.maritalStatus || "Lajang"}** dengan ${profile.dependents || 0} tanggungan, target ideal adalah **${targetMonths}x pengeluaran bulanan**.\n` +
           `2. **Pemisahan Rekening:** Jangan campur dana darurat dengan rekening belanja harian. Buka rekening terpisah khusus darurat di **Reksadana Pasar Uang (RDPU)** bebas biaya admin.\n` +
           `3. **Kriteria Penggunaan:** Hanya boleh ditarik untuk 3 kondisi: (1) Kehilangan sumber penghasilan/PHK, (2) Sakit mendadak di luar cover asuransi, (3) Kerusakan hunian/kendaraan esensial kerja.`;
+      } else if (query.includes("asuransi") || query.includes("bpjs") || query.includes("jiwa") || query.includes("kesehatan")) {
+        replyText = `🛡️ **Panduan Proteksi Asuransi Keluarga (Kaidah CFP):**\n\n` +
+          `1. **Asuransi Kesehatan (Wajib Pertama):** Pastikan **BPJS Kesehatan** seluruh anggota keluarga aktif tanpa tunggakan. Jika ada budget lebih, lengkapi dengan asuransi rawat inap swasta sistem *cashless on-bill 1 bed*.\n` +
+          `2. **Asuransi Jiwa Murni (Term Life):** Wajib bagi pencari nafkah utama dengan Uang Pertanggungan (UP) minimal **10x pengeluaran tahunan** keluarga.\n` +
+          `3. **Batas Beban Premi:** Total pengeluaran seluruh premi asuransi tidak boleh melebihi **5% - 10% dari total pendapatan bulanan** (Maksimal: Rp ${Math.round(totalIncome * 0.1).toLocaleString("id-ID")}/bln).`;
+      } else if (query.includes("pensiun") || query.includes("fire") || query.includes("hari tua") || query.includes("swr")) {
+        const annualLiving = (totalIncome * 0.6) * 12;
+        const targetPortfolio = annualLiving * 25;
+        replyText = `🌅 **Perencanaan Kemerdekaan Finansial (Aturan 4% Safe Withdrawal Rate - Trinity Study):**\n\n` +
+          `1. **Target Portofolio Pensiun:** Butuh modal akumulasi sebesar **25x pengeluaran tahunan** (Estimasi: ~Rp ${Math.round(targetPortfolio).toLocaleString("id-ID")}).\n` +
+          `2. **Skema Penarikan Aman (4% SWR):** Dengan menarik 4% dari modal per tahun, pokok investasi tidak akan habis tergerus inflasi selama masa pensiun.\n` +
+          `3. **Instrumen Penempatan Pensiun:** SBN Ritel seri kupon bulanan (ORI/SR) dan Saham Dividen Blue Chip (IDX High Dividend 20).`;
       } else {
-        replyText = `Halo **${profile.fullName || "Sobat FinPlan"}**! Sebagai AI Financial Planner Anda, saya siap memandu Anda mengambil keputusan finansial terbaik.\n\n` +
-          `Anda dapat bertanya seputar:\n` +
-          `• 💡 *Strategi pelunasan cicilan utang & optimalisasi DSR*\n` +
-          `• 🏠 *Perhitungan DP KPR Rumah & simulasi angsuran bank*\n` +
-          `• 📈 *Alokasi investasi bulanan di SBN, Saham, & Reksadana*\n` +
-          `• 🛡️ *Perhitungan kebutuhan uang pertanggungan asuransi jiwa & BPJS*\n\n` +
-          `Silakan tanyakan detail atau skenario finansial yang ingin Anda simulasikan!`;
+        replyText = `Halo **${profile.fullName || "Sobat FinPlan"}**! Berdasarkan profil keuangan Anda (Pemasukan Rp ${totalIncome.toLocaleString("id-ID")}/bln, DSR ${dsr}%, Profil ${risk.profileType || "Moderat"}):\n\n` +
+          `Saya siap memandu simulasi dan strategi finansial Anda:\n` +
+          `• 💡 *Perhitungan percepatan pelunasan cicilan utang*\n` +
+          `• 🏠 *Simulasi DP dan kemampuan angsuran KPR Rumah*\n` +
+          `• 📈 *Alokasi investasi bulanan di SBN, Saham IDX30, & Reksadana*\n` +
+          `• 🛡️ *Optimasi dana darurat dan proteksi asuransi keluarga*\n\n` +
+          `Silakan sampaikan pertanyaan atau skenario spesifik yang ingin Anda diskusikan!`;
       }
     }
 

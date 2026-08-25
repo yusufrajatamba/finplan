@@ -28,6 +28,7 @@ import { EducationModal } from "./components/EducationModal";
 import { NewProfileModal } from "./components/NewProfileModal";
 import { PostSaveModal } from "./components/PostSaveModal";
 import { AuthGateModal } from "./components/AuthGateModal";
+import { LockSessionModal } from "./components/LockSessionModal";
 import { LoadingPlanScreen } from "./components/LoadingPlanScreen";
 import { generateFinancialPlanPDF } from "./utils/pdfExport";
 import { generateDeterministicFinancialPlan } from "./utils/financialCalculations";
@@ -38,6 +39,7 @@ export default function App() {
   const [isLocked, setIsLocked] = useState<boolean>(() => {
     return localStorage.getItem("finplan_access_granted") !== "true";
   });
+  const [isLockPromptOpen, setIsLockPromptOpen] = useState<boolean>(false);
 
   // Theme state
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
@@ -385,11 +387,7 @@ export default function App() {
         onLoadSample={handleLoadSample}
         isDarkMode={isDarkMode}
         onToggleTheme={() => setIsDarkMode(!isDarkMode)}
-        onLockApp={() => {
-          localStorage.removeItem("finplan_access_granted");
-          setIsLocked(true);
-          showToast("Aplikasi FinPlan berhasil dikunci.");
-        }}
+        onLockApp={() => setIsLockPromptOpen(true)}
         hasPlan={!!planResult}
         hasGeneratedPlan={!!planResult}
       />
@@ -639,12 +637,48 @@ export default function App() {
         onAskAI={() => setIsAIChatOpen(true)}
       />
 
+      {/* Lock Session Prompt Modal */}
+      <LockSessionModal
+        isOpen={isLockPromptOpen}
+        onClose={() => setIsLockPromptOpen(false)}
+        onConfirmLock={(customPin) => {
+          if (customPin) {
+            sessionStorage.setItem("finplan_session_lock_key", customPin);
+          } else {
+            sessionStorage.removeItem("finplan_session_lock_key");
+          }
+          localStorage.removeItem("finplan_access_granted");
+          setIsLocked(true);
+          showToast("Layar FinPlan berhasil dikunci.");
+        }}
+      />
+
       {/* Security Gate Password Modal */}
       {isLocked && (
         <AuthGateModal
           onUnlock={() => {
             setIsLocked(false);
             showToast("Akses FinPlan berhasil dibuka!");
+          }}
+          onResetSession={() => {
+            localStorage.removeItem("user_profile_data_v3");
+            localStorage.removeItem("user_cashflow_data_v3");
+            localStorage.removeItem("user_career_data_v3");
+            localStorage.removeItem("user_goals_data_v3");
+            localStorage.removeItem("user_risk_profile_v3");
+            localStorage.removeItem("saved_finplan_results_v3");
+            localStorage.removeItem("finplan_saved_profiles_history");
+            sessionStorage.removeItem("finplan_session_lock_key");
+
+            setProfile(createEmptyProfileData().profile);
+            setCashflow(createEmptyProfileData().cashflow);
+            setCareer(createEmptyProfileData().career);
+            setGoals(createEmptyProfileData().goals);
+            setRisk(createEmptyProfileData().risk);
+            setPlanResult(null);
+            setIsLandingPage(true);
+            setCurrentStep("data_diri");
+            showToast("Sesi berhasil direset bersih.");
           }}
         />
       )}

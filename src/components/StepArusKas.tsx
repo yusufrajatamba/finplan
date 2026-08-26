@@ -223,8 +223,9 @@ export const StepArusKas: React.FC<StepArusKasProps> = ({
                 id="input-main-income"
                 type="number"
                 value={cashflow.monthlyMainIncome || ""}
+                onFocus={(e) => e.target.select()}
                 onChange={(e) =>
-                  onChange({ monthlyMainIncome: parseInt(e.target.value, 10) || 0 })
+                  onChange({ monthlyMainIncome: e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0 })
                 }
                 placeholder="0"
                 className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
@@ -242,8 +243,9 @@ export const StepArusKas: React.FC<StepArusKasProps> = ({
                 id="input-side-income"
                 type="number"
                 value={cashflow.monthlySideIncome || ""}
+                onFocus={(e) => e.target.select()}
                 onChange={(e) =>
-                  onChange({ monthlySideIncome: parseInt(e.target.value, 10) || 0 })
+                  onChange({ monthlySideIncome: e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0 })
                 }
                 placeholder="0"
                 className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
@@ -261,8 +263,9 @@ export const StepArusKas: React.FC<StepArusKasProps> = ({
                 id="input-passive-income"
                 type="number"
                 value={cashflow.monthlyPassiveIncome || ""}
+                onFocus={(e) => e.target.select()}
                 onChange={(e) =>
-                  onChange({ monthlyPassiveIncome: parseInt(e.target.value, 10) || 0 })
+                  onChange({ monthlyPassiveIncome: e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0 })
                 }
                 placeholder="0"
                 className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
@@ -300,8 +303,9 @@ export const StepArusKas: React.FC<StepArusKasProps> = ({
                 id="input-needs"
                 type="number"
                 value={cashflow.monthlyNeeds || ""}
+                onFocus={(e) => e.target.select()}
                 onChange={(e) =>
-                  onChange({ monthlyNeeds: parseInt(e.target.value, 10) || 0 })
+                  onChange({ monthlyNeeds: e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0 })
                 }
                 placeholder="0"
                 className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
@@ -322,8 +326,9 @@ export const StepArusKas: React.FC<StepArusKasProps> = ({
                 id="input-wants"
                 type="number"
                 value={cashflow.monthlyWants || ""}
+                onFocus={(e) => e.target.select()}
                 onChange={(e) =>
-                  onChange({ monthlyWants: parseInt(e.target.value, 10) || 0 })
+                  onChange({ monthlyWants: e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0 })
                 }
                 placeholder="0"
                 className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
@@ -344,8 +349,9 @@ export const StepArusKas: React.FC<StepArusKasProps> = ({
                 id="input-insurance"
                 type="number"
                 value={cashflow.monthlyExistingInsurance || ""}
+                onFocus={(e) => e.target.select()}
                 onChange={(e) =>
-                  onChange({ monthlyExistingInsurance: parseInt(e.target.value, 10) || 0 })
+                  onChange({ monthlyExistingInsurance: e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0 })
                 }
                 placeholder="0"
                 className="w-full px-4 py-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
@@ -434,9 +440,10 @@ export const StepArusKas: React.FC<StepArusKasProps> = ({
                     <input
                       type="number"
                       value={debt.totalRemaining || ""}
+                      onFocus={(e) => e.target.select()}
                       onChange={(e) =>
                         handleUpdateDebt(debt.id, {
-                          totalRemaining: parseInt(e.target.value, 10) || 0,
+                          totalRemaining: e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0,
                         })
                       }
                       placeholder="0"
@@ -451,9 +458,10 @@ export const StepArusKas: React.FC<StepArusKasProps> = ({
                     <input
                       type="number"
                       value={debt.monthlyPayment || ""}
+                      onFocus={(e) => e.target.select()}
                       onChange={(e) =>
                         handleUpdateDebt(debt.id, {
-                          monthlyPayment: parseInt(e.target.value, 10) || 0,
+                          monthlyPayment: e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0,
                         })
                       }
                       placeholder="0"
@@ -502,8 +510,9 @@ export const StepArusKas: React.FC<StepArusKasProps> = ({
                 id="input-emergency-fund"
                 type="number"
                 value={cashflow.cashEmergencyFund || ""}
+                onFocus={(e) => e.target.select()}
                 onChange={(e) =>
-                  onChange({ cashEmergencyFund: parseInt(e.target.value, 10) || 0 })
+                  onChange({ cashEmergencyFund: e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0 })
                 }
                 placeholder="0"
                 className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -521,8 +530,9 @@ export const StepArusKas: React.FC<StepArusKasProps> = ({
                 id="input-bank-savings"
                 type="number"
                 value={cashflow.bankSavings || ""}
+                onFocus={(e) => e.target.select()}
                 onChange={(e) =>
-                  onChange({ bankSavings: parseInt(e.target.value, 10) || 0 })
+                  onChange({ bankSavings: e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0 })
                 }
                 placeholder="0"
                 className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -540,8 +550,9 @@ export const StepArusKas: React.FC<StepArusKasProps> = ({
                 id="input-gold"
                 type="number"
                 value={cashflow.gold || ""}
+                onFocus={(e) => e.target.select()}
                 onChange={(e) =>
-                  onChange({ gold: parseInt(e.target.value, 10) || 0 })
+                  onChange({ gold: e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0 })
                 }
                 placeholder="0"
                 className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -559,8 +570,9 @@ export const StepArusKas: React.FC<StepArusKasProps> = ({
                 id="input-mutual-funds"
                 type="number"
                 value={cashflow.mutualFunds || ""}
+                onFocus={(e) => e.target.select()}
                 onChange={(e) =>
-                  onChange({ mutualFunds: parseInt(e.target.value, 10) || 0 })
+                  onChange({ mutualFunds: e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0 })
                 }
                 placeholder="0"
                 className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -578,8 +590,9 @@ export const StepArusKas: React.FC<StepArusKasProps> = ({
                 id="input-stocks"
                 type="number"
                 value={cashflow.stocks || ""}
+                onFocus={(e) => e.target.select()}
                 onChange={(e) =>
-                  onChange({ stocks: parseInt(e.target.value, 10) || 0 })
+                  onChange({ stocks: e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0 })
                 }
                 placeholder="0"
                 className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -597,8 +610,9 @@ export const StepArusKas: React.FC<StepArusKasProps> = ({
                 id="input-other-assets"
                 type="number"
                 value={cashflow.otherAssets || ""}
+                onFocus={(e) => e.target.select()}
                 onChange={(e) =>
-                  onChange({ otherAssets: parseInt(e.target.value, 10) || 0 })
+                  onChange({ otherAssets: e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0 })
                 }
                 placeholder="0"
                 className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none"

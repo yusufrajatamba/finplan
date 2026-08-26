@@ -162,8 +162,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                     </label>
                     <input
                       type="number"
-                      value={compInitial}
-                      onChange={(e) => setCompInitial(parseInt(e.target.value, 10) || 0)}
+                      value={compInitial || ""}
+                      placeholder="10000000"
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => setCompInitial(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                       className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
                     />
                   </div>
@@ -174,8 +176,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                     </label>
                     <input
                       type="number"
-                      value={compMonthly}
-                      onChange={(e) => setCompMonthly(parseInt(e.target.value, 10) || 0)}
+                      value={compMonthly || ""}
+                      placeholder="2000000"
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => setCompMonthly(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                       className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
                     />
                   </div>
@@ -188,8 +192,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                       <input
                         type="number"
                         step="0.5"
-                        value={compRate}
-                        onChange={(e) => setCompRate(parseFloat(e.target.value) || 0)}
+                        value={compRate || ""}
+                        placeholder="8"
+                        onFocus={(e) => e.target.select()}
+                        onChange={(e) => setCompRate(e.target.value === "" ? 0 : parseFloat(e.target.value) || 0)}
                         className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
                       />
                     </div>
@@ -199,8 +205,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                       </label>
                       <input
                         type="number"
-                        value={compYears}
-                        onChange={(e) => setCompYears(parseInt(e.target.value, 10) || 1)}
+                        value={compYears || ""}
+                        placeholder="10"
+                        onFocus={(e) => e.target.select()}
+                        onChange={(e) => setCompYears(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                         className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
                       />
                     </div>
@@ -241,8 +249,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                     </label>
                     <input
                       type="number"
-                      value={efMonthlyIncome}
-                      onChange={(e) => setEfMonthlyIncome(parseInt(e.target.value, 10) || 0)}
+                      value={efMonthlyIncome || ""}
+                      placeholder="15000000"
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => setEfMonthlyIncome(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                       className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                     />
                   </div>
@@ -253,8 +263,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                     </label>
                     <input
                       type="number"
-                      value={efMonthlyExpense}
-                      onChange={(e) => setEfMonthlyExpense(parseInt(e.target.value, 10) || 0)}
+                      value={efMonthlyExpense || ""}
+                      placeholder="6000000"
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => setEfMonthlyExpense(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                       className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                     />
                   </div>
@@ -266,8 +278,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                       </label>
                       <input
                         type="number"
-                        value={efDependents}
-                        onChange={(e) => setEfDependents(parseInt(e.target.value, 10) || 0)}
+                        value={efDependents || ""}
+                        placeholder="1"
+                        onFocus={(e) => e.target.select()}
+                        onChange={(e) => setEfDependents(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                         className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                       />
                     </div>
@@ -277,8 +291,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                       </label>
                       <input
                         type="number"
-                        value={efCurrentSavings}
-                        onChange={(e) => setEfCurrentSavings(parseInt(e.target.value, 10) || 0)}
+                        value={efCurrentSavings || ""}
+                        placeholder="15000000"
+                        onFocus={(e) => e.target.select()}
+                        onChange={(e) => setEfCurrentSavings(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                         className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                       />
                     </div>
@@ -322,8 +338,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                     </label>
                     <input
                       type="number"
-                      value={leIncome}
-                      onChange={(e) => setLeIncome(parseInt(e.target.value, 10) || 0)}
+                      value={leIncome || ""}
+                      placeholder="15000000"
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => setLeIncome(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                       className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                     />
                   </div>
@@ -334,8 +352,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                     </label>
                     <input
                       type="number"
-                      value={leHours}
-                      onChange={(e) => setLeHours(parseInt(e.target.value, 10) || 1)}
+                      value={leHours || ""}
+                      placeholder="200"
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => setLeHours(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                       className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                     />
                     <span className="text-[11px] text-slate-400">Standar: 160 jam kantor + 40 jam perjalanan/persiapan = 200 jam.</span>
@@ -347,8 +367,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                     </label>
                     <input
                       type="number"
-                      value={leExpense}
-                      onChange={(e) => setLeExpense(parseInt(e.target.value, 10) || 0)}
+                      value={leExpense || ""}
+                      placeholder="1500000"
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => setLeExpense(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                       className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                     />
                   </div>
@@ -391,8 +413,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                     </label>
                     <input
                       type="number"
-                      value={enwAge}
-                      onChange={(e) => setEnwAge(parseInt(e.target.value, 10) || 18)}
+                      value={enwAge || ""}
+                      placeholder="30"
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => setEnwAge(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                       className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                     />
                   </div>
@@ -403,8 +427,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                     </label>
                     <input
                       type="number"
-                      value={enwAnnualIncome}
-                      onChange={(e) => setEnwAnnualIncome(parseInt(e.target.value, 10) || 0)}
+                      value={enwAnnualIncome || ""}
+                      placeholder="180000000"
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => setEnwAnnualIncome(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                       className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                     />
                   </div>
@@ -415,8 +441,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                     </label>
                     <input
                       type="number"
-                      value={enwActualNetWorth}
-                      onChange={(e) => setEnwActualNetWorth(parseInt(e.target.value, 10) || 0)}
+                      value={enwActualNetWorth || ""}
+                      placeholder="150000000"
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => setEnwActualNetWorth(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                       className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                     />
                     <span className="text-[11px] text-slate-400">Total Aset (Kas + Investasi + Properti) dikurangi Total Utang.</span>
@@ -463,8 +491,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                     </label>
                     <input
                       type="number"
-                      value={fiMonthlyCost}
-                      onChange={(e) => setFiMonthlyCost(parseInt(e.target.value, 10) || 0)}
+                      value={fiMonthlyCost || ""}
+                      placeholder="12000000"
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => setFiMonthlyCost(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                       className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                     />
                   </div>
@@ -475,8 +505,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                     </label>
                     <input
                       type="number"
-                      value={fiCurrentPortfolio}
-                      onChange={(e) => setFiCurrentPortfolio(parseInt(e.target.value, 10) || 0)}
+                      value={fiCurrentPortfolio || ""}
+                      placeholder="50000000"
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => setFiCurrentPortfolio(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                       className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                     />
                   </div>
@@ -488,8 +520,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                       </label>
                       <input
                         type="number"
-                        value={fiMonthlyInvestment}
-                        onChange={(e) => setFiMonthlyInvestment(parseInt(e.target.value, 10) || 0)}
+                        value={fiMonthlyInvestment || ""}
+                        placeholder="4000000"
+                        onFocus={(e) => e.target.select()}
+                        onChange={(e) => setFiMonthlyInvestment(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                         className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                       />
                     </div>
@@ -500,8 +534,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                       <input
                         type="number"
                         step="0.5"
-                        value={fiExpectedReturn}
-                        onChange={(e) => setFiExpectedReturn(parseFloat(e.target.value) || 0)}
+                        value={fiExpectedReturn || ""}
+                        placeholder="7.5"
+                        onFocus={(e) => e.target.select()}
+                        onChange={(e) => setFiExpectedReturn(e.target.value === "" ? 0 : parseFloat(e.target.value) || 0)}
                         className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                       />
                     </div>
@@ -549,8 +585,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                     </label>
                     <input
                       type="number"
-                      value={housePrice}
-                      onChange={(e) => setHousePrice(parseInt(e.target.value, 10) || 0)}
+                      value={housePrice || ""}
+                      placeholder="600000000"
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => setHousePrice(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                       className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                     />
                   </div>
@@ -562,8 +600,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                       </label>
                       <input
                         type="number"
-                        value={dpPercent}
-                        onChange={(e) => setDpPercent(parseInt(e.target.value, 10) || 0)}
+                        value={dpPercent || ""}
+                        placeholder="20"
+                        onFocus={(e) => e.target.select()}
+                        onChange={(e) => setDpPercent(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                         className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                       />
                     </div>
@@ -573,8 +613,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                       </label>
                       <input
                         type="number"
-                        value={kprTenorYears}
-                        onChange={(e) => setKprTenorYears(parseInt(e.target.value, 10) || 1)}
+                        value={kprTenorYears || ""}
+                        placeholder="15"
+                        onFocus={(e) => e.target.select()}
+                        onChange={(e) => setKprTenorYears(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                         className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                       />
                     </div>
@@ -587,8 +629,10 @@ export const CalculatorsModal: React.FC<CalculatorsModalProps> = ({
                     <input
                       type="number"
                       step="0.1"
-                      value={kprInterestRate}
-                      onChange={(e) => setKprInterestRate(parseFloat(e.target.value) || 0)}
+                      value={kprInterestRate || ""}
+                      placeholder="7.5"
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => setKprInterestRate(e.target.value === "" ? 0 : parseFloat(e.target.value) || 0)}
                       className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                     />
                   </div>

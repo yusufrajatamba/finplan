@@ -255,7 +255,8 @@ export const StepGoals: React.FC<StepGoalsProps> = ({
                   type="number"
                   step="5000000"
                   value={goals.emergencyFund?.customTargetAmount || ""}
-                  onChange={(e) => handleEmergencyChange("customTargetAmount", parseInt(e.target.value) || 0)}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => handleEmergencyChange("customTargetAmount", e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                   placeholder="Contoh: 150000000"
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white font-semibold"
                 />
@@ -312,7 +313,8 @@ export const StepGoals: React.FC<StepGoalsProps> = ({
                     type="number"
                     step="50000000"
                     value={goals.housingTarget?.estimatedPrice || ""}
-                    onChange={(e) => handleHousingChange("estimatedPrice", parseInt(e.target.value) || 0)}
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) => handleHousingChange("estimatedPrice", e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                     placeholder="Contoh: 850000000"
                     className="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white font-medium"
                   />
@@ -343,8 +345,10 @@ export const StepGoals: React.FC<StepGoalsProps> = ({
                     type="number"
                     min="1"
                     max="15"
-                    value={goals.housingTarget?.targetYears || 3}
-                    onChange={(e) => handleHousingChange("targetYears", parseInt(e.target.value) || 1)}
+                    value={goals.housingTarget?.targetYears || ""}
+                    placeholder="3"
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) => handleHousingChange("targetYears", e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white font-medium text-center"
                   />
                 </div>
@@ -357,8 +361,10 @@ export const StepGoals: React.FC<StepGoalsProps> = ({
                     type="number"
                     min="10"
                     max="50"
-                    value={goals.housingTarget?.downPaymentPercent || 20}
-                    onChange={(e) => handleHousingChange("downPaymentPercent", parseInt(e.target.value) || 20)}
+                    value={goals.housingTarget?.downPaymentPercent || ""}
+                    placeholder="20"
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) => handleHousingChange("downPaymentPercent", e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white font-medium text-center"
                   />
                 </div>
@@ -393,7 +399,8 @@ export const StepGoals: React.FC<StepGoalsProps> = ({
                   type="number"
                   step="2000000"
                   value={goals.incomeTarget?.targetActiveIncomeMonthly || ""}
-                  onChange={(e) => handleIncomeChange("targetActiveIncomeMonthly", parseInt(e.target.value) || 0)}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => handleIncomeChange("targetActiveIncomeMonthly", e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                   placeholder="Contoh: 35000000"
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white font-medium"
                 />
@@ -407,7 +414,8 @@ export const StepGoals: React.FC<StepGoalsProps> = ({
                   type="number"
                   step="1000000"
                   value={goals.incomeTarget?.targetPassiveIncomeMonthly || ""}
-                  onChange={(e) => handleIncomeChange("targetPassiveIncomeMonthly", parseInt(e.target.value) || 0)}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => handleIncomeChange("targetPassiveIncomeMonthly", e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                   placeholder="Contoh: 15000000"
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-900 dark:text-white font-medium"
                 />
@@ -422,8 +430,10 @@ export const StepGoals: React.FC<StepGoalsProps> = ({
                 type="number"
                 min="1"
                 max="20"
-                value={goals.incomeTarget?.targetYearsToAchieve || 5}
-                onChange={(e) => handleIncomeChange("targetYearsToAchieve", parseInt(e.target.value) || 1)}
+                value={goals.incomeTarget?.targetYearsToAchieve || ""}
+                placeholder="5"
+                onFocus={(e) => e.target.select()}
+                onChange={(e) => handleIncomeChange("targetYearsToAchieve", e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                 className="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white font-semibold"
               />
               <p className="text-[11px] text-slate-400 mt-1">
@@ -481,7 +491,8 @@ export const StepGoals: React.FC<StepGoalsProps> = ({
                     type="number"
                     step="10000000"
                     value={goals.vehicleTarget?.estimatedPrice || ""}
-                    onChange={(e) => handleVehicleChange("estimatedPrice", parseInt(e.target.value) || 0)}
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) => handleVehicleChange("estimatedPrice", e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                     placeholder="Contoh: 350000000"
                     className="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white font-medium"
                   />
@@ -511,8 +522,10 @@ export const StepGoals: React.FC<StepGoalsProps> = ({
                     type="number"
                     min="1"
                     max="10"
-                    value={goals.vehicleTarget?.targetYears || 2}
-                    onChange={(e) => handleVehicleChange("targetYears", parseInt(e.target.value) || 1)}
+                    value={goals.vehicleTarget?.targetYears || ""}
+                    placeholder="2"
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) => handleVehicleChange("targetYears", e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white font-medium text-center"
                   />
                 </div>
@@ -545,11 +558,13 @@ export const StepGoals: React.FC<StepGoalsProps> = ({
               type="number"
               min="0"
               max="6"
-              value={goals.childrenEducation?.plannedChildrenCount ?? 2}
+              value={goals.childrenEducation?.plannedChildrenCount || ""}
+              placeholder="0"
+              onFocus={(e) => e.target.select()}
               onChange={(e) =>
                 handleUpdate("childrenEducation", {
                   ...goals.childrenEducation,
-                  plannedChildrenCount: parseInt(e.target.value) || 0,
+                  plannedChildrenCount: e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0,
                 })
               }
               className="w-14 px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-center text-slate-900 dark:text-white"
@@ -623,14 +638,16 @@ export const StepGoals: React.FC<StepGoalsProps> = ({
                 type="number"
                 step="5000000"
                 value={newChildCost || ""}
-                onChange={(e) => setNewChildCost(parseInt(e.target.value) || 0)}
+                onFocus={(e) => e.target.select()}
+                onChange={(e) => setNewChildCost(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                 placeholder="Estimasi Total Biaya (Rp)"
                 className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
               />
               <input
                 type="number"
                 value={newChildYear || ""}
-                onChange={(e) => setNewChildYear(parseInt(e.target.value) || new Date().getFullYear())}
+                onFocus={(e) => e.target.select()}
+                onChange={(e) => setNewChildYear(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                 placeholder="Tahun Mulai (cth: 2028)"
                 className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
               />

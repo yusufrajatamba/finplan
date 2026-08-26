@@ -1048,8 +1048,10 @@ export const ManualSimulationSuite: React.FC<ManualSimulationSuiteProps> = ({
                         type="number"
                         min="18"
                         max="65"
-                        value={insAge}
-                        onChange={(e) => setInsAge(parseInt(e.target.value) || 30)}
+                        value={insAge || ""}
+                        placeholder="30"
+                        onFocus={(e) => e.target.select()}
+                        onChange={(e) => setInsAge(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                         className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold"
                       />
                     </div>
@@ -1474,8 +1476,10 @@ export const ManualSimulationSuite: React.FC<ManualSimulationSuiteProps> = ({
                   <input
                     type="number"
                     step="0.1"
-                    value={kprFixedRate}
-                    onChange={(e) => setKprFixedRate(parseFloat(e.target.value) || 0)}
+                    value={kprFixedRate || ""}
+                    placeholder="0"
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) => setKprFixedRate(e.target.value === "" ? 0 : parseFloat(e.target.value) || 0)}
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold"
                   />
                 </div>
@@ -1504,8 +1508,10 @@ export const ManualSimulationSuite: React.FC<ManualSimulationSuiteProps> = ({
                   <input
                     type="number"
                     step="0.25"
-                    value={kprFloatingRate}
-                    onChange={(e) => setKprFloatingRate(parseFloat(e.target.value) || 0)}
+                    value={kprFloatingRate || ""}
+                    placeholder="0"
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) => setKprFloatingRate(e.target.value === "" ? 0 : parseFloat(e.target.value) || 0)}
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-rose-600"
                   />
                 </div>
@@ -1702,8 +1708,10 @@ export const ManualSimulationSuite: React.FC<ManualSimulationSuiteProps> = ({
                   <input
                     type="number"
                     step="0.1"
-                    value={vehicleFlatRate}
-                    onChange={(e) => setVehicleFlatRate(parseFloat(e.target.value) || 0)}
+                    value={vehicleFlatRate || ""}
+                    placeholder="0"
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) => setVehicleFlatRate(e.target.value === "" ? 0 : parseFloat(e.target.value) || 0)}
                     className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold"
                   />
                 </div>

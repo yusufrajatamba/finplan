@@ -227,8 +227,10 @@ export const StepProfileKarier: React.FC<StepProfileKarierProps> = ({
                     type="number"
                     min="0"
                     max="50"
-                    value={career.personal?.salaryGrowthRatePercent ?? 7}
-                    onChange={(e) => handlePersonalChange("salaryGrowthRatePercent", parseInt(e.target.value) || 0)}
+                    value={career.personal?.salaryGrowthRatePercent || ""}
+                    placeholder="7"
+                    onFocus={(e) => e.target.select()}
+                    onChange={(e) => handlePersonalChange("salaryGrowthRatePercent", e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                     className="w-24 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white font-bold text-center"
                   />
                   <span className="text-xs text-slate-500">% / tahun (Rata-rata inflasi + merit)</span>
@@ -362,8 +364,10 @@ export const StepProfileKarier: React.FC<StepProfileKarierProps> = ({
                       type="number"
                       min="0"
                       max="50"
-                      value={career.partner?.salaryGrowthRatePercent ?? 7}
-                      onChange={(e) => handlePartnerChange("salaryGrowthRatePercent", parseInt(e.target.value) || 0)}
+                      value={career.partner?.salaryGrowthRatePercent || ""}
+                      placeholder="7"
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => handlePartnerChange("salaryGrowthRatePercent", e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                       className="w-20 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white font-bold text-center"
                     />
                     <span className="text-[11px] text-slate-500">% / thn</span>

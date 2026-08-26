@@ -189,7 +189,9 @@ export const StepDataDiri: React.FC<StepDataDiriProps> = ({
                   min="17"
                   max="75"
                   value={profile.age || ""}
-                  onChange={(e) => handleFieldChange("age", parseInt(e.target.value) || 0)}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => handleFieldChange("age", e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
+                  placeholder="Contoh: 28"
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
                 />
               </div>
@@ -219,8 +221,9 @@ export const StepDataDiri: React.FC<StepDataDiriProps> = ({
                   type="number"
                   min="0"
                   max="10"
-                  value={profile.dependents ?? 0}
-                  onChange={(e) => handleFieldChange("dependents", parseInt(e.target.value) || 0)}
+                  value={profile.dependents || ""}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => handleFieldChange("dependents", e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 text-slate-900 dark:text-white text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-hidden"
                   placeholder="0 jika belum ada anak/ortu"
                 />
@@ -254,7 +257,8 @@ export const StepDataDiri: React.FC<StepDataDiriProps> = ({
                     <input
                       type="number"
                       value={profile.partnerAge || ""}
-                      onChange={(e) => handleFieldChange("partnerAge", parseInt(e.target.value) || 0)}
+                      onFocus={(e) => e.target.select()}
+                      onChange={(e) => handleFieldChange("partnerAge", e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                       placeholder="Usia"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                     />

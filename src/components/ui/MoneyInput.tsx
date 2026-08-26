@@ -65,8 +65,9 @@ export const MoneyInput: React.FC<MoneyInputProps> = ({
     }
   }
 
-  function handleFocus() {
+  function handleFocus(e: React.FocusEvent<HTMLInputElement>) {
     setIsFocused(true);
+    e.target.select();
   }
 
   function handleBlur() {

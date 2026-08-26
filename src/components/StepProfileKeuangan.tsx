@@ -427,14 +427,16 @@ export const StepProfileKeuangan: React.FC<StepProfileKeuanganProps> = ({
                 <input
                   type="number"
                   value={newDebtMonthly || ""}
-                  onChange={(e) => setNewDebtMonthly(parseInt(e.target.value) || 0)}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => setNewDebtMonthly(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                   placeholder="Cicilan / bln (Rp)"
                   className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                 />
                 <input
                   type="number"
                   value={newDebtRemaining || ""}
-                  onChange={(e) => setNewDebtRemaining(parseInt(e.target.value) || 0)}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => setNewDebtRemaining(e.target.value === "" ? 0 : parseInt(e.target.value, 10) || 0)}
                   placeholder="Total Sisa Utang (Rp)"
                   className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs text-slate-900 dark:text-white"
                 />

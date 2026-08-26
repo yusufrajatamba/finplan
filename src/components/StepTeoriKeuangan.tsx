@@ -146,51 +146,102 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
           Kekayaan sejati bukanlah sekadar gaji besar atau memamerkan barang mewah. Kekayaan adalah proses mengubah penghasilan menjadi <strong>surplus kas</strong>, melindunginya dari risiko bencana, dan mengakumulasikannya ke dalam <strong>aset produktif</strong> yang melahirkan kebebasan waktu untuk keluarga Anda:
         </p>
 
-        {/* Visual Pipeline Stack */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-center pt-1">
-          <div className="p-3.5 rounded-xl bg-white/15 border border-white/25">
-            <span className="text-[10px] font-bold text-blue-100 block">TAHAP 1</span>
-            <span className="text-xs font-bold text-white mt-1 block">Penghasilan</span>
-            <span className="text-[11px] text-blue-50">Gaji & Bisnis</span>
+        {/* Pipeline Visual Stack - Responsive: Desktop 6-Col Grid, Mobile Smooth Horizontal Stepper */}
+        <div className="pt-1">
+          <div className="flex items-center justify-between mb-2.5">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-blue-50">
+              Peta Alur 6 Tahap Pengelolaan Kekayaan:
+            </span>
+            <span className="lg:hidden text-[10px] text-blue-100/90 font-medium">
+              Geser ➔
+            </span>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-white/15 border border-white/25">
-            <span className="text-[10px] font-bold text-blue-100 block">TAHAP 2</span>
-            <span className="text-xs font-bold text-white mt-1 block">Surplus Kas</span>
-            <span className="text-[11px] text-blue-50">Income − Living</span>
+          {/* Desktop View (6 Columns) */}
+          <div className="hidden lg:grid grid-cols-6 gap-2.5 text-center">
+            <div className="p-3.5 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 shadow-xs">
+              <span className="text-[10px] font-bold text-blue-100 block">TAHAP 1</span>
+              <span className="text-xs font-bold text-white mt-1 block">Penghasilan</span>
+              <span className="text-[11px] text-blue-50">Gaji & Bisnis</span>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 shadow-xs">
+              <span className="text-[10px] font-bold text-blue-100 block">TAHAP 2</span>
+              <span className="text-xs font-bold text-white mt-1 block">Surplus Kas</span>
+              <span className="text-[11px] text-blue-50">Income − Living</span>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 shadow-xs">
+              <span className="text-[10px] font-bold text-blue-100 block">TAHAP 3</span>
+              <span className="text-xs font-bold text-white mt-1 block">Proteksi Risiko</span>
+              <span className="text-[11px] text-blue-50">BPJS & Asuransi</span>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 shadow-xs">
+              <span className="text-[10px] font-bold text-blue-100 block">TAHAP 4</span>
+              <span className="text-xs font-bold text-white mt-1 block">Aset Produktif</span>
+              <span className="text-[11px] text-blue-50">SBN, Emas, Saham</span>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 shadow-xs">
+              <span className="text-[10px] font-bold text-blue-100 block">TAHAP 5</span>
+              <span className="text-xs font-bold text-white mt-1 block">Bunga Majemuk</span>
+              <span className="text-[11px] text-blue-50">Waktu & Disiplin</span>
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-white/30 backdrop-blur-xs border border-white/40 shadow-sm">
+              <span className="text-[10px] font-bold text-amber-200 block">TAHAP 6</span>
+              <span className="text-xs font-bold text-white mt-1 block">Bebas Finansial</span>
+              <span className="text-[11px] text-blue-50">Kebebasan Waktu</span>
+            </div>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-white/15 border border-white/25">
-            <span className="text-[10px] font-bold text-blue-100 block">TAHAP 3</span>
-            <span className="text-xs font-bold text-white mt-1 block">Proteksi Risiko</span>
-            <span className="text-[11px] text-blue-50">BPJS & Asuransi</span>
-          </div>
+          {/* Mobile Horizontal Stepper Carousel */}
+          <div className="lg:hidden flex space-x-2.5 overflow-x-auto pb-1 scrollbar-none snap-x -mx-1 px-1">
+            <div className="snap-start shrink-0 w-36 p-3 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 text-center">
+              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white/20 text-blue-100 inline-block">1. Income</span>
+              <span className="text-xs font-bold text-white mt-1.5 block">Penghasilan</span>
+              <span className="text-[10px] text-blue-100">Gaji & Bisnis</span>
+            </div>
 
-          <div className="p-3.5 rounded-xl bg-white/15 border border-white/25">
-            <span className="text-[10px] font-bold text-blue-100 block">TAHAP 4</span>
-            <span className="text-xs font-bold text-white mt-1 block">Aset Produktif</span>
-            <span className="text-[11px] text-blue-50">SBN, Emas, Saham</span>
-          </div>
+            <div className="snap-start shrink-0 w-36 p-3 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 text-center">
+              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white/20 text-blue-100 inline-block">2. Surplus</span>
+              <span className="text-xs font-bold text-white mt-1.5 block">Surplus Kas</span>
+              <span className="text-[10px] text-blue-100">Income − Living</span>
+            </div>
 
-          <div className="p-3.5 rounded-xl bg-white/15 border border-white/25">
-            <span className="text-[10px] font-bold text-blue-100 block">TAHAP 5</span>
-            <span className="text-xs font-bold text-white mt-1 block">Bunga Majemuk</span>
-            <span className="text-[11px] text-blue-50">Waktu & Disiplin</span>
-          </div>
+            <div className="snap-start shrink-0 w-36 p-3 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 text-center">
+              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white/20 text-blue-100 inline-block">3. Shield</span>
+              <span className="text-xs font-bold text-white mt-1.5 block">Proteksi Risiko</span>
+              <span className="text-[10px] text-blue-100">BPJS & Asuransi</span>
+            </div>
 
-          <div className="p-3.5 rounded-xl bg-white/25 border border-white/40 shadow-sm">
-            <span className="text-[10px] font-bold text-amber-200 block">TAHAP 6</span>
-            <span className="text-xs font-bold text-white mt-1 block">Bebas Finansial</span>
-            <span className="text-[11px] text-blue-50">Kebebasan Waktu</span>
+            <div className="snap-start shrink-0 w-36 p-3 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 text-center">
+              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white/20 text-blue-100 inline-block">4. Asset</span>
+              <span className="text-xs font-bold text-white mt-1.5 block">Aset Produktif</span>
+              <span className="text-[10px] text-blue-100">SBN, Emas, Saham</span>
+            </div>
+
+            <div className="snap-start shrink-0 w-36 p-3 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 text-center">
+              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white/20 text-blue-100 inline-block">5. Compounding</span>
+              <span className="text-xs font-bold text-white mt-1.5 block">Bunga Majemuk</span>
+              <span className="text-[10px] text-blue-100">Waktu & Disiplin</span>
+            </div>
+
+            <div className="snap-start shrink-0 w-36 p-3 rounded-xl bg-white/30 backdrop-blur-xs border border-white/40 shadow-sm text-center">
+              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-amber-400/30 text-amber-200 inline-block">6. Freedom</span>
+              <span className="text-xs font-bold text-white mt-1.5 block">Bebas Finansial</span>
+              <span className="text-[10px] text-blue-100">Kebebasan Waktu</span>
+            </div>
           </div>
         </div>
 
         {/* 3 Musuh Utama */}
-        <div className="p-4 rounded-xl bg-amber-500/20 border border-amber-300/40 text-amber-100 text-xs sm:text-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div className="p-3.5 sm:p-4 rounded-xl bg-amber-500/20 border border-amber-300/40 text-amber-100 text-xs sm:text-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div className="flex items-center space-x-2">
             <AlertTriangle className="w-4 h-4 text-amber-300 shrink-0" />
             <span>
-              <strong>3 Jebakan Utama Kekayaan:</strong> Inflasi Gaya Hidup • Utang Konsumtif • Nol Dana Darurat (Zero Margin of Safety).
+              <strong>3 Jebakan Kekayaan:</strong> Inflasi Gaya Hidup • Utang Konsumtif • Nol Dana Darurat.
             </span>
           </div>
           <span className="text-[11px] font-semibold text-amber-200 shrink-0">Morgan Housel & Benjamin Graham</span>

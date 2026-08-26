@@ -236,12 +236,12 @@ export const Header: React.FC<HeaderProps> = ({
                   onClick={() => setShowSampleDropdown(!showSampleDropdown)}
                   className={`inline-flex items-center justify-center p-2 sm:px-3 sm:py-1.5 text-xs font-semibold rounded-lg border transition-colors cursor-pointer ${
                     showSampleDropdown
-                      ? "bg-blue-100 dark:bg-blue-900/60 text-[#003399] dark:text-blue-300 border-blue-400"
+                      ? "bg-blue-100 dark:bg-blue-900/60 text-[#0066CC] dark:text-blue-300 border-blue-400"
                       : "bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border-slate-300/80 dark:border-slate-700"
                   }`}
                   title="Pilih Template Profil"
                 >
-                  <UserCheck className="w-3.5 h-3.5 text-[#0055B8]" />
+                  <UserCheck className="w-3.5 h-3.5 text-[#0066CC]" />
                   <span className="hidden md:inline ml-1.5">Template Profil</span>
                 </button>
 
@@ -263,7 +263,7 @@ export const Header: React.FC<HeaderProps> = ({
                               setShowSampleDropdown(false);
                               onOpenNewProfile();
                             }}
-                            className="text-[#0055B8] dark:text-blue-400 hover:underline font-bold text-[11px] cursor-pointer"
+                            className="text-[#0066CC] dark:text-blue-400 hover:underline font-bold text-[11px] cursor-pointer"
                           >
                             + Form Kosong
                           </button>
@@ -283,7 +283,7 @@ export const Header: React.FC<HeaderProps> = ({
                               <span className="font-semibold text-slate-900 dark:text-white truncate">
                                 {sample.name}
                               </span>
-                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-[#003399] dark:text-blue-300 font-bold shrink-0">
+                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-[#0066CC] dark:text-blue-300 font-bold shrink-0">
                                 {sample.badge}
                               </span>
                             </div>
@@ -302,7 +302,7 @@ export const Header: React.FC<HeaderProps> = ({
               {(hasPlan || hasGeneratedPlan) && onExportPDF && (
                 <button
                   onClick={onExportPDF}
-                  className="inline-flex items-center justify-center p-2 sm:px-3 sm:py-1.5 text-xs font-bold rounded-lg bg-[#0055B8] hover:bg-[#003399] text-white shadow-xs transition-all cursor-pointer"
+                  className="hidden sm:inline-flex items-center justify-center p-2 sm:px-3 sm:py-1.5 text-xs font-bold rounded-lg bg-[#0066CC] hover:bg-[#0055B8] text-white shadow-xs transition-all cursor-pointer"
                   title="Unduh Laporan PDF Resmi FinPlan"
                 >
                   <Download className="w-3.5 h-3.5" />
@@ -314,7 +314,7 @@ export const Header: React.FC<HeaderProps> = ({
               {onOpenNewProfile && (
                 <button
                   onClick={onOpenNewProfile}
-                  className="inline-flex items-center justify-center p-2 sm:px-3 sm:py-1.5 text-xs font-bold rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white shadow-xs transition-all cursor-pointer"
+                  className="hidden sm:inline-flex items-center justify-center p-2 sm:px-3 sm:py-1.5 text-xs font-bold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs transition-all cursor-pointer"
                   title="Tambah Profil Baru (Orang Berbeda)"
                 >
                   <UserPlus className="w-3.5 h-3.5" />
@@ -325,7 +325,7 @@ export const Header: React.FC<HeaderProps> = ({
               {/* Halo FinPlan Advisory Chat */}
               <button
                 onClick={handleOpenChat}
-                className="inline-flex items-center justify-center p-2 sm:px-3.5 sm:py-1.5 text-xs font-bold rounded-lg bg-[#003399] hover:bg-[#002266] text-white shadow-xs transition-all cursor-pointer"
+                className="inline-flex items-center justify-center p-2 sm:px-3.5 sm:py-1.5 text-xs font-bold rounded-lg bg-[#0066CC] hover:bg-[#0055B8] text-white shadow-xs transition-all cursor-pointer"
                 title="Konsultasi Halo FinPlan CFP® Advisor"
               >
                 <MessageSquareText className="w-3.5 h-3.5" />

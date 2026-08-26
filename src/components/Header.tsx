@@ -35,6 +35,8 @@ interface HeaderProps {
   onLockApp?: () => void;
   onGoHome?: () => void;
   isLandingPage?: boolean;
+  currentView?: "landing" | "wizard" | "education" | "calculators";
+  onSelectView?: (view: "landing" | "wizard" | "education" | "calculators") => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -57,11 +59,16 @@ export const Header: React.FC<HeaderProps> = ({
   onLockApp,
   onGoHome,
   isLandingPage,
+  currentView,
+  onSelectView,
 }) => {
   const [showSampleDropdown, setShowSampleDropdown] = useState(false);
   const [lang, setLang] = useState<"ID" | "EN">("ID");
 
   const handleStepClick = (step: WizardStep) => {
+    if (onSelectView) {
+      onSelectView("wizard");
+    }
     if (onSelectStep) {
       onSelectStep(step);
     } else if (onStepClick) {
@@ -70,10 +77,20 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   const handleOpenEducation = () => {
-    if (onOpenTeoriModal) {
+    if (onSelectView) {
+      onSelectView("education");
+    } else if (onOpenTeoriModal) {
       onOpenTeoriModal();
     } else if (onOpenTeori) {
       onOpenTeori();
+    }
+  };
+
+  const handleOpenCalculators = () => {
+    if (onSelectView) {
+      onSelectView("calculators");
+    } else if (onOpenCalculators) {
+      onOpenCalculators();
     }
   };
 
@@ -200,7 +217,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   onClick={() => handleStepClick("data_diri")}
                   className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition cursor-pointer ${
-                    !isLandingPage
+                    currentView === "wizard" || (!isLandingPage && currentView !== "education" && currentView !== "calculators")
                       ? "bg-white/20 text-white font-bold shadow-xs"
                       : "text-blue-100 hover:text-white hover:bg-white/10"
                   }`}
@@ -210,14 +227,22 @@ export const Header: React.FC<HeaderProps> = ({
 
                 <button
                   onClick={handleOpenEducation}
-                  className="px-3 py-2 rounded-lg text-xs sm:text-sm font-medium text-blue-100 hover:text-white hover:bg-white/10 transition cursor-pointer"
+                  className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition cursor-pointer ${
+                    currentView === "education"
+                      ? "bg-white/20 text-white font-bold shadow-xs"
+                      : "text-blue-100 hover:text-white hover:bg-white/10"
+                  }`}
                 >
                   Edukatips Finansial
                 </button>
 
                 <button
-                  onClick={onOpenCalculators}
-                  className="px-3 py-2 rounded-lg text-xs sm:text-sm font-medium text-blue-100 hover:text-white hover:bg-white/10 transition cursor-pointer"
+                  onClick={handleOpenCalculators}
+                  className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition cursor-pointer ${
+                    currentView === "calculators"
+                      ? "bg-white/20 text-white font-bold shadow-xs"
+                      : "text-blue-100 hover:text-white hover:bg-white/10"
+                  }`}
                 >
                   Simulasi & Kalkulator
                 </button>
@@ -328,20 +353,30 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={() => handleStepClick("data_diri")}
               className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-semibold cursor-pointer ${
-                !isLandingPage ? "bg-white text-[#0B5DA7] font-bold" : "text-blue-100"
+                currentView === "wizard" || (!isLandingPage && currentView !== "education" && currentView !== "calculators")
+                  ? "bg-white text-[#0B5DA7] font-bold"
+                  : "text-blue-100 hover:text-white"
               }`}
             >
               Perencanaan
             </button>
             <button
               onClick={handleOpenEducation}
-              className="px-3 py-1.5 rounded-lg whitespace-nowrap text-blue-100 hover:text-white cursor-pointer font-medium"
+              className={`px-3 py-1.5 rounded-lg whitespace-nowrap cursor-pointer font-semibold ${
+                currentView === "education"
+                  ? "bg-white text-[#0B5DA7] font-bold"
+                  : "text-blue-100 hover:text-white"
+              }`}
             >
               Edukatips
             </button>
             <button
-              onClick={onOpenCalculators}
-              className="px-3 py-1.5 rounded-lg whitespace-nowrap text-blue-100 hover:text-white cursor-pointer font-medium"
+              onClick={handleOpenCalculators}
+              className={`px-3 py-1.5 rounded-lg whitespace-nowrap cursor-pointer font-semibold ${
+                currentView === "calculators"
+                  ? "bg-white text-[#0B5DA7] font-bold"
+                  : "text-blue-100 hover:text-white"
+              }`}
             >
               Kalkulator
             </button>
@@ -355,8 +390,8 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* ── Stepper Navigation (1-7 Perbankan, No Duplicate Numbering) ── */}
-      {currentStep !== "loading_plan" && !isLandingPage && (
+      {/* ── Stepper Navigation (1-7 Perbankan, Only in Wizard Mode) ── */}
+      {currentStep !== "loading_plan" && !isLandingPage && (currentView === "wizard" || (!currentView && !isLandingPage)) && (
         <div className="bg-[#F4F6F9] dark:bg-slate-950/80 border-b border-slate-200/90 dark:border-slate-800 py-2 sm:py-2.5">
           <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
             <div className="flex items-center space-x-1.5 sm:space-x-2.5 overflow-x-auto scrollbar-none py-0.5">

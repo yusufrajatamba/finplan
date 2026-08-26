@@ -23,8 +23,8 @@ import { StepRencanaKeuangan } from "./components/StepRencanaKeuangan";
 
 import { HistoryModal } from "./components/HistoryModal";
 import { AIChatModal } from "./components/AIChatModal";
-import { CalculatorsModal } from "./components/CalculatorsModal";
-import { EducationModal } from "./components/EducationModal";
+import { EducationPage } from "./components/EducationPage";
+import { CalculatorsPage } from "./components/CalculatorsPage";
 import { NewProfileModal } from "./components/NewProfileModal";
 import { PostSaveModal } from "./components/PostSaveModal";
 import { AuthGateModal } from "./components/AuthGateModal";
@@ -56,8 +56,9 @@ export default function App() {
     }
   }, [isDarkMode]);
 
-  // Landing page vs Wizard view state
-  const [isLandingPage, setIsLandingPage] = useState<boolean>(true);
+  // Navigation view state: 3 main pages (Perencanaan Finansial, Edukatips, Simulasi & Kalkulator) + Landing Page
+  const [currentView, setCurrentView] = useState<"landing" | "wizard" | "education" | "calculators">("landing");
+  const isLandingPage = currentView === "landing";
 
   // Active wizard step
   const [currentStep, setCurrentStep] = useState<WizardStep>("data_diri");
@@ -65,8 +66,6 @@ export default function App() {
   // Modal open states
   const [isHistoryOpen, setIsHistoryOpen] = useState<boolean>(false);
   const [isAIChatOpen, setIsAIChatOpen] = useState<boolean>(false);
-  const [isCalculatorsOpen, setIsCalculatorsOpen] = useState<boolean>(false);
-  const [isEducationOpen, setIsEducationOpen] = useState<boolean>(false);
   const [isNewProfileModalOpen, setIsNewProfileModalOpen] = useState<boolean>(false);
   const [isPostSaveModalOpen, setIsPostSaveModalOpen] = useState<boolean>(false);
 
@@ -213,7 +212,7 @@ export default function App() {
       });
       setPlanResult(instantPlan);
 
-      setIsLandingPage(false);
+      setCurrentView("wizard");
       setCurrentStep("data_diri");
       setIsNewProfileModalOpen(false);
       showToast(`Profil baru "${params.name}" berhasil dibuat.`);
@@ -238,7 +237,7 @@ export default function App() {
     });
     setPlanResult(instantPlan);
 
-    setIsLandingPage(false);
+    setCurrentView("wizard");
     setCurrentStep("rencana");
     showToast(`Contoh profil "${sample.name}" berhasil dimuat.`);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -352,7 +351,7 @@ export default function App() {
     setGoals(record.goals);
     setRisk(record.risk);
     setPlanResult(record.planResult);
-    setIsLandingPage(false);
+    setCurrentView("wizard");
     setCurrentStep("rencana");
     showToast("Snapshot riwayat berhasil dimuat!");
   };
@@ -370,32 +369,42 @@ export default function App() {
       {/* Main Header with Step Nav & Tool Buttons */}
       <Header
         currentStep={currentStep}
+        currentView={currentView}
+        onSelectView={(view) => {
+          setCurrentView(view);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
         isLandingPage={isLandingPage}
         onGoHome={() => {
-          setIsLandingPage(true);
+          setCurrentView("landing");
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
         onSelectStep={(step) => {
-          setIsLandingPage(false);
+          setCurrentView("wizard");
           setCurrentStep(step);
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
         onStepClick={(step) => {
-          setIsLandingPage(false);
+          setCurrentView("wizard");
           setCurrentStep(step);
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
         onOpenHistory={() => setIsHistoryOpen(true)}
         onOpenNewProfile={() => setIsNewProfileModalOpen(true)}
         onOpenTeori={() => {
-          setIsLandingPage(false);
-          setCurrentStep("teori");
+          setCurrentView("education");
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
-        onOpenTeoriModal={() => setIsEducationOpen(true)}
+        onOpenTeoriModal={() => {
+          setCurrentView("education");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
         onOpenAIChat={() => setIsAIChatOpen(true)}
         onOpenAdvisorChat={() => setIsAIChatOpen(true)}
-        onOpenCalculators={() => setIsCalculatorsOpen(true)}
+        onOpenCalculators={() => {
+          setCurrentView("calculators");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }}
         onExportPDF={handleDownloadPDF}
         onLoadSample={handleLoadSample}
         isDarkMode={isDarkMode}
@@ -435,19 +444,66 @@ export default function App() {
           </div>
         )}
 
-        {/* ─── CONDITIONAL SCREEN: LANDING GATEWAY vs WIZARD ─── */}
-        {isLandingPage ? (
+        {/* ─── CONDITIONAL SCREEN ROUTING: LANDING vs EDUCATION vs CALCULATORS vs WIZARD ─── */}
+        {currentView === "landing" && (
           <LandingPage
             onStartPlanning={() => {
-              setIsLandingPage(false);
+              setCurrentView("wizard");
               setCurrentStep("data_diri");
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            onOpenEducation={() => setIsEducationOpen(true)}
-            onOpenCalculators={() => setIsCalculatorsOpen(true)}
+            onOpenEducation={() => {
+              setCurrentView("education");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            onOpenCalculators={() => {
+              setCurrentView("calculators");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
             onOpenAIChat={() => setIsAIChatOpen(true)}
           />
-        ) : (
+        )}
+
+        {currentView === "education" && (
+          <EducationPage
+            onStartPlanning={() => {
+              setCurrentView("wizard");
+              setCurrentStep("data_diri");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            onBack={() => {
+              setCurrentView("landing");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            onOpenCalculators={() => {
+              setCurrentView("calculators");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            onAskAI={(question) => {
+              setIsAIChatOpen(true);
+            }}
+          />
+        )}
+
+        {currentView === "calculators" && (
+          <CalculatorsPage
+            onStartPlanning={() => {
+              setCurrentView("wizard");
+              setCurrentStep("data_diri");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            onBack={() => {
+              setCurrentView("landing");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            onOpenEducation={() => {
+              setCurrentView("education");
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          />
+        )}
+
+        {currentView === "wizard" && (
           <div className="max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-5 sm:space-y-6">
             {/* STEP 1: Data Diri */}
             {currentStep === "data_diri" && (
@@ -579,7 +635,7 @@ export default function App() {
           <div
             className="flex items-center space-x-3 cursor-pointer group"
             onClick={() => {
-              setIsLandingPage(true);
+              setCurrentView("landing");
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
@@ -634,17 +690,6 @@ export default function App() {
         plan={planResult}
       />
 
-      <CalculatorsModal
-        isOpen={isCalculatorsOpen}
-        onClose={() => setIsCalculatorsOpen(false)}
-      />
-
-      <EducationModal
-        isOpen={isEducationOpen}
-        onClose={() => setIsEducationOpen(false)}
-        onAskAI={() => setIsAIChatOpen(true)}
-      />
-
       {/* New Profile Creation Modal */}
       <NewProfileModal
         isOpen={isNewProfileModalOpen}
@@ -695,7 +740,7 @@ export default function App() {
             setRisk(fresh.risk);
             setPlanResult(null);
             setHistory([]);
-            setIsLandingPage(true);
+            setCurrentView("landing");
             setCurrentStep("data_diri");
             showToast("Seluruh data input dan riwayat profiling berhasil direset bersih seperti baru.");
           }}

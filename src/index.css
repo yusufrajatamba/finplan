@@ -25,15 +25,15 @@
   }
 }
 
-/* Custom BCA Corporate Tokens & Accents */
+/* Custom Banking Corporate Tokens & Accents */
 :root {
-  --bca-primary: #003399;
-  --bca-dark: #002266;
-  --bca-deep: #001A4E;
-  --bca-blue: #0055B8;
-  --bca-light-blue: #0066AE;
+  --bca-primary: #0066CC;
+  --bca-dark: #0055B8;
+  --bca-deep: #0047BA;
+  --bca-blue: #0066CC;
+  --bca-light-blue: #0077E6;
   --bca-cyan: #00A3E0;
-  --bca-bg-gray: #F4F6F9;
+  --bca-bg-gray: #F8FAFC;
   --bca-gold: #F5A623;
 }
 
@@ -64,7 +64,7 @@ input[type="number"] {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 51, 153, 0.6);
+  background: rgba(0, 102, 204, 0.6);
 }
 
 /* Banking Tab Active Underline */
@@ -74,7 +74,7 @@ input[type="number"] {
 }
 
 .bca-nav-tab.active {
-  color: #003399;
+  color: #0066CC;
   font-weight: 700;
 }
 
@@ -85,7 +85,7 @@ input[type="number"] {
   left: 0;
   right: 0;
   height: 3px;
-  background-color: #0055B8;
+  background-color: #0066CC;
   border-radius: 2px;
 }
 

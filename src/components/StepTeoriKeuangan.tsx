@@ -113,75 +113,75 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-[#003399] via-[#0047BA] to-[#0055B8] rounded-2xl p-5 sm:p-6 text-white shadow-md border border-blue-800/40 space-y-1.5">
-        <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-sm text-xs font-bold border border-white/20">
-          <BookOpen className="w-3.5 h-3.5 text-blue-200" />
+      <div className="bg-gradient-to-r from-[#0066CC] via-[#0077EE] to-[#0099FF] rounded-2xl p-5 sm:p-6 text-white shadow-md border border-blue-300/40 space-y-1.5">
+        <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-sm text-xs font-bold border border-white/30 text-white">
+          <BookOpen className="w-3.5 h-3.5 text-blue-100" />
           <span>Langkah 6 dari 7 • Evaluasi Rasio & Standar OJK</span>
         </div>
         <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
           Evaluasi Rasio Keuangan & Standar OJK
         </h1>
-        <p className="text-blue-100/90 text-xs sm:text-sm leading-relaxed max-w-4xl">
+        <p className="text-blue-50 text-xs sm:text-sm leading-relaxed max-w-4xl">
           Diagnosis kepatuhan rasio finansial keluarga Anda terhadap standar OJK dan filosofi 10 guru finansial dunia sebelum menghasilkan rencana keuangan komprehensif.
         </p>
       </div>
 
       {/* Visual Roadmap Blueprint: "Peta Besar: Financially Healthy Itu Apa?" */}
-      <div className="rounded-2xl bg-[#002B66] text-white p-6 sm:p-7 shadow-lg border border-blue-900/60 space-y-5">
+      <div className="rounded-2xl bg-gradient-to-r from-[#0066CC] via-[#0077EE] to-[#0099FF] text-white p-6 sm:p-7 shadow-lg border border-blue-300/40 space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-blue-200">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-blue-50">
               Family Financial Operating System
             </span>
             <h2 className="text-lg sm:text-xl font-bold text-white mt-0.5">
               Peta Besar: Sebenarnya "Financially Healthy" Itu Apa?
             </h2>
           </div>
-          <span className="text-xs font-bold px-3 py-1 rounded-full bg-white/15 text-blue-100 border border-white/20 self-start sm:self-auto">
+          <span className="text-xs font-bold px-3 py-1 rounded-full bg-white/20 text-white border border-white/30 self-start sm:self-auto">
             Filosofi 10 Guru & Standar OJK
           </span>
         </div>
 
-        <p className="text-xs sm:text-sm text-blue-100 leading-relaxed max-w-4xl">
+        <p className="text-xs sm:text-sm text-blue-50 leading-relaxed max-w-4xl">
           Kekayaan sejati bukanlah sekadar gaji besar atau memamerkan barang mewah. Kekayaan adalah proses mengubah penghasilan menjadi <strong>surplus kas</strong>, melindunginya dari risiko bencana, dan mengakumulasikannya ke dalam <strong>aset produktif</strong> yang melahirkan kebebasan waktu untuk keluarga Anda:
         </p>
 
         {/* Visual Pipeline Stack */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-center pt-1">
-          <div className="p-3.5 rounded-xl bg-white/10 border border-white/15">
-            <span className="text-[10px] font-bold text-blue-200 block">TAHAP 1</span>
+          <div className="p-3.5 rounded-xl bg-white/15 border border-white/25">
+            <span className="text-[10px] font-bold text-blue-100 block">TAHAP 1</span>
             <span className="text-xs font-bold text-white mt-1 block">Penghasilan</span>
-            <span className="text-[11px] text-blue-100">Gaji & Bisnis</span>
+            <span className="text-[11px] text-blue-50">Gaji & Bisnis</span>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-white/10 border border-white/15">
-            <span className="text-[10px] font-bold text-blue-200 block">TAHAP 2</span>
+          <div className="p-3.5 rounded-xl bg-white/15 border border-white/25">
+            <span className="text-[10px] font-bold text-blue-100 block">TAHAP 2</span>
             <span className="text-xs font-bold text-white mt-1 block">Surplus Kas</span>
-            <span className="text-[11px] text-blue-100">Income − Living</span>
+            <span className="text-[11px] text-blue-50">Income − Living</span>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-white/10 border border-white/15">
-            <span className="text-[10px] font-bold text-blue-200 block">TAHAP 3</span>
+          <div className="p-3.5 rounded-xl bg-white/15 border border-white/25">
+            <span className="text-[10px] font-bold text-blue-100 block">TAHAP 3</span>
             <span className="text-xs font-bold text-white mt-1 block">Proteksi Risiko</span>
-            <span className="text-[11px] text-blue-100">BPJS & Asuransi</span>
+            <span className="text-[11px] text-blue-50">BPJS & Asuransi</span>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-white/10 border border-white/15">
-            <span className="text-[10px] font-bold text-blue-200 block">TAHAP 4</span>
+          <div className="p-3.5 rounded-xl bg-white/15 border border-white/25">
+            <span className="text-[10px] font-bold text-blue-100 block">TAHAP 4</span>
             <span className="text-xs font-bold text-white mt-1 block">Aset Produktif</span>
-            <span className="text-[11px] text-blue-100">SBN, Emas, Saham</span>
+            <span className="text-[11px] text-blue-50">SBN, Emas, Saham</span>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-white/10 border border-white/15">
-            <span className="text-[10px] font-bold text-blue-200 block">TAHAP 5</span>
+          <div className="p-3.5 rounded-xl bg-white/15 border border-white/25">
+            <span className="text-[10px] font-bold text-blue-100 block">TAHAP 5</span>
             <span className="text-xs font-bold text-white mt-1 block">Bunga Majemuk</span>
-            <span className="text-[11px] text-blue-100">Waktu & Disiplin</span>
+            <span className="text-[11px] text-blue-50">Waktu & Disiplin</span>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-blue-500/30 border border-blue-300/40">
-            <span className="text-[10px] font-bold text-blue-200 block">TAHAP 6</span>
+          <div className="p-3.5 rounded-xl bg-white/25 border border-white/40 shadow-sm">
+            <span className="text-[10px] font-bold text-amber-200 block">TAHAP 6</span>
             <span className="text-xs font-bold text-white mt-1 block">Bebas Finansial</span>
-            <span className="text-[11px] text-blue-100">Kebebasan Waktu</span>
+            <span className="text-[11px] text-blue-50">Kebebasan Waktu</span>
           </div>
         </div>
 
@@ -203,7 +203,7 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
           onClick={() => setActiveTab("ojk_ratios")}
           className={`px-3.5 py-2.5 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center space-x-1.5 ${
             activeTab === "ojk_ratios"
-              ? "border-[#003399] text-[#003399] dark:text-blue-400 font-bold"
+              ? "border-[#0066CC] text-[#0066CC] dark:text-blue-400 font-bold"
               : "border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white"
           }`}
         >
@@ -215,7 +215,7 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
           onClick={() => setActiveTab("gurus")}
           className={`px-3.5 py-2.5 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center space-x-1.5 ${
             activeTab === "gurus"
-              ? "border-[#003399] text-[#003399] dark:text-blue-400 font-bold"
+              ? "border-[#0066CC] text-[#0066CC] dark:text-blue-400 font-bold"
               : "border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white"
           }`}
         >
@@ -227,7 +227,7 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
           onClick={() => setActiveTab("hierarchy_5layer")}
           className={`px-3.5 py-2.5 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center space-x-1.5 ${
             activeTab === "hierarchy_5layer"
-              ? "border-[#003399] text-[#003399] dark:text-blue-400 font-bold"
+              ? "border-[#0066CC] text-[#0066CC] dark:text-blue-400 font-bold"
               : "border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white"
           }`}
         >
@@ -239,7 +239,7 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
           onClick={() => setActiveTab("curriculum_manifesto")}
           className={`px-3.5 py-2.5 font-semibold text-xs sm:text-sm border-b-2 transition-all cursor-pointer whitespace-nowrap shrink-0 flex items-center space-x-1.5 ${
             activeTab === "curriculum_manifesto"
-              ? "border-[#003399] text-[#003399] dark:text-blue-400 font-bold"
+              ? "border-[#0066CC] text-[#0066CC] dark:text-blue-400 font-bold"
               : "border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white"
           }`}
         >
@@ -731,7 +731,7 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
 
         <button
           onClick={onNext}
-          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#003399] hover:bg-[#002266] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
+          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#0066CC] hover:bg-[#0055B8] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
         >
           <span>Lanjut ke Langkah 7: Hasil Rencana Keuangan</span>
           <ArrowRight className="w-4 h-4" />

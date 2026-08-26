@@ -109,16 +109,16 @@ export const StepDataDiri: React.FC<StepDataDiriProps> = ({
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-[#003399] via-[#0047BA] to-[#0055B8] rounded-2xl p-5 sm:p-6 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-blue-800/40">
+      <div className="bg-gradient-to-r from-[#0066CC] via-[#0077EE] to-[#0099FF] rounded-2xl p-5 sm:p-6 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-blue-300/40">
         <div className="space-y-1.5 flex-1">
-          <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-sm text-xs font-bold border border-white/20">
-            <User className="w-3.5 h-3.5 text-blue-200" />
+          <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-sm text-xs font-bold border border-white/30 text-white">
+            <User className="w-3.5 h-3.5 text-blue-100" />
             <span>Langkah 1 dari 7 • Profiling Nasabah</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
             Data Diri & Profil Keluarga
           </h1>
-          <p className="text-blue-100/90 text-xs sm:text-sm leading-relaxed max-w-4xl">
+          <p className="text-blue-50 text-xs sm:text-sm leading-relaxed max-w-4xl">
             Informasi pribadi, rencana tempat tinggal, dan profil tanggungan keluarga untuk analisis kebutuhan proteksi jiwa serta alokasi dana darurat standar CFP® & OJK.
           </p>
         </div>
@@ -127,10 +127,10 @@ export const StepDataDiri: React.FC<StepDataDiriProps> = ({
           <div className="shrink-0">
             <button
               onClick={onAddNewProfile}
-              className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-bold border border-white/25 shadow-xs transition-all cursor-pointer"
+              className="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white/20 hover:bg-white/30 text-white text-xs font-bold border border-white/30 shadow-xs transition-all cursor-pointer"
               title="Buat profil baru untuk orang yang berbeda"
             >
-              <UserPlus className="w-4 h-4 text-blue-200" />
+              <UserPlus className="w-4 h-4 text-white" />
               <span>+ Profil Baru</span>
             </button>
           </div>
@@ -549,7 +549,7 @@ export const StepDataDiri: React.FC<StepDataDiriProps> = ({
       <div className="flex justify-end pt-4">
         <button
           onClick={onNext}
-          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#003399] hover:bg-[#002266] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
+          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#0066CC] hover:bg-[#0055B8] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
         >
           <span>Lanjut ke Langkah 2: Arus Kas & Aset</span>
           <ArrowRight className="w-4 h-4" />

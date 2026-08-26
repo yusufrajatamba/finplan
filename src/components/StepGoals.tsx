@@ -158,15 +158,15 @@ export const StepGoals: React.FC<StepGoalsProps> = ({
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-[#003399] via-[#0047BA] to-[#0055B8] rounded-2xl p-5 sm:p-6 text-white shadow-md border border-blue-800/40 space-y-1.5">
-        <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-sm text-xs font-bold border border-white/20">
-          <Target className="w-3.5 h-3.5 text-blue-200" />
+      <div className="bg-gradient-to-r from-[#0066CC] via-[#0077EE] to-[#0099FF] rounded-2xl p-5 sm:p-6 text-white shadow-md border border-blue-300/40 space-y-1.5">
+        <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-sm text-xs font-bold border border-white/30 text-white">
+          <Target className="w-3.5 h-3.5 text-blue-100" />
           <span>Langkah 4 dari 7 • Target Finansial</span>
         </div>
         <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
           Target Finansial & Sasaran Masa Depan
         </h1>
-        <p className="text-blue-100/90 text-xs sm:text-sm leading-relaxed max-w-4xl">
+        <p className="text-blue-50 text-xs sm:text-sm leading-relaxed max-w-4xl">
           Tentukan sasaran dana darurat, pembelian hunian, kendaraan, dana pendidikan anak, hingga rencana pensiun mandiri sesuai standar CFP® & OJK.
         </p>
       </div>
@@ -659,7 +659,7 @@ export const StepGoals: React.FC<StepGoalsProps> = ({
 
         <button
           onClick={onNext}
-          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#003399] hover:bg-[#002266] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
+          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#0066CC] hover:bg-[#0055B8] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
         >
           <span>Lanjut ke Langkah 5: Profil Risiko</span>
           <ArrowRight className="w-4 h-4" />

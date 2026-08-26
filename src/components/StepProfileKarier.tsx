@@ -98,15 +98,15 @@ export const StepProfileKarier: React.FC<StepProfileKarierProps> = ({
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-[#003399] via-[#0047BA] to-[#0055B8] rounded-2xl p-5 sm:p-6 text-white shadow-md border border-blue-800/40 space-y-1.5">
-        <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/15 backdrop-blur-sm text-xs font-bold border border-white/20">
-          <Briefcase className="w-3.5 h-3.5 text-blue-200" />
+      <div className="bg-gradient-to-r from-[#0066CC] via-[#0077EE] to-[#0099FF] rounded-2xl p-5 sm:p-6 text-white shadow-md border border-blue-300/40 space-y-1.5">
+        <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-sm text-xs font-bold border border-white/30 text-white">
+          <Briefcase className="w-3.5 h-3.5 text-blue-100" />
           <span>Langkah 3 dari 7 • Stabilitas & Prospek Karier</span>
         </div>
         <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
           Profil Karier & Pertumbuhan Penghasilan
         </h1>
-        <p className="text-blue-100/90 text-xs sm:text-sm leading-relaxed max-w-4xl">
+        <p className="text-blue-50 text-xs sm:text-sm leading-relaxed max-w-4xl">
           Evaluasi stabilitas pekerjaan, potensi kenaikan penghasilan, dan mitigasi risiko pendapatan untuk memproyeksikan earning power jangka panjang.
         </p>
       </div>
@@ -397,7 +397,7 @@ export const StepProfileKarier: React.FC<StepProfileKarierProps> = ({
 
         <button
           onClick={onNext}
-          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#003399] hover:bg-[#002266] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
+          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#0066CC] hover:bg-[#0055B8] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
         >
           <span>Lanjut ke Langkah 4: Target Goals</span>
           <ArrowRight className="w-4 h-4" />

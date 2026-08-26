@@ -229,29 +229,29 @@ export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-[#002266] via-[#003399] to-[#0055B8] rounded-2xl p-5 sm:p-6 text-white shadow-xl border border-blue-900/60 space-y-4">
+      <div className="bg-gradient-to-r from-[#0066CC] via-[#0077EE] to-[#0099FF] rounded-2xl p-5 sm:p-6 text-white shadow-xl border border-blue-300/40 space-y-4">
         {/* Top: Title & Description */}
         <div className="space-y-1.5">
-          <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/15 text-blue-100 border border-white/25 text-xs font-bold">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/20 text-white border border-white/30 text-xs font-bold">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
             <span>Langkah 7 dari 7 • Executive Financial Statement</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight">
             Rencana Keuangan Komprehensif & Roadmap Strategis
           </h1>
-          <p className="text-blue-100/90 text-xs sm:text-sm leading-relaxed max-w-4xl">
+          <p className="text-blue-50 text-xs sm:text-sm leading-relaxed max-w-4xl">
             Laporan rekomendasi berstandar CFP® & kepatuhan OJK memuat alokasi anggaran, proteksi asuransi, proyeksi kekayaan bersih, dan peta jalan tahunan.
           </p>
         </div>
 
         {/* Action Toolbar */}
-        <div className="pt-3.5 border-t border-white/15 flex flex-wrap items-center justify-between gap-3">
+        <div className="pt-3.5 border-t border-white/20 flex flex-wrap items-center justify-between gap-3">
           {/* Primary Action Buttons */}
           <div className="flex flex-wrap items-center gap-2.5">
             <button
               onClick={onGenerateAIPlan}
               disabled={isLoadingAI}
-              className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-white text-[#003399] hover:bg-blue-50 text-xs font-bold transition-all shadow-md cursor-pointer disabled:opacity-50"
+              className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-white text-[#0066CC] hover:bg-blue-50 text-xs font-bold transition-all shadow-md cursor-pointer disabled:opacity-50"
             >
               <RefreshCw className={`w-4 h-4 ${isLoadingAI ? "animate-spin" : ""}`} />
               <span>{isLoadingAI ? "Memproses Data..." : "Perbarui Analisis"}</span>
@@ -260,7 +260,7 @@ export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
             <button
               onClick={handleOpenExportModal}
               disabled={!plan}
-              className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-[#0055B8] hover:bg-[#0047BA] text-white text-xs font-bold transition-all shadow-md cursor-pointer disabled:opacity-50 border border-blue-400/40"
+              className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-white/20 hover:bg-white/30 text-white text-xs font-bold transition-all shadow-md cursor-pointer disabled:opacity-50 border border-white/30"
             >
               <Download className="w-4 h-4" />
               <span>Unduh Laporan PDF</span>
@@ -273,7 +273,7 @@ export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
               onClick={onSaveToHistory}
               className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-semibold border border-white/20 transition-all cursor-pointer"
             >
-              <Save className="w-4 h-4 text-blue-200" />
+              <Save className="w-4 h-4 text-white" />
               <span>Simpan Snapshot</span>
             </button>
 
@@ -283,16 +283,16 @@ export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
                 className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-semibold border border-white/20 transition-all cursor-pointer"
                 title="Buat Sesi Profiling Baru untuk Orang Lain"
               >
-                <UserPlus className="w-4 h-4 text-blue-200" />
+                <UserPlus className="w-4 h-4 text-white" />
                 <span>+ Profil Baru</span>
               </button>
             )}
 
             <button
               onClick={onOpenAIChat}
-              className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-[#001A4E] hover:bg-[#00143D] text-white text-xs font-bold transition-all shadow-md cursor-pointer border border-blue-700/50"
+              className="inline-flex items-center space-x-1.5 px-3.5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-bold transition-all shadow-md cursor-pointer border border-white/20"
             >
-              <MessageSquare className="w-4 h-4 text-blue-300" />
+              <MessageSquare className="w-4 h-4 text-white" />
               <span>Konsultasi Advisor</span>
             </button>
           </div>

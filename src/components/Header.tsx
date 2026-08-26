@@ -100,8 +100,8 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-40 shadow-xs">
-      {/* ── Top Corporate Utility Bar (BCA Dark Navy #002266) ── */}
-      <div className="bg-[#002266] dark:bg-slate-950 text-white text-xs border-b border-blue-900/60 transition-colors">
+      {/* ── Top Corporate Utility Bar (Bright Executive Blue #0055B8) ── */}
+      <div className="bg-[#0055B8] dark:bg-slate-950 text-white text-xs border-b border-blue-400/30 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-11">
           {/* Left: Corporate Logo & Identity */}
           <div className="flex items-center space-x-3 sm:space-x-4">
@@ -116,21 +116,21 @@ export const Header: React.FC<HeaderProps> = ({
               }}
               title="Kembali ke Halaman Utama"
             >
-              {/* BCA-Style Crest Logo */}
-              <div className="w-7 h-7 rounded-lg bg-[#0055B8] group-hover:bg-[#0047BA] flex items-center justify-center font-black text-white text-xs shadow-inner border border-blue-400/40 transition-colors">
+              {/* Modern Crisp Crest Logo */}
+              <div className="w-7 h-7 rounded-lg bg-white group-hover:bg-blue-50 flex items-center justify-center font-black text-[#0055B8] text-xs shadow-md transition-colors">
                 FP
               </div>
               <div className="flex flex-col">
-                <span className="font-extrabold tracking-tight text-sm text-white leading-tight font-heading group-hover:text-blue-200 transition-colors">
+                <span className="font-extrabold tracking-tight text-sm text-white leading-tight font-heading group-hover:text-blue-100 transition-colors">
                   FinPlan
                 </span>
-                <span className="text-[9px] text-blue-200 tracking-wider font-light hidden sm:inline">
+                <span className="text-[9px] text-blue-100 tracking-wider font-light hidden sm:inline">
                   Senantiasa di Sisi Anda
                 </span>
               </div>
             </div>
 
-            <div className="hidden md:flex items-center text-[11px] text-blue-200/90 pl-3 border-l border-blue-800/60">
+            <div className="hidden md:flex items-center text-[11px] text-blue-100 pl-3 border-l border-blue-400/40">
               <span>Portal Perencanaan Finansial Mandiri Terpercaya</span>
             </div>
           </div>
@@ -138,19 +138,19 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Right Utility: Language Switcher, CFP/OJK Badge, Theme Toggle, Security Lock */}
           <div className="flex items-center space-x-3 sm:space-x-4">
             {/* OJK & CFP Badge */}
-            <div className="hidden sm:flex items-center space-x-1.5 text-[11px] text-blue-100 bg-blue-900/60 px-2.5 py-1 rounded-full border border-blue-700/60">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <div className="hidden sm:flex items-center space-x-1.5 text-[11px] text-white bg-white/15 px-2.5 py-1 rounded-full border border-white/25">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
               <span>Standar CFP® & Kepatuhan OJK</span>
             </div>
 
             {/* Language Switcher Pill */}
-            <div className="inline-flex rounded-md bg-[#001A4E] dark:bg-slate-900 p-0.5 border border-blue-800/60 text-[10px] font-bold">
+            <div className="inline-flex rounded-md bg-blue-900/50 dark:bg-slate-900 p-0.5 border border-white/20 text-[10px] font-bold">
               <button
                 onClick={() => setLang("ID")}
                 className={`px-2 py-0.5 rounded transition cursor-pointer ${
                   lang === "ID"
-                    ? "bg-[#0055B8] text-white shadow-xs"
-                    : "text-blue-200 hover:text-white"
+                    ? "bg-white text-[#0055B8] shadow-xs"
+                    : "text-blue-100 hover:text-white"
                 }`}
               >
                 ID
@@ -159,8 +159,8 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={() => setLang("EN")}
                 className={`px-2 py-0.5 rounded transition cursor-pointer ${
                   lang === "EN"
-                    ? "bg-[#0055B8] text-white shadow-xs"
-                    : "text-blue-200 hover:text-white"
+                    ? "bg-white text-[#0055B8] shadow-xs"
+                    : "text-blue-100 hover:text-white"
                 }`}
               >
                 EN
@@ -170,7 +170,7 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Theme Toggle */}
             <button
               onClick={onToggleTheme}
-              className="p-1 rounded-md text-blue-200 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className="p-1 rounded-md text-blue-100 hover:text-white hover:bg-white/15 transition-colors cursor-pointer"
               title={isDarkMode ? "Mode Terang" : "Mode Gelap"}
             >
               {isDarkMode ? <Sun className="w-3.5 h-3.5 text-amber-300" /> : <Moon className="w-3.5 h-3.5" />}
@@ -180,10 +180,10 @@ export const Header: React.FC<HeaderProps> = ({
             {onLockApp && (
               <button
                 onClick={onLockApp}
-                className="p-1 rounded-md text-blue-200 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                className="p-1 rounded-md text-blue-100 hover:text-white hover:bg-white/15 transition-colors cursor-pointer"
                 title="Kunci Akses FinPlan (Logout)"
               >
-                <Lock className="w-3.5 h-3.5 text-blue-200" />
+                <Lock className="w-3.5 h-3.5 text-blue-100" />
               </button>
             )}
           </div>
@@ -194,18 +194,18 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 gap-2">
-            {/* Left Nav Tabs (with BCA Blue Active Underline) */}
+            {/* Left Nav Tabs (with Blue Active Underline) */}
             <nav className="flex items-center space-x-2 sm:space-x-6 overflow-x-auto scrollbar-none py-1 h-full shrink min-w-0">
               <button
                 onClick={() => handleStepClick("data_diri")}
-                className="bca-nav-tab h-full flex items-center px-2 sm:px-3 text-xs sm:text-sm cursor-pointer whitespace-nowrap active text-[#003399] font-bold shrink-0"
+                className="bca-nav-tab h-full flex items-center px-2 sm:px-3 text-xs sm:text-sm cursor-pointer whitespace-nowrap active text-[#0066CC] font-bold shrink-0"
               >
                 Perencanaan Finansial
               </button>
 
               <button
                 onClick={handleOpenEducation}
-                className="bca-nav-tab h-full flex items-center px-2 sm:px-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-[#003399] cursor-pointer whitespace-nowrap shrink-0"
+                className="bca-nav-tab h-full flex items-center px-2 sm:px-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-[#0066CC] cursor-pointer whitespace-nowrap shrink-0"
               >
                 <BookOpen className="w-3.5 h-3.5 text-blue-600 mr-1.5 hidden sm:inline" />
                 <span>Edukatips Finansial</span>
@@ -213,7 +213,7 @@ export const Header: React.FC<HeaderProps> = ({
 
               <button
                 onClick={onOpenCalculators}
-                className="bca-nav-tab h-full flex items-center px-2 sm:px-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-[#003399] cursor-pointer whitespace-nowrap shrink-0"
+                className="bca-nav-tab h-full flex items-center px-2 sm:px-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-[#0066CC] cursor-pointer whitespace-nowrap shrink-0"
               >
                 <Calculator className="w-3.5 h-3.5 text-emerald-600 mr-1.5 hidden sm:inline" />
                 <span>Simulasi & Kalkulator</span>
@@ -221,7 +221,7 @@ export const Header: React.FC<HeaderProps> = ({
 
               <button
                 onClick={onOpenHistory}
-                className="bca-nav-tab h-full flex items-center px-2 sm:px-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-[#003399] cursor-pointer whitespace-nowrap shrink-0"
+                className="bca-nav-tab h-full flex items-center px-2 sm:px-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-[#0066CC] cursor-pointer whitespace-nowrap shrink-0"
               >
                 <History className="w-3.5 h-3.5 text-amber-600 mr-1.5 hidden sm:inline" />
                 <span>Riwayat Profiling</span>

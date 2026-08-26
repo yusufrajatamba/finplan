@@ -41,12 +41,9 @@ export default function App() {
   });
   const [isLockPromptOpen, setIsLockPromptOpen] = useState<boolean>(false);
 
-  // Theme state
+  // Theme state: Default strictly to light theme (clean white background)
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
-    return (
-      localStorage.getItem("theme_mode") === "dark" ||
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    );
+    return localStorage.getItem("theme_mode") === "dark";
   });
 
   useEffect(() => {

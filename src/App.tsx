@@ -406,7 +406,7 @@ export default function App() {
       />
 
       {/* Main App Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-5 sm:space-y-6">
+      <main className="flex-1 w-full">
         {/* Toast Notification */}
         {toastMessage && (
           <div className="fixed top-16 sm:top-20 right-3 left-3 sm:left-auto sm:right-6 max-w-md z-50 p-3 sm:p-4 rounded-2xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-xl border border-slate-700/50 text-xs font-semibold flex items-center space-x-2 animate-in slide-in-from-top duration-200">
@@ -417,19 +417,21 @@ export default function App() {
 
         {/* Error Alert */}
         {errorMessage && (
-          <div className="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 flex items-start space-x-3">
-            <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-rose-600" />
-            <div className="flex-1 text-xs">
-              <span className="font-bold block">Pemberitahuan Sistem:</span>
-              <span>{errorMessage}</span>
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4">
+            <div className="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 flex items-start space-x-3">
+              <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-rose-600" />
+              <div className="flex-1 text-xs">
+                <span className="font-bold block">Pemberitahuan Sistem:</span>
+                <span>{errorMessage}</span>
+              </div>
+              <button
+                onClick={() => handleGenerateAIPlan()}
+                className="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-semibold flex items-center space-x-1 cursor-pointer"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+                <span>Coba Lagi</span>
+              </button>
             </div>
-            <button
-              onClick={() => handleGenerateAIPlan()}
-              className="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-semibold flex items-center space-x-1 cursor-pointer"
-            >
-              <RefreshCw className="w-3.5 h-3.5" />
-              <span>Coba Lagi</span>
-            </button>
           </div>
         )}
 
@@ -446,7 +448,7 @@ export default function App() {
             onOpenAIChat={() => setIsAIChatOpen(true)}
           />
         ) : (
-          <>
+          <div className="max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-5 sm:space-y-6">
             {/* STEP 1: Data Diri */}
             {currentStep === "data_diri" && (
               <StepDataDiri
@@ -567,7 +569,7 @@ export default function App() {
                 }}
               />
             )}
-          </>
+          </div>
         )}
       </main>
 

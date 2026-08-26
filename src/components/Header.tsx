@@ -99,58 +99,32 @@ export const Header: React.FC<HeaderProps> = ({
   const currentStepIndex = steps.findIndex((s) => s.id === currentStep);
 
   return (
-    <header className="sticky top-0 z-40 shadow-xs">
-      {/* ── Top Corporate Utility Bar (Bright Executive Blue #0055B8) ── */}
-      <div className="bg-[#0055B8] dark:bg-slate-950 text-white text-xs border-b border-blue-400/30 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-11">
-          {/* Left: Corporate Logo & Identity */}
-          <div className="flex items-center space-x-3 sm:space-x-4">
-            <div
-              className="flex items-center space-x-2.5 cursor-pointer py-1 group"
-              onClick={() => {
-                if (onGoHome) {
-                  onGoHome();
-                } else {
-                  handleStepClick("data_diri");
-                }
-              }}
-              title="Kembali ke Halaman Utama"
-            >
-              {/* Modern Crisp Crest Logo */}
-              <div className="w-7 h-7 rounded-lg bg-white group-hover:bg-blue-50 flex items-center justify-center font-black text-[#0055B8] text-xs shadow-md transition-colors">
-                FP
-              </div>
-              <div className="flex flex-col">
-                <span className="font-extrabold tracking-tight text-sm text-white leading-tight font-heading group-hover:text-blue-100 transition-colors">
-                  FinPlan
-                </span>
-                <span className="text-[9px] text-blue-100 tracking-wider font-light hidden sm:inline">
-                  Senantiasa di Sisi Anda
-                </span>
-              </div>
-            </div>
-
-            <div className="hidden md:flex items-center text-[11px] text-blue-100 pl-3 border-l border-blue-400/40">
-              <span>Portal Perencanaan Finansial Mandiri Terpercaya</span>
-            </div>
-          </div>
-
-          {/* Right Utility: Language Switcher, CFP/OJK Badge, Theme Toggle, Security Lock */}
-          <div className="flex items-center space-x-3 sm:space-x-4">
-            {/* OJK & CFP Badge */}
-            <div className="hidden sm:flex items-center space-x-1.5 text-[11px] text-white bg-white/15 px-2.5 py-1 rounded-full border border-white/25">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
+    <header className="sticky top-0 z-40 shadow-sm">
+      {/* ── Top Clean Sub-Bar (White / Slate-900) ── */}
+      <div className="bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 text-xs border-b border-slate-200 dark:border-slate-800 transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-9">
+          {/* Left: OJK & CFP Trust Badge */}
+          <div className="flex items-center space-x-3 text-[11px]">
+            <div className="flex items-center space-x-1.5 font-medium text-slate-700 dark:text-slate-300">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span>Standar CFP® & Kepatuhan OJK</span>
             </div>
+            <span className="hidden md:inline text-slate-300 dark:text-slate-700">|</span>
+            <span className="hidden md:inline text-slate-500 dark:text-slate-400">
+              Platform Perencanaan Finansial Keluarga Terpercaya
+            </span>
+          </div>
 
+          {/* Right Utility: Language Switcher, Theme Toggle, Security Lock */}
+          <div className="flex items-center space-x-3 sm:space-x-4">
             {/* Language Switcher Pill */}
-            <div className="inline-flex rounded-md bg-blue-900/50 dark:bg-slate-900 p-0.5 border border-white/20 text-[10px] font-bold">
+            <div className="inline-flex rounded-md bg-slate-100 dark:bg-slate-800 p-0.5 border border-slate-200 dark:border-slate-700 text-[10px] font-bold">
               <button
                 onClick={() => setLang("ID")}
                 className={`px-2 py-0.5 rounded transition cursor-pointer ${
                   lang === "ID"
-                    ? "bg-white text-[#0055B8] shadow-xs"
-                    : "text-blue-100 hover:text-white"
+                    ? "bg-[#0B5DA7] text-white shadow-xs"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
                 }`}
               >
                 ID
@@ -159,8 +133,8 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={() => setLang("EN")}
                 className={`px-2 py-0.5 rounded transition cursor-pointer ${
                   lang === "EN"
-                    ? "bg-white text-[#0055B8] shadow-xs"
-                    : "text-blue-100 hover:text-white"
+                    ? "bg-[#0B5DA7] text-white shadow-xs"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
                 }`}
               >
                 EN
@@ -170,91 +144,118 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Theme Toggle */}
             <button
               onClick={onToggleTheme}
-              className="p-1 rounded-md text-blue-100 hover:text-white hover:bg-white/15 transition-colors cursor-pointer"
+              className="p-1 rounded-md text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
               title={isDarkMode ? "Mode Terang" : "Mode Gelap"}
             >
-              {isDarkMode ? <Sun className="w-3.5 h-3.5 text-amber-300" /> : <Moon className="w-3.5 h-3.5" />}
+              {isDarkMode ? <Sun className="w-3.5 h-3.5 text-amber-500" /> : <Moon className="w-3.5 h-3.5" />}
             </button>
 
             {/* Lock App Security Button */}
             {onLockApp && (
               <button
                 onClick={onLockApp}
-                className="p-1 rounded-md text-blue-100 hover:text-white hover:bg-white/15 transition-colors cursor-pointer"
+                className="p-1 rounded-md text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                 title="Kunci Akses FinPlan (Logout)"
               >
-                <Lock className="w-3.5 h-3.5 text-blue-100" />
+                <Lock className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
         </div>
       </div>
 
-      {/* ── Main Banking Tab Bar (White / Dark Slate) ── */}
-      <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors">
+      {/* ── Main BFI Corporate Blue Bar (#0B5DA7) ── */}
+      <div className="bg-[#0B5DA7] text-white transition-colors shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14 gap-2">
-            {/* Left Nav Tabs (with Blue Active Underline) */}
-            <nav className="flex items-center space-x-2 sm:space-x-6 overflow-x-auto scrollbar-none py-1 h-full shrink min-w-0">
-              <button
-                onClick={() => handleStepClick("data_diri")}
-                className="bca-nav-tab h-full flex items-center px-2 sm:px-3 text-xs sm:text-sm cursor-pointer whitespace-nowrap active text-[#0066CC] font-bold shrink-0"
+          <div className="flex items-center justify-between h-14 sm:h-16 gap-3">
+            {/* Left: Brand Identity & Logo */}
+            <div className="flex items-center space-x-4 sm:space-x-6 shrink-0">
+              <div
+                className="flex items-center space-x-2.5 cursor-pointer py-1 group"
+                onClick={() => {
+                  if (onGoHome) {
+                    onGoHome();
+                  } else {
+                    handleStepClick("data_diri");
+                  }
+                }}
+                title="Kembali ke Halaman Utama"
               >
-                Perencanaan Finansial
-              </button>
+                {/* BFI-Style Crisp White Logo Square */}
+                <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center font-black text-[#0B5DA7] text-sm shadow-md transition-transform group-hover:scale-105">
+                  FP
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-extrabold tracking-tight text-base sm:text-lg text-white leading-tight font-heading">
+                    FinPlan
+                  </span>
+                  <span className="text-[9px] text-blue-100 tracking-wider font-medium hidden sm:inline">
+                    Financial Planning System
+                  </span>
+                </div>
+              </div>
 
-              <button
-                onClick={handleOpenEducation}
-                className="bca-nav-tab h-full flex items-center px-2 sm:px-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-[#0066CC] cursor-pointer whitespace-nowrap shrink-0"
-              >
-                <BookOpen className="w-3.5 h-3.5 text-blue-600 mr-1.5 hidden sm:inline" />
-                <span>Edukatips Finansial</span>
-              </button>
+              {/* Navigation Links in Main Blue Bar */}
+              <nav className="hidden lg:flex items-center space-x-1 sm:space-x-2 pl-2">
+                <button
+                  onClick={() => handleStepClick("data_diri")}
+                  className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold transition cursor-pointer ${
+                    !isLandingPage
+                      ? "bg-white/20 text-white font-bold shadow-xs"
+                      : "text-blue-100 hover:text-white hover:bg-white/10"
+                  }`}
+                >
+                  Perencanaan Finansial
+                </button>
 
-              <button
-                onClick={onOpenCalculators}
-                className="bca-nav-tab h-full flex items-center px-2 sm:px-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-[#0066CC] cursor-pointer whitespace-nowrap shrink-0"
-              >
-                <Calculator className="w-3.5 h-3.5 text-emerald-600 mr-1.5 hidden sm:inline" />
-                <span>Simulasi & Kalkulator</span>
-              </button>
+                <button
+                  onClick={handleOpenEducation}
+                  className="px-3 py-2 rounded-lg text-xs sm:text-sm font-medium text-blue-100 hover:text-white hover:bg-white/10 transition cursor-pointer"
+                >
+                  Edukatips Finansial
+                </button>
 
-              <button
-                onClick={onOpenHistory}
-                className="bca-nav-tab h-full flex items-center px-2 sm:px-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-[#0066CC] cursor-pointer whitespace-nowrap shrink-0"
-              >
-                <History className="w-3.5 h-3.5 text-amber-600 mr-1.5 hidden sm:inline" />
-                <span>Riwayat Profiling</span>
-              </button>
-            </nav>
+                <button
+                  onClick={onOpenCalculators}
+                  className="px-3 py-2 rounded-lg text-xs sm:text-sm font-medium text-blue-100 hover:text-white hover:bg-white/10 transition cursor-pointer"
+                >
+                  Simulasi & Kalkulator
+                </button>
 
-            {/* Right Action Tools */}
-            <div className="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
+                <button
+                  onClick={onOpenHistory}
+                  className="px-3 py-2 rounded-lg text-xs sm:text-sm font-medium text-blue-100 hover:text-white hover:bg-white/10 transition cursor-pointer"
+                >
+                  Riwayat Profiling
+                </button>
+              </nav>
+            </div>
+
+            {/* Right Action Tools: Template Dropdown & BFI Vibrant Orange CTA */}
+            <div className="flex items-center space-x-2 sm:space-x-2.5 shrink-0">
               {/* Preset Profile Dropdown */}
               <div className="relative">
                 <button
                   onClick={() => setShowSampleDropdown(!showSampleDropdown)}
-                  className={`inline-flex items-center justify-center p-2 sm:px-3 sm:py-1.5 text-xs font-semibold rounded-lg border transition-colors cursor-pointer ${
+                  className={`inline-flex items-center justify-center px-3 py-2 text-xs font-semibold rounded-xl transition-colors cursor-pointer border ${
                     showSampleDropdown
-                      ? "bg-blue-100 dark:bg-blue-900/60 text-[#0066CC] dark:text-blue-300 border-blue-400"
-                      : "bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border-slate-300/80 dark:border-slate-700"
+                      ? "bg-white text-[#0B5DA7] border-white shadow-xs font-bold"
+                      : "bg-white/15 hover:bg-white/25 text-white border-white/20"
                   }`}
                   title="Pilih Template Profil"
                 >
-                  <UserCheck className="w-3.5 h-3.5 text-[#0066CC]" />
-                  <span className="hidden md:inline ml-1.5">Template Profil</span>
+                  <UserCheck className="w-3.5 h-3.5 mr-1 sm:mr-1.5" />
+                  <span>Template</span>
                 </button>
 
                 {showSampleDropdown && (
                   <>
-                    {/* Mobile Backdrop to prevent clipping and enable outside tap */}
                     <div
                       className="fixed inset-0 z-40 bg-black/40 backdrop-blur-xs sm:hidden animate-in fade-in duration-150"
                       onClick={() => setShowSampleDropdown(false)}
                     />
 
-                    {/* Responsive Modal/Dropdown Container */}
-                    <div className="fixed inset-x-3 top-24 z-50 max-h-[80vh] overflow-y-auto max-w-sm mx-auto sm:max-h-none sm:overflow-visible sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:mt-2 sm:w-80 sm:mx-0 bg-white dark:bg-slate-900 rounded-2xl sm:rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 p-2.5 sm:p-2 animate-in fade-in zoom-in-95 duration-100">
+                    <div className="fixed inset-x-3 top-24 z-50 max-h-[80vh] overflow-y-auto max-w-sm mx-auto sm:max-h-none sm:overflow-visible sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:mt-2 sm:w-80 sm:mx-0 bg-white dark:bg-slate-900 rounded-2xl sm:rounded-xl shadow-2xl border border-slate-200 dark:border-slate-800 p-2.5 sm:p-2 animate-in fade-in zoom-in-95 duration-100 text-slate-800 dark:text-slate-200">
                       <div className="px-3 py-2 text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider flex items-center justify-between border-b border-slate-100 dark:border-slate-800 mb-1">
                         <span>Pilih Template Simulasi</span>
                         {onOpenNewProfile && (
@@ -263,7 +264,7 @@ export const Header: React.FC<HeaderProps> = ({
                               setShowSampleDropdown(false);
                               onOpenNewProfile();
                             }}
-                            className="text-[#0066CC] dark:text-blue-400 hover:underline font-bold text-[11px] cursor-pointer"
+                            className="text-[#0B5DA7] dark:text-blue-400 hover:underline font-bold text-[11px] cursor-pointer"
                           >
                             + Form Kosong
                           </button>
@@ -283,7 +284,7 @@ export const Header: React.FC<HeaderProps> = ({
                               <span className="font-semibold text-slate-900 dark:text-white truncate">
                                 {sample.name}
                               </span>
-                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-[#0066CC] dark:text-blue-300 font-bold shrink-0">
+                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-[#0B5DA7] dark:text-blue-300 font-bold shrink-0">
                                 {sample.badge}
                               </span>
                             </div>
@@ -302,36 +303,54 @@ export const Header: React.FC<HeaderProps> = ({
               {(hasPlan || hasGeneratedPlan) && onExportPDF && (
                 <button
                   onClick={onExportPDF}
-                  className="hidden sm:inline-flex items-center justify-center p-2 sm:px-3 sm:py-1.5 text-xs font-bold rounded-lg bg-[#0066CC] hover:bg-[#0055B8] text-white shadow-xs transition-all cursor-pointer"
+                  className="hidden sm:inline-flex items-center justify-center px-3 py-2 text-xs font-bold rounded-xl bg-white/20 hover:bg-white/30 text-white shadow-xs transition-all cursor-pointer border border-white/20"
                   title="Unduh Laporan PDF Resmi FinPlan"
                 >
-                  <Download className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline ml-1.5">Laporan PDF</span>
+                  <Download className="w-3.5 h-3.5 mr-1.5" />
+                  <span>PDF</span>
                 </button>
               )}
 
-              {/* Tambah Profil Baru */}
-              {onOpenNewProfile && (
-                <button
-                  onClick={onOpenNewProfile}
-                  className="hidden sm:inline-flex items-center justify-center p-2 sm:px-3 sm:py-1.5 text-xs font-bold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs transition-all cursor-pointer"
-                  title="Tambah Profil Baru (Orang Berbeda)"
-                >
-                  <UserPlus className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline ml-1.5">+ Profil Baru</span>
-                </button>
-              )}
-
-              {/* Halo FinPlan Advisory Chat */}
+              {/* BFI Signature Vibrant Orange CTA Button */}
               <button
                 onClick={handleOpenChat}
-                className="inline-flex items-center justify-center p-2 sm:px-3.5 sm:py-1.5 text-xs font-bold rounded-lg bg-[#0066CC] hover:bg-[#0055B8] text-white shadow-xs transition-all cursor-pointer"
+                className="inline-flex items-center justify-center px-3.5 sm:px-4 py-2 text-xs font-bold rounded-xl bg-[#E8701A] hover:bg-[#D6610E] text-white shadow-md hover:shadow-lg transition-all cursor-pointer"
                 title="Konsultasi Halo FinPlan CFP® Advisor"
               >
-                <MessageSquareText className="w-3.5 h-3.5" />
-                <span className="hidden md:inline ml-1.5">Halo FinPlan CFP®</span>
+                <MessageSquareText className="w-3.5 h-3.5 mr-1.5" />
+                <span>Konsultasi AI</span>
               </button>
             </div>
+          </div>
+
+          {/* Mobile Navigation Secondary Row */}
+          <div className="lg:hidden flex items-center space-x-2 overflow-x-auto scrollbar-none py-2 border-t border-white/15 text-xs">
+            <button
+              onClick={() => handleStepClick("data_diri")}
+              className={`px-3 py-1.5 rounded-lg whitespace-nowrap font-semibold cursor-pointer ${
+                !isLandingPage ? "bg-white text-[#0B5DA7] font-bold" : "text-blue-100"
+              }`}
+            >
+              Perencanaan
+            </button>
+            <button
+              onClick={handleOpenEducation}
+              className="px-3 py-1.5 rounded-lg whitespace-nowrap text-blue-100 hover:text-white cursor-pointer font-medium"
+            >
+              Edukatips
+            </button>
+            <button
+              onClick={onOpenCalculators}
+              className="px-3 py-1.5 rounded-lg whitespace-nowrap text-blue-100 hover:text-white cursor-pointer font-medium"
+            >
+              Kalkulator
+            </button>
+            <button
+              onClick={onOpenHistory}
+              className="px-3 py-1.5 rounded-lg whitespace-nowrap text-blue-100 hover:text-white cursor-pointer font-medium"
+            >
+              Riwayat
+            </button>
           </div>
         </div>
       </div>

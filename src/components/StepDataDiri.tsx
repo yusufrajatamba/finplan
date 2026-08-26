@@ -108,8 +108,8 @@ export const StepDataDiri: React.FC<StepDataDiriProps> = ({
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
-      {/* Header Banner */}
-      <div className="bg-gradient-to-r from-[#0066CC] via-[#0077EE] to-[#0099FF] rounded-2xl p-5 sm:p-6 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-blue-300/40">
+      {/* ── Corporate Banner: Step 1 (BFI Corporate Blue #0B5DA7) ── */}
+      <div className="bg-gradient-to-r from-[#0B5DA7] via-[#09559B] to-[#0D65B5] rounded-2xl p-5 sm:p-6 text-white shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-blue-400/30">
         <div className="space-y-1.5 flex-1">
           <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-sm text-xs font-bold border border-white/30 text-white">
             <User className="w-3.5 h-3.5 text-blue-100" />
@@ -549,7 +549,7 @@ export const StepDataDiri: React.FC<StepDataDiriProps> = ({
       <div className="flex justify-end pt-4">
         <button
           onClick={onNext}
-          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#0066CC] hover:bg-[#0055B8] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
+          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#E8701A] hover:bg-[#D6610E] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
         >
           <span>Lanjut ke Langkah 2: Arus Kas & Aset</span>
           <ArrowRight className="w-4 h-4" />

@@ -33,11 +33,12 @@ export const EducationModal: React.FC<EducationModalProps> = ({
   onClose,
   onAskAI,
 }) => {
-  const [activeMainTab, setActiveMainTab] = useState<"gurus" | "curriculum" | "manifesto" | "articles">("gurus");
+  const [activeMainTab, setActiveMainTab] = useState<"gurus" | "curriculum" | "manifesto" | "articles" | "references">("gurus");
   const [selectedGuru, setSelectedGuru] = useState<FinancialGuruTheory>(financialGurusTheories[0]);
   const [selectedArticle, setSelectedArticle] = useState<EducationArticle | null>(financialArticles[0]);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState<string>("Semua");
+  const [refCategory, setRefCategory] = useState<string>("Semua");
 
   if (!isOpen) return null;
 
@@ -48,6 +49,159 @@ export const EducationModal: React.FC<EducationModalProps> = ({
     "Aturan Budgeting",
     "Asuransi & Proteksi",
     "Bebas Utang",
+  ];
+
+  const financialReferencesList = [
+    {
+      id: "ojk-buku-9",
+      category: "Regulasi & OJK",
+      title: "Buku 9 Seri Literasi Keuangan: Perencanaan Keuangan Keluarga",
+      sourceOrg: "Otoritas Jasa Keuangan (OJK)",
+      description: "Pedoman resmi rasio kesehatan keuangan rumah tangga Indonesia, formula dana darurat bertingkat, batas aman cicilan kredit DSR ≤30%, dan tabungan ≥10-20%.",
+      implementedInFinPlan: "Diagnosis 6 Rasio Finansial (Langkah 6), batas aman cicilan DSR ≤30%, dan target dana darurat keluarga.",
+      url: "https://sikapiuangmu.ojk.go.id",
+      badge: "OJK Resmi",
+    },
+    {
+      id: "fpsb-cfp",
+      category: "Regulasi & OJK",
+      title: "Kurikulum & Standar Sertifikasi Certified Financial Planner (CFP®)",
+      sourceOrg: "FPSB Indonesia (Financial Planning Standards Board)",
+      description: "Kaidah baku 6-Step Financial Planning Process, Capital Needs Analysis, dan standar etika perencanaan keuangan independen.",
+      implementedInFinPlan: "Alur 7 langkah komprehensif, perhitungan Uang Pertanggungan (UP) asuransi jiwa murni, dan profiling risiko.",
+      url: "https://fpsbindonesia.net",
+      badge: "Standar CFP®",
+    },
+    {
+      id: "seojk-paydi",
+      category: "Regulasi & OJK",
+      title: "SEOJK No. 5/SEOJK.05/2022 tentang Produk Asuransi Yang Dikaitkan dengan Investasi (PAYDI)",
+      sourceOrg: "Otoritas Jasa Keuangan (OJK)",
+      description: "Regulasi transparansi biaya akuisisi, pemisahan proteksi vs investasi, dan perlindungan konsumen asuransi unit link.",
+      implementedInFinPlan: "Modul edukasi asuransi unit link vs asuransi jiwa murni (Term Life) di Langkah 7 & Edukatips.",
+      url: "https://www.ojk.go.id",
+      badge: "Regulasi OJK",
+    },
+    {
+      id: "bi-rate",
+      category: "Pasar & Makro",
+      title: "Suku Bunga Acuan (BI-Rate) & Laporan Kebijakan Moneter",
+      sourceOrg: "Bank Indonesia (BI)",
+      description: "Data indikator transmisi suku bunga, inflasi nasional, dan suku bunga penjaminan simpanan perbankan.",
+      implementedInFinPlan: "Ticker makroekonomi terintegrasi, acuan return RDPU dan instrumen pasar uang.",
+      url: "https://www.bi.go.id",
+      badge: "Bank Indonesia",
+    },
+    {
+      id: "kemenkeu-sbn",
+      category: "Pasar & Makro",
+      title: "Penerbitan Surat Berharga Negara Ritel (SBN: ORI, SBR, SR, ST)",
+      sourceOrg: "Kementerian Keuangan RI (DJPPR)",
+      description: "Informasi kupon obligasi negara ritel terbitan pemerintah RI sebagai instrumen pendapatan tetap aman bebas risiko gagal bayar.",
+      implementedInFinPlan: "Simulasi alokasi aset pendapatan tetap berkupon bulanan di Langkah 7.",
+      url: "https://www.kemenkeu.go.id",
+      badge: "Kemenkeu RI",
+    },
+    {
+      id: "bpjs-kesehatan-tk",
+      category: "Regulasi & OJK",
+      title: "Jaminan Kesehatan Nasional (JKN) & Program Jamsostek (JHT, JKK, JKM, JP)",
+      sourceOrg: "BPJS Kesehatan & BPJS Ketenagakerjaan",
+      description: "Sistem jaminan sosial nasional sebagai fondasi proteksi dasar kesehatan dan ketenagakerjaan seluruh warga Indonesia.",
+      implementedInFinPlan: "Lapisan proteksi pertama (Layer 2) pada hirarki anggaran keluarga FinPlan.",
+      url: "https://bpjs-kesehatan.go.id",
+      badge: "Jaminan Sosial",
+    },
+    {
+      id: "housel-psychology",
+      category: "Buku & Pakar Global",
+      title: "The Psychology of Money: Timeless Lessons on Wealth, Greed, and Happiness",
+      sourceOrg: "Morgan Housel (Collaborative Fund)",
+      description: "Analisis perilaku mengelola uang, konsep 'Wealth ≠ Income', Room for Error, dan bahaya inflasi gaya hidup.",
+      implementedInFinPlan: "Guru Finansial #1, peringatan 3 jebakan kekayaan, dan filosofi titik cukup (Enough).",
+      url: "https://collabfund.com/blog/the-psychology-of-money/",
+      badge: "Buku & Pakar",
+    },
+    {
+      id: "sethi-iwtytbr",
+      category: "Buku & Pakar Global",
+      title: "I Will Teach You to Be Rich: Conscious Spending Plan",
+      sourceOrg: "Ramit Sethi",
+      description: "Sistem otomasi arus kas harian, hirarki anggaran 5 lapis, dan penentuan definisi 'Rich Life' keluarga.",
+      implementedInFinPlan: "Guru Finansial #2, 5-Layer Financial Hierarchy, dan strategi autodebet tabungan awal bulan.",
+      url: "https://www.iwillteachyoutoberich.com/",
+      badge: "Buku & Pakar",
+    },
+    {
+      id: "collins-simple-path",
+      category: "Buku & Pakar Global",
+      title: "The Simple Path to Wealth: Your Road Map to Financial Independence",
+      sourceOrg: "JL Collins",
+      description: "Panduan investasi pasif berbasis indeks pasar luas (Broad Market Indexing), dana 'F-You Money', dan disiplin jangka panjang.",
+      implementedInFinPlan: "Guru Finansial #5, strategi DCA reksa dana indeks/pasar uang, dan kalkulator bebas finansial.",
+      url: "https://jlcollinsnh.com/stock-series/",
+      badge: "Buku & Pakar",
+    },
+    {
+      id: "buffett-munger-letters",
+      category: "Buku & Pakar Global",
+      title: "Berkshire Hathaway Annual Shareholder Letters & Circle of Competence",
+      sourceOrg: "Warren Buffett & Charlie Munger",
+      description: "Prinsip pelestarian modal ('Preserve the ability to stay in the game'), anti-leverage spekulasi, dan bunga majemuk.",
+      implementedInFinPlan: "Guru Finansial #4, Rule 72 Bunga Majemuk, dan strategi anti-utang konsumtif.",
+      url: "https://www.berkshirehathaway.com/letters/letters.html",
+      badge: "Buku & Pakar",
+    },
+    {
+      id: "graham-intelligent-investor",
+      category: "Buku & Pakar Global",
+      title: "The Intelligent Investor: Margin of Safety Principle",
+      sourceOrg: "Benjamin Graham",
+      description: "Konsep Margin of Safety (ruang aman finansial) untuk melindungi kekayaan dari ketidakpastian masa depan.",
+      implementedInFinPlan: "Kalkulator Margin of Safety dan batas ketahanan kas darurat keluarga.",
+      url: "https://en.wikipedia.org/wiki/The_Intelligent_Investor",
+      badge: "Buku & Pakar",
+    },
+    {
+      id: "robin-your-money",
+      category: "Buku & Pakar Global",
+      title: "Your Money or Your Life: Transforming Your Relationship with Money",
+      sourceOrg: "Vicki Robin & Joe Dominguez",
+      description: "Mengukur nilai uang berdasarkan energi hidup (Life Energy / jam kerja yang dikorbankan) dan konsep Crossover Point.",
+      implementedInFinPlan: "Guru Finansial #6 dan Kalkulator Nilai Energi Hidup (Langkah 7).",
+      url: "https://yourmoneyoryourlife.com/",
+      badge: "Buku & Pakar",
+    },
+    {
+      id: "stanley-millionaire-next-door",
+      category: "Buku & Pakar Global",
+      title: "The Millionaire Next Door: Expected Net Worth Formula (PAW vs UAW)",
+      sourceOrg: "Thomas J. Stanley & William D. Danko",
+      description: "Kajian empiris gaya hidup hemat miliarder sejati dan formula target kekayaan bersih ideal berdasarkan usia.",
+      implementedInFinPlan: "Kalkulator Akumulator Kekayaan Bersih (PAW / AAW / UAW) di simulasi FinPlan.",
+      url: "https://en.wikipedia.org/wiki/The_Millionaire_Next_Door",
+      badge: "Buku & Pakar",
+    },
+    {
+      id: "bogle-bogleheads",
+      category: "Buku & Pakar Global",
+      title: "The Little Book of Common Sense Investing & Bogleheads Philosophy",
+      sourceOrg: "John C. Bogle / Bogleheads Community",
+      description: "Prinsip investasi berbasis biaya rendah, diversifikasi maksimal, dan menolak biaya manajemen tinggi yang menggerus return.",
+      implementedInFinPlan: "Rekomendasi pemilihan instrumen investasi berbiaya rendah (TER rendah) di Langkah 7.",
+      url: "https://www.bogleheads.org/",
+      badge: "Buku & Pakar",
+    },
+    {
+      id: "perkins-die-with-zero",
+      category: "Buku & Pakar Global",
+      title: "Die with Zero: Getting All You Can from Your Money and Your Life",
+      sourceOrg: "Bill Perkins",
+      description: "Konsep Time-Bucketing: memaksimalkan kepuasan hidup di setiap dekade usia tanpa meninggalkan penyesalan.",
+      implementedInFinPlan: "Guru Finansial #10 dan modul alokasi budget kenikmatan hidup keluarga (Layer 5).",
+      url: "https://www.diewithzerobook.com/",
+      badge: "Buku & Pakar",
+    },
   ];
 
   const filteredArticles = financialArticles.filter((art) => {
@@ -67,21 +221,31 @@ export const EducationModal: React.FC<EducationModalProps> = ({
     );
   });
 
+  const filteredReferences = financialReferencesList.filter((ref) => {
+    const matchCategory = refCategory === "Semua" || ref.category === refCategory;
+    const matchSearch =
+      ref.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      ref.sourceOrg.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      ref.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      ref.implementedInFinPlan.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchCategory && matchSearch;
+  });
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-150">
       <div className="bg-white dark:bg-slate-900 rounded-3xl max-w-5xl w-full h-[92vh] max-h-[780px] shadow-2xl border border-slate-100 dark:border-slate-800 flex flex-col overflow-hidden">
         {/* Modal Header */}
-        <div className="px-5 sm:px-6 py-4 border-b border-blue-900/60 flex items-center justify-between bg-[#002266] text-white">
+        <div className="px-5 sm:px-6 py-4 border-b border-blue-900/60 flex items-center justify-between bg-[#0B5DA7] text-white">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#0055B8] text-white flex items-center justify-center border border-blue-400/30">
+            <div className="p-2 rounded-xl bg-white/15 text-white">
               <BookOpen className="w-5 h-5" />
             </div>
             <div>
               <h2 className="text-base font-bold text-white">
                 Edukatips Finansial & Master Knowledge Base
               </h2>
-              <p className="text-xs text-blue-200">
-                10 Guru Finansial Dunia, Kurikulum 8 Semester, 10 Aturan Keluarga, dan Standar Resmi OJK
+              <p className="text-xs text-blue-100">
+                10 Guru Finansial Dunia, Kurikulum 8 Semester, 10 Aturan Keluarga, Standar Resmi OJK & Sumber Rujukan
               </p>
             </div>
           </div>
@@ -101,13 +265,14 @@ export const EducationModal: React.FC<EducationModalProps> = ({
             { id: "curriculum", label: "🎓 Kurikulum 8 Semester", icon: GraduationCap },
             { id: "manifesto", label: "📜 10 Aturan Keluarga", icon: Bookmark },
             { id: "articles", label: "📚 Artikel Literasi OJK & BI", icon: BookOpen },
+            { id: "references", label: "🔗 Sumber & Rujukan Resmi", icon: ExternalLink },
           ].map((t) => (
             <button
               key={t.id}
               onClick={() => setActiveMainTab(t.id as any)}
               className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition whitespace-nowrap shrink-0 flex items-center space-x-1.5 cursor-pointer ${
                 activeMainTab === t.id
-                  ? "bg-[#003399] text-white shadow-xs"
+                  ? "bg-[#0B5DA7] text-white shadow-xs"
                   : "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 border border-slate-200/80 dark:border-slate-700"
               }`}
             >
@@ -433,7 +598,7 @@ export const EducationModal: React.FC<EducationModalProps> = ({
                         onAskAI(`Saya sedang membaca tentang "${selectedArticle.title}". Tolong jelaskan bagaimana cara menerapkannya dalam kondisi keuangan saya.`);
                         onClose();
                       }}
-                      className="flex items-center space-x-2 px-5 py-2.5 rounded-2xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-600/20 transition cursor-pointer"
+                      className="flex items-center space-x-2 px-5 py-2.5 rounded-2xl text-xs font-bold text-white bg-[#0B5DA7] hover:bg-[#074580] shadow-md shadow-blue-950/20 transition cursor-pointer"
                     >
                       <Sparkles className="w-3.5 h-3.5" />
                       <span>Tanya Coach AI tentang Topik Ini</span>
@@ -445,6 +610,104 @@ export const EducationModal: React.FC<EducationModalProps> = ({
                   Pilih salah satu artikel di sebelah kiri untuk membaca.
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* ─── TAB 5: DAFTAR RUJUKAN & SUMBER KNOWLEDGE RESMI ──────────────── */}
+        {activeMainTab === "references" && (
+          <div className="flex-1 overflow-y-auto p-5 sm:p-7 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
+              <div>
+                <span className="text-xs font-bold text-[#0B5DA7] dark:text-blue-400 uppercase tracking-wider block">
+                  Transparansi & Legalitas Knowledge
+                </span>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white mt-0.5">
+                  Daftar Rujukan & Sumber Resmi FinPlan
+                </h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                  Seluruh formula, batasan rasio, dan kurikulum dalam FinPlan merujuk langsung pada literatur resmi otoritas finansial dan pakar dunia.
+                </p>
+              </div>
+
+              {/* Category Filter Pills */}
+              <div className="flex items-center space-x-1.5 overflow-x-auto pb-1 scrollbar-none shrink-0">
+                {["Semua", "Regulasi & OJK", "Buku & Pakar Global", "Pasar & Makro"].map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setRefCategory(cat)}
+                    className={`text-[11px] font-bold px-3 py-1.5 rounded-full whitespace-nowrap transition cursor-pointer ${
+                      refCategory === cat
+                        ? "bg-[#0B5DA7] text-white shadow-xs"
+                        : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700"
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* List of References */}
+            <div className="space-y-3.5">
+              {filteredReferences.map((ref, idx) => (
+                <div
+                  key={ref.id}
+                  className="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-850 hover:border-[#0B5DA7]/50 shadow-xs transition-all space-y-3"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div className="flex items-start sm:items-center space-x-2.5">
+                      <span className="w-6 h-6 rounded-full bg-blue-50 dark:bg-blue-950 text-[#0B5DA7] dark:text-blue-400 font-black text-[11px] flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
+                        {idx + 1}
+                      </span>
+                      <div>
+                        <div className="flex items-center space-x-2">
+                          <span
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider ${
+                              ref.category === "Regulasi & OJK"
+                                ? "bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300"
+                                : ref.category === "Buku & Pakar Global"
+                                ? "bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300"
+                                : "bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300"
+                            }`}
+                          >
+                            {ref.badge}
+                          </span>
+                          <span className="text-xs font-semibold text-slate-400">
+                            {ref.sourceOrg}
+                          </span>
+                        </div>
+                        <h4 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white mt-1">
+                          {ref.title}
+                        </h4>
+                      </div>
+                    </div>
+
+                    <a
+                      href={ref.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/60 hover:bg-[#0B5DA7] text-[#0B5DA7] hover:text-white dark:text-blue-300 text-xs font-bold transition-colors cursor-pointer self-start sm:self-auto shrink-0 border border-blue-200 dark:border-blue-800"
+                    >
+                      <span>Buka Sumber Resmi</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                    {ref.description}
+                  </p>
+
+                  <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-750 text-xs flex items-start space-x-2">
+                    <span className="text-[#0B5DA7] dark:text-blue-400 font-bold shrink-0">
+                      ⚡ Penerapan di FinPlan:
+                    </span>
+                    <span className="text-slate-700 dark:text-slate-300 font-medium">
+                      {ref.implementedInFinPlan}
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}

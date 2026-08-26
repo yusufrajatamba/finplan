@@ -112,8 +112,8 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
-      {/* Banner */}
-      <div className="bg-gradient-to-r from-[#0066CC] via-[#0077EE] to-[#0099FF] rounded-2xl p-5 sm:p-6 text-white shadow-md border border-blue-300/40 space-y-1.5">
+      {/* ── Banner (BFI Corporate Blue #0B5DA7) ── */}
+      <div className="bg-gradient-to-r from-[#0B5DA7] via-[#09559B] to-[#0D65B5] rounded-2xl p-5 sm:p-6 text-white shadow-md border border-blue-400/30 space-y-1.5">
         <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-sm text-xs font-bold border border-white/30 text-white">
           <BookOpen className="w-3.5 h-3.5 text-blue-100" />
           <span>Langkah 6 dari 7 • Evaluasi Rasio & Standar OJK</span>
@@ -127,7 +127,7 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
       </div>
 
       {/* Visual Roadmap Blueprint: "Peta Besar: Financially Healthy Itu Apa?" */}
-      <div className="rounded-2xl bg-gradient-to-r from-[#0066CC] via-[#0077EE] to-[#0099FF] text-white p-6 sm:p-7 shadow-lg border border-blue-300/40 space-y-5">
+      <div className="rounded-2xl bg-gradient-to-r from-[#0B5DA7] via-[#09559B] to-[#0D65B5] text-white p-6 sm:p-7 shadow-lg border border-blue-400/30 space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <span className="text-[11px] font-bold uppercase tracking-wider text-blue-50">
@@ -782,7 +782,7 @@ export const StepTeoriKeuangan: React.FC<StepTeoriKeuanganProps> = ({
 
         <button
           onClick={onNext}
-          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#0066CC] hover:bg-[#0055B8] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
+          className="inline-flex items-center space-x-2 px-7 py-3.5 rounded-xl bg-[#E8701A] hover:bg-[#D6610E] text-white font-bold text-sm shadow-md hover:scale-[1.01] transition-all cursor-pointer"
         >
           <span>Lanjut ke Langkah 7: Hasil Rencana Keuangan</span>
           <ArrowRight className="w-4 h-4" />

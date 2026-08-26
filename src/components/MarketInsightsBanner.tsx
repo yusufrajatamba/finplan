@@ -35,7 +35,7 @@ export const MarketInsightsBanner: React.FC = () => {
   }, []);
 
   return (
-    <div className="hidden md:block bg-[#0047BA] dark:bg-slate-950 text-slate-100 py-2 px-4 border-b border-blue-400/30 text-xs shadow-inner transition-colors">
+    <div className="hidden md:block bg-[#074580] dark:bg-slate-950 text-slate-100 py-2 px-4 border-b border-blue-400/20 text-xs shadow-inner transition-colors">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2">
         <div className="flex items-center space-x-2 text-blue-100 font-bold tracking-wide shrink-0">
           <BarChart2 className="w-3.5 h-3.5 text-blue-200" />

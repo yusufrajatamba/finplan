@@ -228,8 +228,8 @@ export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
-      {/* Banner */}
-      <div className="bg-gradient-to-r from-[#0066CC] via-[#0077EE] to-[#0099FF] rounded-2xl p-5 sm:p-6 text-white shadow-xl border border-blue-300/40 space-y-4">
+      {/* ── Banner (BFI Corporate Blue #0B5DA7) ── */}
+      <div className="bg-gradient-to-r from-[#0B5DA7] via-[#09559B] to-[#0D65B5] rounded-2xl p-5 sm:p-6 text-white shadow-xl border border-blue-400/30 space-y-4">
         {/* Top: Title & Description */}
         <div className="space-y-1.5">
           <div className="inline-flex items-center space-x-2 px-2.5 py-0.5 rounded-full bg-white/20 text-white border border-white/30 text-xs font-bold">
@@ -251,7 +251,7 @@ export const StepRencanaKeuangan: React.FC<StepRencanaKeuanganProps> = ({
             <button
               onClick={onGenerateAIPlan}
               disabled={isLoadingAI}
-              className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-white text-[#0066CC] hover:bg-blue-50 text-xs font-bold transition-all shadow-md cursor-pointer disabled:opacity-50"
+              className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-white text-[#0B5DA7] hover:bg-blue-50 text-xs font-bold transition-all shadow-md cursor-pointer disabled:opacity-50"
             >
               <RefreshCw className={`w-4 h-4 ${isLoadingAI ? "animate-spin" : ""}`} />
               <span>{isLoadingAI ? "Memproses Data..." : "Perbarui Analisis"}</span>

@@ -67,7 +67,7 @@ export const AuthGateModal: React.FC<AuthGateModalProps> = ({ onUnlock, onResetS
       <div className="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-800 relative overflow-hidden space-y-5">
         {/* Header Security */}
         <div className="text-center space-y-2 relative z-10">
-          <div className="inline-flex p-3.5 rounded-2xl bg-[#0066CC] text-white shadow-lg shadow-blue-500/20 mb-1 border border-blue-400/40">
+          <div className="inline-flex p-3.5 rounded-2xl bg-[#0B5DA7] text-white shadow-lg shadow-blue-500/20 mb-1 border border-blue-400/40">
             <Lock className="w-7 h-7" />
           </div>
 
@@ -81,7 +81,7 @@ export const AuthGateModal: React.FC<AuthGateModalProps> = ({ onUnlock, onResetS
 
         {/* ─── Catatan Privasi & Zero Database (Tanpa Membocorkan Password) ─── */}
         <div className="p-3.5 rounded-2xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-800 text-xs text-slate-700 dark:text-slate-300 space-y-2">
-          <div className="flex items-center space-x-2 text-[#0066CC] dark:text-blue-300 font-bold">
+          <div className="flex items-center space-x-2 text-[#0B5DA7] dark:text-blue-300 font-bold">
             <Info className="w-4 h-4 shrink-0" />
             <span>Pemberitahuan Privasi Layar:</span>
           </div>
@@ -100,7 +100,7 @@ export const AuthGateModal: React.FC<AuthGateModalProps> = ({ onUnlock, onResetS
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center justify-between">
               <span className="flex items-center space-x-1.5">
-                <KeyRound className="w-3.5 h-3.5 text-[#0066CC]" />
+                <KeyRound className="w-3.5 h-3.5 text-[#0B5DA7]" />
                 <span>Masukkan PIN / Password Layar</span>
               </span>
             </label>
@@ -115,7 +115,7 @@ export const AuthGateModal: React.FC<AuthGateModalProps> = ({ onUnlock, onResetS
                   error
                     ? "border-rose-500 bg-rose-50/50 dark:bg-rose-950/30 text-rose-900 dark:text-rose-200"
                     : "border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 text-slate-900 dark:text-white"
-                } text-sm focus:ring-2 focus:ring-[#0066CC] focus:outline-hidden transition-all pr-10`}
+                } text-sm focus:ring-2 focus:ring-[#0B5DA7] focus:outline-hidden transition-all pr-10`}
                 autoFocus
               />
               <button
@@ -136,7 +136,7 @@ export const AuthGateModal: React.FC<AuthGateModalProps> = ({ onUnlock, onResetS
 
           <button
             type="submit"
-            className="w-full py-3 px-4 rounded-xl bg-[#0066CC] hover:bg-[#0055B8] text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer"
+            className="w-full py-3 px-4 rounded-xl bg-[#E8701A] hover:bg-[#D6610E] text-white font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer"
           >
             <span>Buka Layar FinPlan</span>
             <ArrowRight className="w-4 h-4" />

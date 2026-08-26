@@ -25,16 +25,15 @@
   }
 }
 
-/* Custom Banking Corporate Tokens & Accents */
+/* Custom BFI Financial Corporate Tokens & Accents */
 :root {
-  --bca-primary: #0066CC;
-  --bca-dark: #0055B8;
-  --bca-deep: #0047BA;
-  --bca-blue: #0066CC;
-  --bca-light-blue: #0077E6;
-  --bca-cyan: #00A3E0;
-  --bca-bg-gray: #F8FAFC;
-  --bca-gold: #F5A623;
+  --bfi-primary: #0B5DA7;
+  --bfi-dark: #074580;
+  --bfi-deep: #053361;
+  --bfi-light: #EBF4FC;
+  --bfi-orange: #E8701A;
+  --bfi-orange-hover: #D6610E;
+  --bfi-bg: #F4F7FB;
 }
 
 /* Remove number input spinners */
@@ -64,7 +63,7 @@ input[type="number"] {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 102, 204, 0.6);
+  background: rgba(11, 93, 167, 0.6);
 }
 
 /* Banking Tab Active Underline */
@@ -74,7 +73,7 @@ input[type="number"] {
 }
 
 .bca-nav-tab.active {
-  color: #0066CC;
+  color: #0B5DA7;
   font-weight: 700;
 }
 
@@ -85,7 +84,7 @@ input[type="number"] {
   left: 0;
   right: 0;
   height: 3px;
-  background-color: #0066CC;
+  background-color: #0B5DA7;
   border-radius: 2px;
 }
 

@@ -36,7 +36,7 @@ export const LockSessionModal: React.FC<LockSessionModalProps> = ({
         </button>
 
         <div className="flex items-center space-x-3">
-          <div className="p-3 rounded-2xl bg-[#0066CC] text-white shadow-md">
+          <div className="p-3 rounded-2xl bg-[#0B5DA7] text-white shadow-md">
             <Lock className="w-6 h-6" />
           </div>
           <div>
@@ -56,7 +56,7 @@ export const LockSessionModal: React.FC<LockSessionModalProps> = ({
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center space-x-1.5">
-              <KeyRound className="w-3.5 h-3.5 text-[#0066CC]" />
+              <KeyRound className="w-3.5 h-3.5 text-[#0B5DA7]" />
               <span>PIN / Password Kunci Layar (Opsional)</span>
             </label>
             <div className="relative">
@@ -65,7 +65,7 @@ export const LockSessionModal: React.FC<LockSessionModalProps> = ({
                 value={pin}
                 onChange={(e) => setPin(e.target.value)}
                 placeholder="Contoh: 1234 atau kata sandi Anda..."
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-[#0066CC] focus:ring-2 focus:ring-[#0066CC]/20 bg-white dark:bg-slate-950 text-slate-900 dark:text-white text-sm outline-none transition pr-10"
+                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 focus:border-[#0B5DA7] focus:ring-2 focus:ring-[#0B5DA7]/20 bg-white dark:bg-slate-950 text-slate-900 dark:text-white text-sm outline-none transition pr-10"
                 autoFocus
               />
               <button
@@ -88,7 +88,7 @@ export const LockSessionModal: React.FC<LockSessionModalProps> = ({
             </button>
             <button
               type="submit"
-              className="flex-1 py-2.5 px-4 rounded-xl bg-[#0066CC] hover:bg-[#0055B8] text-white text-xs font-bold shadow-md transition flex items-center justify-center space-x-1.5 cursor-pointer"
+              className="flex-1 py-2.5 px-4 rounded-xl bg-[#E8701A] hover:bg-[#D6610E] text-white text-xs font-bold shadow-md transition flex items-center justify-center space-x-1.5 cursor-pointer"
             >
               <Lock className="w-3.5 h-3.5" />
               <span>Kunci Layar</span>

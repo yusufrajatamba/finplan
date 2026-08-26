@@ -33,130 +33,152 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   onOpenAIChat,
 }) => {
   return (
-    <div className="space-y-8 sm:space-y-10 animate-in fade-in duration-200 max-w-7xl mx-auto py-2">
-      {/* ─── Hero Section: Filosofi & Peta Besar (Bright Fresh Modern Blue) ─── */}
-      <div className="rounded-2xl bg-gradient-to-r from-[#0066CC] via-[#0077EE] to-[#0099FF] text-white p-6 sm:p-8 lg:p-10 shadow-lg border border-blue-300/40 space-y-6">
-        <div className="max-w-4xl space-y-3">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/20 text-xs font-bold border border-white/30 text-white shadow-xs">
-            <ShieldCheck className="w-4 h-4 text-emerald-300" />
-            <span>Family Financial Operating System • Standar CFP® & OJK</span>
+    <div className="w-full animate-in fade-in duration-200">
+      {/* ─── FULL-WIDTH HERO SECTION (BFI Finance Style Edge-to-Edge #0B5DA7) ─── */}
+      <div className="w-full bg-[#0B5DA7] text-white relative overflow-hidden border-b border-blue-800/40">
+        {/* Subtle Decorative Background Glow Circles */}
+        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-sky-400/15 blur-3xl pointer-events-none"></div>
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-blue-950/30 blur-3xl pointer-events-none"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
+          {/* Left Column: Clean Headline & Action CTA */}
+          <div className="lg:col-span-7 space-y-5 text-left">
+            <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-white/15 backdrop-blur-xs text-xs font-bold border border-white/20 text-white shadow-xs">
+              <ShieldCheck className="w-4 h-4 text-emerald-300" />
+              <span>Family Financial Operating System • Standar CFP® & OJK</span>
+            </div>
+
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15] text-white">
+              Membangun Kemerdekaan Finansial Keluarga yang Kokoh & Terukur
+            </h1>
+
+            <p className="text-blue-100 text-xs sm:text-sm lg:text-base leading-relaxed max-w-xl font-normal">
+              Platform mandiri untuk mendiagnosis arus kas, mengamankan dana darurat & proteksi asuransi, serta menyusun peta jalan akumulasi aset keluarga secara terstruktur.
+            </p>
+
+            {/* BFI-Style 2 Key Value Points */}
+            <div className="space-y-2 text-xs sm:text-sm text-blue-50 font-medium pt-1">
+              <div className="flex items-center space-x-2.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Evaluasi 6 Rasio Kesehatan Finansial & Standar Kepatuhan OJK</span>
+              </div>
+              <div className="flex items-center space-x-2.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Roadmap Bebas Utang, Dana Darurat & Akumulasi Aset Terukur</span>
+              </div>
+            </div>
+
+            {/* Action Buttons: Signature Orange Primary CTA + Ghost Secondary */}
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <button
+                onClick={onStartPlanning}
+                className="px-6 sm:px-7 py-3.5 rounded-xl bg-[#E8701A] hover:bg-[#D6610E] text-white text-xs sm:text-sm font-bold shadow-lg shadow-orange-950/30 hover:scale-[1.02] transition-all cursor-pointer flex items-center space-x-2"
+              >
+                <span>Mulai Perencanaan Sekarang</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={onOpenCalculators}
+                className="px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 text-white text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center space-x-2"
+              >
+                <Calculator className="w-4 h-4 text-blue-200" />
+                <span>Hitung Simulasi</span>
+              </button>
+            </div>
+
+            <p className="text-[11px] text-blue-200/80 pt-1">
+              FinPlan berstandar Certified Financial Planner (CFP®) dan mengacu pada regulasi Otoritas Jasa Keuangan (OJK).
+            </p>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight text-white">
-            Membangun Kemerdekaan Finansial Keluarga yang Kokoh & Terukur
-          </h1>
+          {/* Right Column: App Illustration & Financial Health Visual Mockup (BFI Circle Style) */}
+          <div className="lg:col-span-5 flex justify-center lg:justify-end relative">
+            {/* Circular Halo Backdrop */}
+            <div className="w-72 h-72 sm:w-84 sm:h-84 lg:w-96 lg:h-96 rounded-full bg-gradient-to-tr from-white/15 via-sky-300/10 to-transparent border-2 border-white/20 p-3 sm:p-5 relative flex items-center justify-center shadow-2xl backdrop-blur-xs">
+              {/* Floating Top Mini Badge */}
+              <div className="absolute -top-2 right-4 bg-white dark:bg-slate-900 text-slate-800 dark:text-white px-3 py-1.5 rounded-full shadow-lg border border-slate-100 dark:border-slate-800 text-[11px] font-bold flex items-center space-x-1.5 z-20 animate-bounce duration-1000">
+                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                <span>CFP® Standard</span>
+              </div>
 
-          <p className="text-blue-50 text-xs sm:text-sm leading-relaxed max-w-3xl font-normal">
-            Kekayaan sejati bukan sekadar besarnya gaji atau konsumsi barang mewah. Kekayaan adalah proses mengubah penghasilan menjadi <strong>surplus kas</strong>, melindunginya dengan <strong>perisai risiko (BPJS & Asuransi)</strong>, dan mengalokasikannya ke dalam <strong>aset produktif</strong> untuk kebebasan waktu keluarga Anda.
-          </p>
-        </div>
+              {/* Floating Bottom Left Mini Badge */}
+              <div className="absolute -bottom-2 -left-2 bg-emerald-600 text-white px-3 py-1.5 rounded-full shadow-lg text-[10px] font-bold flex items-center space-x-1.5 z-20">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>Kepatuhan OJK Terverifikasi</span>
+              </div>
 
-        {/* Pipeline Visual Stack - Responsive: Desktop 6-Col Grid, Mobile Smooth Horizontal Stepper */}
-        <div className="pt-2 border-t border-white/25">
-          <div className="flex items-center justify-between mb-2.5">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-blue-50">
-              Peta Alur 6 Tahap Pengelolaan Kekayaan:
-            </span>
-            <span className="lg:hidden text-[10px] text-blue-100/90 font-medium">
-              Geser ➔
-            </span>
-          </div>
+              {/* Core App Simulation Card Mockup */}
+              <div className="w-full max-w-[280px] sm:max-w-xs bg-white text-slate-800 rounded-2xl p-4 sm:p-5 shadow-2xl border border-slate-100 space-y-3.5 relative z-10">
+                {/* Header Card */}
+                <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-7 h-7 rounded-lg bg-[#0B5DA7] flex items-center justify-center text-white font-black text-xs shadow-xs">
+                      FP
+                    </div>
+                    <div>
+                      <span className="font-bold text-xs text-slate-900 block leading-tight">
+                        Status Finansial
+                      </span>
+                      <span className="text-[10px] text-emerald-600 font-bold flex items-center">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1 animate-pulse"></span>
+                        Sehat & Terukur
+                      </span>
+                    </div>
+                  </div>
+                  <span className="text-xs font-black text-[#0B5DA7] bg-blue-50 px-2 py-0.5 rounded-md">
+                    Skor 85/100
+                  </span>
+                </div>
 
-          {/* Desktop View (6 Columns) */}
-          <div className="hidden lg:grid grid-cols-6 gap-2.5 text-center">
-            <div className="p-3.5 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 shadow-xs">
-              <span className="text-[10px] font-bold text-blue-100 block">TAHAP 1</span>
-              <span className="text-xs font-bold text-white mt-1 block">Penghasilan</span>
-              <span className="text-[11px] text-blue-50">Gaji & Bisnis</span>
-            </div>
+                {/* 3 Metric Rows */}
+                <div className="space-y-2 text-xs">
+                  <div className="p-2 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] text-slate-500 font-medium block">Surplus Kas</span>
+                      <span className="font-bold text-slate-900">+32% / Bulan</span>
+                    </div>
+                    <span className="text-[9px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">
+                      Ideal &gt; 10%
+                    </span>
+                  </div>
 
-            <div className="p-3.5 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 shadow-xs">
-              <span className="text-[10px] font-bold text-blue-100 block">TAHAP 2</span>
-              <span className="text-xs font-bold text-white mt-1 block">Surplus Kas</span>
-              <span className="text-[11px] text-blue-50">Income − Living</span>
-            </div>
+                  <div className="p-2 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] text-slate-500 font-medium block">Beban Utang</span>
+                      <span className="font-bold text-slate-900">18% Gaji</span>
+                    </div>
+                    <span className="text-[9px] font-bold text-blue-700 bg-blue-100 px-1.5 py-0.5 rounded">
+                      Aman OJK &lt; 30%
+                    </span>
+                  </div>
 
-            <div className="p-3.5 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 shadow-xs">
-              <span className="text-[10px] font-bold text-blue-100 block">TAHAP 3</span>
-              <span className="text-xs font-bold text-white mt-1 block">Proteksi Risiko</span>
-              <span className="text-[11px] text-blue-50">BPJS & Asuransi</span>
-            </div>
+                  <div className="p-2 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] text-slate-500 font-medium block">Dana Darurat</span>
+                      <span className="font-bold text-slate-900">Rp 45.000.000</span>
+                    </div>
+                    <span className="text-[9px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">
+                      6x Pengeluaran
+                    </span>
+                  </div>
+                </div>
 
-            <div className="p-3.5 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 shadow-xs">
-              <span className="text-[10px] font-bold text-blue-100 block">TAHAP 4</span>
-              <span className="text-xs font-bold text-white mt-1 block">Aset Produktif</span>
-              <span className="text-[11px] text-blue-50">SBN, Emas, Saham</span>
-            </div>
-
-            <div className="p-3.5 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 shadow-xs">
-              <span className="text-[10px] font-bold text-blue-100 block">TAHAP 5</span>
-              <span className="text-xs font-bold text-white mt-1 block">Bunga Majemuk</span>
-              <span className="text-[11px] text-blue-50">Waktu & Disiplin</span>
-            </div>
-
-            <div className="p-3.5 rounded-xl bg-white/30 backdrop-blur-xs border border-white/40 shadow-sm">
-              <span className="text-[10px] font-bold text-amber-200 block">TAHAP 6</span>
-              <span className="text-xs font-bold text-white mt-1 block">Bebas Finansial</span>
-              <span className="text-[11px] text-blue-50">Kebebasan Waktu</span>
-            </div>
-          </div>
-
-          {/* Mobile Horizontal Stepper Carousel */}
-          <div className="lg:hidden flex space-x-2.5 overflow-x-auto pb-1 scrollbar-none snap-x -mx-1 px-1">
-            <div className="snap-start shrink-0 w-36 p-3 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 text-center">
-              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white/20 text-blue-100 inline-block">1. Income</span>
-              <span className="text-xs font-bold text-white mt-1.5 block">Penghasilan</span>
-              <span className="text-[10px] text-blue-100">Gaji & Bisnis</span>
-            </div>
-
-            <div className="snap-start shrink-0 w-36 p-3 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 text-center">
-              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white/20 text-blue-100 inline-block">2. Surplus</span>
-              <span className="text-xs font-bold text-white mt-1.5 block">Surplus Kas</span>
-              <span className="text-[10px] text-blue-100">Income − Living</span>
-            </div>
-
-            <div className="snap-start shrink-0 w-36 p-3 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 text-center">
-              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white/20 text-blue-100 inline-block">3. Shield</span>
-              <span className="text-xs font-bold text-white mt-1.5 block">Proteksi Risiko</span>
-              <span className="text-[10px] text-blue-100">BPJS & Asuransi</span>
-            </div>
-
-            <div className="snap-start shrink-0 w-36 p-3 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 text-center">
-              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white/20 text-blue-100 inline-block">4. Asset</span>
-              <span className="text-xs font-bold text-white mt-1.5 block">Aset Produktif</span>
-              <span className="text-[10px] text-blue-100">SBN, Emas, Saham</span>
-            </div>
-
-            <div className="snap-start shrink-0 w-36 p-3 rounded-xl bg-white/20 backdrop-blur-xs border border-white/30 text-center">
-              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white/20 text-blue-100 inline-block">5. Compounding</span>
-              <span className="text-xs font-bold text-white mt-1.5 block">Bunga Majemuk</span>
-              <span className="text-[10px] text-blue-100">Waktu & Disiplin</span>
-            </div>
-
-            <div className="snap-start shrink-0 w-36 p-3 rounded-xl bg-white/30 backdrop-blur-xs border border-white/40 shadow-sm text-center">
-              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-amber-400/30 text-amber-200 inline-block">6. Freedom</span>
-              <span className="text-xs font-bold text-white mt-1.5 block">Bebas Finansial</span>
-              <span className="text-[10px] text-blue-100">Kebebasan Waktu</span>
+                {/* Mini Summary */}
+                <div className="pt-0.5 flex items-center justify-between text-[10px] text-slate-400 font-medium border-t border-slate-100">
+                  <span>Peta Jalan 7 Langkah</span>
+                  <span className="text-[#0B5DA7] font-bold">Siap Diakses →</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* 3 Musuh Utama Callout - High Legibility */}
-        <div className="p-3.5 sm:p-4 rounded-xl bg-amber-500/20 border border-amber-300/40 text-amber-100 text-xs sm:text-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div className="flex items-center space-x-2">
-            <AlertTriangle className="w-4 h-4 text-amber-300 shrink-0" />
-            <span>
-              <strong>3 Jebakan Kekayaan:</strong> Inflasi Gaya Hidup • Utang Konsumtif • Nol Dana Darurat.
-            </span>
-          </div>
-          <span className="text-[11px] font-semibold text-amber-200 shrink-0">Morgan Housel & Benjamin Graham</span>
         </div>
       </div>
 
-      {/* ─── 3 Pilihan Aksi Utama (Navigation Gateway - Prestigious Clean Cards) ─── */}
-      <div className="space-y-4">
+      {/* ─── PADDED LOWER CONTENT SECTION (Restricted Max Width & Centered) ─── */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 space-y-12">
         <div>
-          <span className="text-xs font-bold text-[#0066CC] dark:text-blue-400 uppercase tracking-wider block">
+          <span className="text-xs font-bold text-[#0B5DA7] dark:text-blue-400 uppercase tracking-wider block">
             Pilihan Modul Navigasi
           </span>
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-0.5">
@@ -169,12 +191,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Card 1: Perencanaan Finansial (Primary) */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-[#0066CC] shadow-sm flex flex-col justify-between space-y-6">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-[#0B5DA7] shadow-sm flex flex-col justify-between space-y-6">
             <div className="space-y-3">
-              <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950 text-[#0066CC] dark:text-blue-400 flex items-center justify-center font-bold">
+              <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950 text-[#0B5DA7] dark:text-blue-400 flex items-center justify-center font-bold">
                 <Compass className="w-5 h-5" />
               </div>
-              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-md bg-blue-100 dark:bg-blue-950 text-[#0066CC] dark:text-blue-300 uppercase tracking-wider inline-block">
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950 text-[#0B5DA7] dark:text-blue-300 uppercase tracking-wider inline-block">
                 Layanan Utama
               </span>
               <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
@@ -187,7 +209,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
             <button
               onClick={onStartPlanning}
-              className="w-full flex items-center justify-center space-x-2 px-5 py-3 rounded-xl bg-[#0066CC] hover:bg-[#0055B8] text-white text-xs sm:text-sm font-bold shadow-sm transition-all cursor-pointer"
+              className="w-full flex items-center justify-center space-x-2 px-5 py-3.5 rounded-xl bg-[#E8701A] hover:bg-[#D6610E] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all cursor-pointer"
             >
               <span>Mulai Perencanaan (7 Langkah)</span>
               <ArrowRight className="w-4 h-4" />
@@ -195,9 +217,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
 
           {/* Card 2: Belajar Teori & 10 Guru */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-6 hover:border-blue-400 transition-colors">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-6 hover:border-[#0B5DA7] transition-colors">
             <div className="space-y-3">
-              <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-slate-800 text-[#0066CC] dark:text-slate-300 flex items-center justify-center font-bold">
+              <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-slate-800 text-[#0B5DA7] dark:text-slate-300 flex items-center justify-center font-bold">
                 <BookOpen className="w-5 h-5" />
               </div>
               <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 uppercase tracking-wider inline-block">
@@ -213,7 +235,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
             <button
               onClick={onOpenEducation}
-              className="w-full flex items-center justify-center space-x-2 px-5 py-3 rounded-xl border-2 border-[#0066CC] hover:bg-blue-50 dark:hover:bg-blue-950/40 text-[#0066CC] dark:text-blue-400 text-xs sm:text-sm font-bold transition-all cursor-pointer"
+              className="w-full flex items-center justify-center space-x-2 px-5 py-3.5 rounded-xl border-2 border-[#0B5DA7] hover:bg-blue-50 dark:hover:bg-blue-950/40 text-[#0B5DA7] dark:text-blue-400 text-xs sm:text-sm font-bold transition-all cursor-pointer"
             >
               <BookOpen className="w-4 h-4" />
               <span>Buka Knowledge Base</span>
@@ -221,9 +243,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
 
           {/* Card 3: Simulasi & Kalkulator */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-6 hover:border-blue-400 transition-colors">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-6 hover:border-[#0B5DA7] transition-colors">
             <div className="space-y-3">
-              <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-slate-800 text-[#0066CC] dark:text-slate-300 flex items-center justify-center font-bold">
+              <div className="w-11 h-11 rounded-xl bg-blue-50 dark:bg-slate-800 text-[#0B5DA7] dark:text-slate-300 flex items-center justify-center font-bold">
                 <Calculator className="w-5 h-5" />
               </div>
               <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 uppercase tracking-wider inline-block">
@@ -239,7 +261,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
             <button
               onClick={onOpenCalculators}
-              className="w-full flex items-center justify-center space-x-2 px-5 py-3 rounded-xl border-2 border-[#0066CC] hover:bg-blue-50 dark:hover:bg-blue-950/40 text-[#0066CC] dark:text-blue-400 text-xs sm:text-sm font-bold transition-all cursor-pointer"
+              className="w-full flex items-center justify-center space-x-2 px-5 py-3.5 rounded-xl border-2 border-[#0B5DA7] hover:bg-blue-50 dark:hover:bg-blue-950/40 text-[#0B5DA7] dark:text-blue-400 text-xs sm:text-sm font-bold transition-all cursor-pointer"
             >
               <Calculator className="w-4 h-4" />
               <span>Buka Kalkulator Finansial</span>
@@ -252,7 +274,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 sm:p-7 border border-slate-200 dark:border-slate-800 shadow-xs space-y-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 gap-2">
           <div className="flex items-center space-x-2.5">
-            <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-950 text-[#003399] dark:text-blue-400">
+            <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-950 text-[#0B5DA7] dark:text-blue-400">
               <Bookmark className="w-4 h-4" />
             </div>
             <div>
@@ -266,7 +288,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
           <button
             onClick={onOpenEducation}
-            className="text-xs font-bold text-[#003399] dark:text-blue-400 hover:underline flex items-center self-start sm:self-auto cursor-pointer"
+            className="text-xs font-bold text-[#0B5DA7] dark:text-blue-400 hover:underline flex items-center self-start sm:self-auto cursor-pointer"
           >
             <span>Pelajari Selengkapnya</span>
             <ArrowRight className="w-3.5 h-3.5 ml-1" />
@@ -280,7 +302,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 space-y-1.5"
             >
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#003399] text-white">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#0B5DA7] text-white">
                   ATURAN #{rule.ruleNumber}
                 </span>
                 <span className="text-[10px] font-semibold text-slate-500">{rule.guruInfluence.split("/")[0]}</span>
